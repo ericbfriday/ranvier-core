@@ -6,3 +6,5 @@ coverage
 dist
 .yarn
 src/js
+
+!.yarn/releases
