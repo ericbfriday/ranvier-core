@@ -1,34 +1,48 @@
 {
-  "name": "ranvier",
-  "description": "MUD game engine",
-  "homepage": "https://ranviermud.com",
-  "bugs": "https://github.com/ranviermud/core/issues",
-  "license": "MIT",
-  "author": "Shawn Biddle (http://shawnbiddle.com)",
-  "version": "3.0.6",
-  "repository": "github:ranviermud/core",
-  "engines": {
-    "node": ">= 10.12.0"
-  },
-  "scripts": {
-    "test": "nyc --reporter=html --reporter=text --include=src --all mocha --recursive",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
-  },
-  "main": "index.js",
-  "dependencies": {
-    "bcryptjs": "^2.4.0",
-    "js-yaml": "^3.12.0",
-    "longjohn": "^0.2.11",
-    "pretty-error": "^2.0.2",
-    "require-dir": "^1.1.0",
-    "sty": "",
-    "uuid": "^3.3.2",
-    "winston": "^2.4.4",
-    "wrap-ansi": "^2.0.0"
-  },
-  "devDependencies": {
-    "coveralls": "^3.0.2",
-    "mocha": "^5.2.0",
-    "nyc": "^13.1.0"
-  }
+    "name": "ranvier",
+    "version": "3.0.6",
+    "packageManager": "yarn@4.9.1",
+    "description": "MUD game engine",
+    "author": "Shawn Biddle (http://shawnbiddle.com)",
+    "license": "MIT",
+    "homepage": "https://ranviermud.com",
+    "repository": "github:ranviermud/core",
+    "bugs": "https://github.com/ranviermud/core/issues",
+    "type": "module",
+    "scripts": {
+        "build": "tsc",
+        "test": "nyc --reporter=html --reporter=text --include=src --all mocha --recursive",
+        "coverage": "nyc report --reporter=text-lcov | coveralls",
+        "lint": "eslint",
+        "lint:fix": "eslint --fix",
+        "lint:inspect": "yarn dlx @eslint/config-inspector"
+    },
+    "dependencies": {
+        "bcryptjs": "^3.0.2",
+        "js-yaml": "^4.1.0",
+        "longjohn": "^0.2.11",
+        "pretty-error": "^4.0.0",
+        "sty": "^0.6.1",
+        "uuid": "^11.1.0",
+        "winston": "^3.17.0",
+        "wrap-ansi": "^9.0.0"
+    },
+    "devDependencies": {
+        "@antfu/eslint-config": "^4.11.0",
+        "@types/bcryptjs": "2.4.6",
+        "@types/js-yaml": "4.0.9",
+        "@types/node": "^22.13.13",
+        "@types/uuid": "10.0.0",
+        "@typescript-eslint/utils": "^8.28.0",
+        "coveralls": "^3.0.2",
+        "eslint": "^9.25.1",
+        "eslint-plugin-command": "^3.2.0",
+        "eslint-plugin-format": "^1.0.1",
+        "mocha": "^5.2.0",
+        "nyc": "^13.1.0",
+        "typescript": "^5.8.3"
+    },
+    "volta": {
+        "node": "22.14.0"
+    }
 }

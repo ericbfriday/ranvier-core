@@ -3,3 +3,6 @@ coverage
 .nyc_output
 *.swp
 *.sublime-*
+dist
+.yarn
+src/js

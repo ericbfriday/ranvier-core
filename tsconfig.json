@@ -1,0 +1,19 @@
+{
+    "extends": "./tsconfig.node22.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"]
+        },
+        "allowJs": true,
+        "checkJs": true,
+        "skipDefaultLibCheck": true,
+        "strict": false,
+        "declaration": true,
+        "outDir": "dist",
+        "sourceMap": true,
+        "resolveJsonModule": true
+    },
+    "include": ["index.ts", "src/**/*"],
+    "exclude": ["node_modules", "dist", "src/js/**/*"]
+}
