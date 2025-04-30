@@ -1,19 +1,19 @@
-import type DataSource from './DataSource'
+import type DataSource from './DataSource';
 
 /**
  * Used to CRUD an entity from a configured DataSource
  */
 export default class EntityLoader {
-    private dataSource: DataSource
-    public config: any
+    private dataSource: DataSource;
+    public config: any;
 
     /**
      * @param dataSource - Data source
      * @param config - Configuration
      */
     constructor(dataSource: DataSource, config: any = {}) {
-        this.dataSource = dataSource
-        this.config = config
+        this.dataSource = dataSource;
+        this.config = config;
     }
 
     /**
@@ -21,7 +21,7 @@ export default class EntityLoader {
      * @param name - Area name
      */
     setArea(name: string): void {
-        this.config.area = name
+        this.config.area = name;
     }
 
     /**
@@ -29,14 +29,14 @@ export default class EntityLoader {
      * @param name - Bundle name
      */
     setBundle(name: string): void {
-        this.config.bundle = name
+        this.config.bundle = name;
     }
 
     /**
      * Check if data source has data
      */
     hasData(): boolean {
-        return this.dataSource.hasData(this.config)
+        return this.dataSource.hasData(this.config);
     }
 
     /**
@@ -44,10 +44,10 @@ export default class EntityLoader {
      */
     fetchAll(): any[] {
         if (!('fetchAll' in this.dataSource)) {
-            throw new Error(`fetchAll not supported by ${this.dataSource.name}`)
+            throw new Error(`fetchAll not supported by ${this.dataSource.name}`);
         }
 
-        return this.dataSource.fetchAll(this.config)
+        return this.dataSource.fetchAll(this.config);
     }
 
     /**
@@ -56,10 +56,10 @@ export default class EntityLoader {
      */
     fetch(id: string): any {
         if (!('fetch' in this.dataSource)) {
-            throw new Error(`fetch not supported by ${this.dataSource.name}`)
+            throw new Error(`fetch not supported by ${this.dataSource.name}`);
         }
 
-        return this.dataSource.fetch(this.config, id)
+        return this.dataSource.fetch(this.config, id);
     }
 
     /**
@@ -68,10 +68,10 @@ export default class EntityLoader {
      */
     replace(data: any): any {
         if (!('replace' in this.dataSource)) {
-            throw new Error(`replace not supported by ${this.dataSource.name}`)
+            throw new Error(`replace not supported by ${this.dataSource.name}`);
         }
 
-        return this.dataSource.replace(this.config, data)
+        return this.dataSource.replace(this.config, data);
     }
 
     /**
@@ -81,9 +81,9 @@ export default class EntityLoader {
      */
     update(id: string, data: any): any {
         if (!('update' in this.dataSource)) {
-            throw new Error(`update not supported by ${this.dataSource.name}`)
+            throw new Error(`update not supported by ${this.dataSource.name}`);
         }
 
-        return this.dataSource.update(this.config, id, data)
+        return this.dataSource.update(this.config, id, data);
     }
 }

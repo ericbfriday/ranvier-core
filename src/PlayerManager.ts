@@ -1,8 +1,8 @@
-import type EntityLoader from './EntityLoader'
-import { EventEmitter } from 'node:events'
-import Data from './Data'
-import EventManager from './EventManager'
-import Player from './Player'
+import type EntityLoader from './EntityLoader';
+import { EventEmitter } from 'node:events';
+import Data from './Data';
+import EventManager from './EventManager';
+import Player from './Player';
 
 /**
  * Keeps track of all active players in game
@@ -14,16 +14,16 @@ import Player from './Player'
  * @listens PlayerManager#updateTick
  */
 class PlayerManager extends EventEmitter {
-    players: Map<string, Player>
-    events: EventManager
-    loader: EntityLoader | null
+    players: Map<string, Player>;
+    events: EventManager;
+    loader: EntityLoader | null;
 
     constructor() {
-        super()
-        this.players = new Map()
-        this.events = new EventManager()
-        this.loader = null
-        this.on('updateTick', this.tickAll)
+        super();
+        this.players = new Map();
+        this.events = new EventManager();
+        this.loader = null;
+        this.on('updateTick', this.tickAll);
     }
 
     /**
@@ -31,7 +31,7 @@ class PlayerManager extends EventEmitter {
      * @param {EntityLoader} loader
      */
     setLoader(loader: EntityLoader): void {
-        this.loader = loader
+        this.loader = loader;
     }
 
     /**
@@ -39,14 +39,14 @@ class PlayerManager extends EventEmitter {
      * @return {Player}
      */
     getPlayer(name: string): Player | undefined {
-        return this.players.get(name.toLowerCase())
+        return this.players.get(name.toLowerCase());
     }
 
     /**
      * @param {Player} player
      */
     addPlayer(player: Player): void {
-        this.players.set(this.keyify(player), player)
+        this.players.set(this.keyify(player), player);
     }
 
     /**
@@ -57,36 +57,36 @@ class PlayerManager extends EventEmitter {
      */
     removePlayer(player: Player, killSocket = false): void {
         if (killSocket) {
-            player.socket!.end()
+            player.socket!.end();
         }
 
-        player.removeAllListeners()
-        player.removeFromCombat()
-        player.effects.clear()
+        player.removeAllListeners();
+        player.removeFromCombat();
+        player.effects.clear();
         if (player.room) {
-            player.room.removePlayer(player)
+            player.room.removePlayer(player);
         }
-        (player as any).__pruned = true
-        this.players.delete(this.keyify(player))
+        (player as any).__pruned = true;
+        this.players.delete(this.keyify(player));
     }
 
     /**
      * @return {Array}
      */
     getPlayersAsArray(): Player[] {
-        return Array.from(this.players.values())
+        return Array.from(this.players.values());
     }
 
     /**
      * @param {string | symbol}   behaviorName
      * @param {Function} listener
      */
-    addListener<K>(eventName: string | symbol, listener: (...args: any[]) => void ): K {
+    addListener<K>(eventName: string | symbol, listener: (...args: any[]) => void): K {
         if (typeof eventName !== 'string') {
             this.events.add(String(eventName), listener);
             return;
         }
-        this.events.add(eventName, listener)
+        this.events.add(eventName, listener);
     }
 
     /**
@@ -94,7 +94,7 @@ class PlayerManager extends EventEmitter {
      * @return {Array}
      */
     filter(fn: (player: Player) => boolean): Player[] {
-        return this.getPlayersAsArray().filter(fn)
+        return this.getPlayersAsArray().filter(fn);
     }
 
     /**
@@ -112,23 +112,23 @@ class PlayerManager extends EventEmitter {
         force?: boolean,
     ): Promise<Player> {
         if (this.players.has(username) && !force) {
-            return this.getPlayer(username)!
+            return this.getPlayer(username)!;
         }
 
         if (!this.loader) {
-            throw new Error('No entity loader configured for players')
+            throw new Error('No entity loader configured for players');
         }
 
-        const data = await this.loader.fetch(username)
-        data.name = username
+        const data = await this.loader.fetch(username);
+        data.name = username;
 
-        const player = new Player(data)
-        player.account = account
+        const player = new Player(data);
+        player.account = account;
 
-        this.events.attach(player)
+        this.events.attach(player);
 
-        this.addPlayer(player)
-        return player
+        this.addPlayer(player);
+        return player;
     }
 
     /**
@@ -137,7 +137,7 @@ class PlayerManager extends EventEmitter {
      * @return {string}
      */
     keyify(player: Player): string {
-        return player.name.toLowerCase()
+        return player.name.toLowerCase();
     }
 
     /**
@@ -145,7 +145,7 @@ class PlayerManager extends EventEmitter {
      * @return {boolean}
      */
     exists(name: string): boolean {
-        return Data.exists('player', name)
+        return Data.exists('player', name);
     }
 
     /**
@@ -154,15 +154,15 @@ class PlayerManager extends EventEmitter {
      */
     async save(player: Player): Promise<void> {
         if (!this.loader) {
-            throw new Error('No entity loader configured for players')
+            throw new Error('No entity loader configured for players');
         }
 
-        await this.loader.update(player.name, player.serialize())
+        await this.loader.update(player.name, player.serialize());
 
         /**
          * @event Player#saved
          */
-        player.emit('saved')
+        player.emit('saved');
     }
 
     /**
@@ -170,7 +170,7 @@ class PlayerManager extends EventEmitter {
      */
     async saveAll(): Promise<void> {
         for (const [name, player] of this.players.entries()) {
-            await this.save(player)
+            await this.save(player);
         }
     }
 
@@ -182,7 +182,7 @@ class PlayerManager extends EventEmitter {
             /**
              * @event Player#updateTick
              */
-            player.emit('updateTick')
+            player.emit('updateTick');
         }
     }
 
@@ -191,8 +191,8 @@ class PlayerManager extends EventEmitter {
      * @return {Array<Character>}
      */
     getBroadcastTargets(): Player[] {
-        return this.getPlayersAsArray()
+        return this.getPlayersAsArray();
     }
 }
 
-export default PlayerManager
+export default PlayerManager;

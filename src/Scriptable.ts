@@ -1,5 +1,5 @@
-import type BehaviorManager from './BehaviorManager'
-import Logger from './Logger'
+import type BehaviorManager from './BehaviorManager';
+import Logger from './Logger';
 
 /**
  * @ignore
@@ -9,18 +9,18 @@ import Logger from './Logger'
  */
 function Scriptable<T extends new (...args: any[]) => any>(parentClass: T) {
     return class extends parentClass {
-        behaviors: Map<string, any>
-        __pruned?: boolean
+        behaviors: Map<string, any>;
+        __pruned?: boolean;
 
         emit(name: string, ...args: any[]): void {
             // Squelch events on a pruned entity. Attempts to prevent the case where an entity has been effectively removed
             // from the game but somehow still triggered a listener. Set by respective entity Manager class
             if (this.__pruned) {
-                this.removeAllListeners()
-                return
+                this.removeAllListeners();
+                return;
             }
 
-            super.emit(name, ...args)
+            super.emit(name, ...args);
         }
 
         /**
@@ -28,7 +28,7 @@ function Scriptable<T extends new (...args: any[]) => any>(parentClass: T) {
          * @return {boolean}
          */
         hasBehavior(name: string): boolean {
-            return this.behaviors.has(name)
+            return this.behaviors.has(name);
         }
 
         /**
@@ -36,7 +36,7 @@ function Scriptable<T extends new (...args: any[]) => any>(parentClass: T) {
          * @return {*}
          */
         getBehavior(name: string): any {
-            return this.behaviors.get(name)
+            return this.behaviors.get(name);
         }
 
         /**
@@ -45,25 +45,25 @@ function Scriptable<T extends new (...args: any[]) => any>(parentClass: T) {
          */
         setupBehaviors(manager: BehaviorManager): void {
             for (let [behaviorName, config] of this.behaviors) {
-                const behavior = manager.get(behaviorName)
+                const behavior = manager.get(behaviorName);
                 if (!behavior) {
                     Logger.warn(
                         `No script found for [${this.constructor.name}] behavior '${behaviorName}'`,
-                    )
-                    continue
+                    );
+                    continue;
                 }
 
                 // behavior may be a boolean in which case it will be `behaviorName: true`
-                config = config === true ? {} : config
-                behavior.attach(this, config)
+                config = config === true ? {} : config;
+                behavior.attach(this, config);
             }
         }
 
         removeAllListeners(): void {
             // This method is implemented by EventEmitter which is assumed to be a parent class
-            super.removeAllListeners()
+            super.removeAllListeners();
         }
-    }
+    };
 }
 
-export default Scriptable
+export default Scriptable;

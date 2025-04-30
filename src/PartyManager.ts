@@ -1,5 +1,5 @@
-import type { Player } from './Player'
-import { Party } from './Party'
+import type { Player } from './Player';
+import { Party } from './Party';
 
 /**
  * Keeps track of active in game parties and is used to create new parties
@@ -12,18 +12,18 @@ class PartyManager extends Set<Party> {
      * @return {Party} The newly created party
      */
     create(leader: Player): Party {
-        const party = new Party(leader)
-        this.add(party)
-        return party
+        const party = new Party(leader);
+        this.add(party);
+        return party;
     }
 
     /**
      * @param {Party} party
      */
     disband(party: Party): void {
-        this.delete(party)
-        party.disband()
+        this.delete(party);
+        party.disband();
     }
 }
 
-export default PartyManager
+export default PartyManager;

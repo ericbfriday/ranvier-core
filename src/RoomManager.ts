@@ -1,13 +1,13 @@
-import type Room from './Room'
+import type Room from './Room';
 
 /**
  * Keeps track of all the individual rooms in the game
  */
 class RoomManager {
-    private rooms: Map<string, Room>
+    private rooms: Map<string, Room>;
 
     constructor() {
-        this.rooms = new Map()
+        this.rooms = new Map();
     }
 
     /**
@@ -15,7 +15,7 @@ class RoomManager {
      * @param entityRef - Room entity reference
      */
     getRoom(entityRef: string): Room | undefined {
-        return this.rooms.get(entityRef)
+        return this.rooms.get(entityRef);
     }
 
     /**
@@ -23,7 +23,7 @@ class RoomManager {
      * @param room - Room to add
      */
     addRoom(room: Room): void {
-        this.rooms.set(room.entityReference, room)
+        this.rooms.set(room.entityReference, room);
     }
 
     /**
@@ -31,8 +31,8 @@ class RoomManager {
      * @param room - Room to remove
      */
     removeRoom(room: Room): void {
-        this.rooms.delete(room.entityReference)
+        this.rooms.delete(room.entityReference);
     }
 }
 
-export default RoomManager
+export default RoomManager;

@@ -1,5 +1,5 @@
-import type Character from './Character'
-import Damage from './Damage'
+import type Character from './Character';
+import Damage from './Damage';
 
 /**
  * Heal is `Damage` that raises an attribute instead of lowering it
@@ -13,8 +13,8 @@ class Heal extends Damage {
      * @fires Character#healed
      */
     commit(target: Character): void {
-        const finalAmount = this.evaluate(target)
-        target.raiseAttribute(this.attribute, finalAmount)
+        const finalAmount = this.evaluate(target);
+        target.raiseAttribute(this.attribute, finalAmount);
 
         if (this.attacker) {
             /**
@@ -23,15 +23,15 @@ class Heal extends Damage {
              * @param {Character} target
              * @param {number} finalAmount
              */
-            this.attacker.emit('heal', this, target, finalAmount)
+            this.attacker.emit('heal', this, target, finalAmount);
         }
         /**
          * @event Character#healed
          * @param {Heal} heal
          * @param {number} finalAmount
          */
-        target.emit('healed', this, finalAmount)
+        target.emit('healed', this, finalAmount);
     }
 }
 
-export default Heal
+export default Heal;

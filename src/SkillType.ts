@@ -5,8 +5,8 @@
 const SkillType = {
     SKILL: Symbol('SKILL'),
     SPELL: Symbol('SPELL'),
-} as const
+} as const;
 
-export type SkillTypeValue = (typeof SkillType)[keyof typeof SkillType]
+export type SkillTypeValue = (typeof SkillType)[keyof typeof SkillType];
 
-export default SkillType
+export default SkillType;

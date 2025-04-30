@@ -1,12 +1,12 @@
-import type Area  from './Area'
-import type GameState  from './GameState'
-import type Item  from './Item'
-import type Room  from './Room'
-import Character  from './Character'
-import CommandQueue  from './CommandQueue'
-import Logger  from './Logger'
-import Scriptable  from './Scriptable'
-import uuid from 'uuid/v8'
+import type Area from './Area';
+import type GameState from './GameState';
+import type Item from './Item';
+import type Room from './Room';
+import uuid from 'uuid/v8';
+import Character from './Character';
+import CommandQueue from './CommandQueue';
+import Logger from './Logger';
+import Scriptable from './Scriptable';
 
 interface NpcConfig {
     keywords: string[]
@@ -31,46 +31,46 @@ interface NpcConfig {
  * @mixes Scriptable
  */
 class Npc extends Scriptable(Character) {
-    area: Area
-    script?: string
-    behaviors: Map<string, any>
-    equipment: Map<string, Item>
-    defaultEquipment: Record<string, string>
-    defaultItems: string[]
-    description: string
-    entityReference: string
-    id: number
-    keywords: string[]
-    quests: string[]
-    uuid: string
-    commandQueue: CommandQueue
-    __pruned?: boolean
+    area: Area;
+    script?: string;
+    behaviors: Map<string, any>;
+    equipment: Map<string, Item>;
+    defaultEquipment: Record<string, string>;
+    defaultItems: string[];
+    description: string;
+    entityReference: string;
+    id: number;
+    keywords: string[];
+    quests: string[];
+    uuid: string;
+    commandQueue: CommandQueue;
+    __pruned?: boolean;
 
     constructor(area: Area, data: NpcConfig) {
-        super(data)
-        const validate = ['keywords', 'name', 'id']
+        super(data);
+        const validate = ['keywords', 'name', 'id'];
 
         for (const prop of validate) {
             if (!(prop in data)) {
                 throw new ReferenceError(
                     `NPC in area [${area.name}] missing required property [${prop}]`,
-                )
+                );
             }
         }
 
-        this.area = data.area
-        this.script = data.script
-        this.behaviors = new Map(Object.entries(data.behaviors || {}))
-        this.equipment = new Map()
-        this.defaultEquipment = data.equipment || {}
-        this.defaultItems = data.items || []
-        this.description = data.description || ''
-        this.entityReference = data.entityReference
-        this.id = data.id
-        this.keywords = data.keywords
-        this.quests = data.quests || []
-        this.uuid = data.uuid || uuid()
-        this.commandQueue = new CommandQueue()
+        this.area = data.area;
+        this.script = data.script;
+        this.behaviors = new Map(Object.entries(data.behaviors || {}));
+        this.equipment = new Map();
+        this.defaultEquipment = data.equipment || {};
+        this.defaultItems = data.items || [];
+        this.description = data.description || '';
+        this.entityReference = data.entityReference;
+        this.id = data.id;
+        this.keywords = data.keywords;
+        this.quests = data.quests || [];
+        this.uuid = data.uuid || uuid();
+        this.commandQueue = new CommandQueue();
     }
 
     /**
@@ -82,65 +82,65 @@ class Npc extends Scriptable(Character) {
      * @fires Npc#enterRoom
      */
     moveTo(nextRoom: Room, onMoved: Function = _ => _): void {
-        const prevRoom = this.room
+        const prevRoom = this.room;
         if (this.room) {
             /**
              * @event Room#npcLeave
              * @param {Npc} npc
              * @param {Room} nextRoom
              */
-            this.room.emit('npcLeave', this, nextRoom)
-            this.room.removeNpc(this)
+            this.room.emit('npcLeave', this, nextRoom);
+            this.room.removeNpc(this);
         }
 
-        this.room = nextRoom
-        nextRoom.addNpc(this)
+        this.room = nextRoom;
+        nextRoom.addNpc(this);
 
-        onMoved()
+        onMoved();
 
         /**
          * @event Room#npcEnter
          * @param {Npc} npc
          * @param {Room} prevRoom
          */
-        nextRoom.emit('npcEnter', this, prevRoom)
+        nextRoom.emit('npcEnter', this, prevRoom);
         /**
          * @event Npc#enterRoom
          * @param {Room} room
          */
-        this.emit('enterRoom', nextRoom)
+        this.emit('enterRoom', nextRoom);
     }
 
     hydrate(state: GameState): void {
-        super.hydrate(state)
-        state.MobManager.addMob(this)
+        super.hydrate(state);
+        state.MobManager.addMob(this);
 
-        this.setupBehaviors(state.MobBehaviorManager)
+        this.setupBehaviors(state.MobBehaviorManager);
 
         for (const defaultItemId of this.defaultItems) {
             Logger.verbose(
                 `\tDIST: Adding item [${defaultItemId}] to npc [${this.name}]`,
-            )
-            const newItem = state.ItemFactory.create(this.area, defaultItemId)
-            newItem.hydrate(state)
-            state.ItemManager.add(newItem)
-            this.addItem(newItem)
+            );
+            const newItem = state.ItemFactory.create(this.area, defaultItemId);
+            newItem.hydrate(state);
+            state.ItemManager.add(newItem);
+            this.addItem(newItem);
         }
 
         for (const [slot, defaultEqId] of Object.entries(this.defaultEquipment)) {
             Logger.verbose(
                 `\tDIST: Equipping item [${defaultEqId}] to npc [${this.name}] in slot [${slot}]`,
-            )
-            const newItem = state.ItemFactory.create(this.area, defaultEqId)
-            newItem.hydrate(state)
-            state.ItemManager.add(newItem)
-            this.equip(newItem, slot)
+            );
+            const newItem = state.ItemFactory.create(this.area, defaultEqId);
+            newItem.hydrate(state);
+            state.ItemManager.add(newItem);
+            this.equip(newItem, slot);
         }
     }
 
     get isNpc(): boolean {
-        return true
+        return true;
     }
 }
 
-export default Npc
+export default Npc;

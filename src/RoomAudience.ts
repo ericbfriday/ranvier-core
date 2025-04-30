@@ -1,5 +1,5 @@
-import type { GameEntity } from './GameEntity'
-import ChannelAudience from './ChannelAudience'
+import type { GameEntity } from './GameEntity';
+import ChannelAudience from './ChannelAudience';
 
 /**
  * Audience class representing other players in the same room as the sender
@@ -13,8 +13,8 @@ class RoomAudience extends ChannelAudience {
     getBroadcastTargets(): GameEntity[] {
         return this.sender.room
             .getBroadcastTargets()
-            .filter(target => target !== this.sender)
+            .filter(target => target !== this.sender);
     }
 }
 
-export default RoomAudience
+export default RoomAudience;

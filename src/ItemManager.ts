@@ -1,36 +1,36 @@
-import type { Item } from './Item'
-import ItemType = require('./ItemType')
+import type { Item } from './Item';
+import ItemType = require('./ItemType');
 
 /**
  * Keep track of all items in game
  */
 class ItemManager {
-    items: Set<Item>
+    items: Set<Item>;
 
     constructor() {
-        this.items = new Set<Item>()
+        this.items = new Set<Item>();
     }
 
     add(item: Item): void {
-        this.items.add(item)
+        this.items.add(item);
     }
 
     remove(item: Item): void {
         if (item.room) {
-            item.room.removeItem(item)
+            item.room.removeItem(item);
         }
 
         if (item.carriedBy) {
-            item.carriedBy.removeItem(item)
+            item.carriedBy.removeItem(item);
         }
 
         if (item.type === ItemType.CONTAINER && item.inventory) {
-            item.inventory.forEach(childItem => this.remove(childItem))
+            item.inventory.forEach(childItem => this.remove(childItem));
         }
 
-        item.__pruned = true
-        item.removeAllListeners()
-        this.items.delete(item)
+        item.__pruned = true;
+        item.removeAllListeners();
+        this.items.delete(item);
     }
 
     /**
@@ -41,9 +41,9 @@ class ItemManager {
             /**
              * @event Item#updateTick
              */
-            item.emit('updateTick')
+            item.emit('updateTick');
         }
     }
 }
 
-export default ItemManager
+export default ItemManager;

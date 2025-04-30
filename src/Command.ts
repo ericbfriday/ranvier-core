@@ -1,6 +1,6 @@
-import type Player from './Player'
-import CommandType from './CommandType'
-import PlayerRoles from './PlayerRoles'
+import type Player from './Player';
+import CommandType from './CommandType';
+import PlayerRoles from './PlayerRoles';
 
 interface CommandDefinition {
     type?: typeof CommandType
@@ -23,15 +23,15 @@ interface CommandDefinition {
  * @property {object} metadata General use configuration object
  */
 class Command {
-    bundle: string
-    type: typeof CommandType
-    name: string
-    func: (args: string, player: Player, arg0: string) => any
-    aliases?: string[]
-    usage: string
-    requiredRole: typeof PlayerRoles
-    file: string
-    metadata: Record<string, any>
+    bundle: string;
+    type: typeof CommandType;
+    name: string;
+    func: (args: string, player: Player, arg0: string) => any;
+    aliases?: string[];
+    usage: string;
+    requiredRole: typeof PlayerRoles;
+    file: string;
+    metadata: Record<string, any>;
 
     /**
      * @param {string} bundle Bundle the command came from
@@ -50,15 +50,15 @@ class Command {
         def: CommandDefinition,
         file: string,
     ) {
-        this.bundle = bundle
-        this.type = def.type || CommandType.COMMAND
-        this.name = name
-        this.func = def.command
-        this.aliases = def.aliases
-        this.usage = def.usage || this.name
-        this.requiredRole = def.requiredRole || PlayerRoles.PLAYER
-        this.file = file
-        this.metadata = def.metadata || {}
+        this.bundle = bundle;
+        this.type = def.type || CommandType.COMMAND;
+        this.name = name;
+        this.func = def.command;
+        this.aliases = def.aliases;
+        this.usage = def.usage || this.name;
+        this.requiredRole = def.requiredRole || PlayerRoles.PLAYER;
+        this.file = file;
+        this.metadata = def.metadata || {};
     }
 
     /**
@@ -68,8 +68,8 @@ class Command {
      * @return {*}
      */
     execute(args: string, player: Player, arg0: string): any {
-        return this.func(args, player, arg0)
+        return this.func(args, player, arg0);
     }
 }
 
-export default Command
+export default Command;

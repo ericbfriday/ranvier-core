@@ -5,14 +5,14 @@
         "paths": {
             "@/*": ["src/*"]
         },
+        "resolveJsonModule": true,
         "allowJs": true,
         "checkJs": true,
-        "skipDefaultLibCheck": true,
         "strict": false,
         "declaration": true,
         "outDir": "dist",
         "sourceMap": true,
-        "resolveJsonModule": true
+        "skipDefaultLibCheck": true
     },
     "include": ["index.ts", "src/**/*"],
     "exclude": ["node_modules", "dist", "src/js/**/*"]

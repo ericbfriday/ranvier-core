@@ -1,4 +1,4 @@
-import type { Channel } from './Channel'
+import type { Channel } from './Channel';
 
 /**
  * Contains registered channels
@@ -6,10 +6,10 @@ import type { Channel } from './Channel'
  * TODO: should probably refactor this to just extend `Map`
  */
 class ChannelManager {
-    channels: Map<string, Channel>
+    channels: Map<string, Channel>;
 
     constructor() {
-        this.channels = new Map()
+        this.channels = new Map();
     }
 
     /**
@@ -17,16 +17,16 @@ class ChannelManager {
      * @return {Channel}
      */
     get(name: string): Channel | undefined {
-        return this.channels.get(name)
+        return this.channels.get(name);
     }
 
     /**
      * @param {Channel} channel
      */
     add(channel: Channel): void {
-        this.channels.set(channel.name, channel)
+        this.channels.set(channel.name, channel);
         if (channel.aliases) {
-            channel.aliases.forEach(alias => this.channels.set(alias, channel))
+            channel.aliases.forEach(alias => this.channels.set(alias, channel));
         }
     }
 
@@ -34,7 +34,7 @@ class ChannelManager {
      * @param {Channel} channel
      */
     remove(channel: Channel): void {
-        this.channels.delete(channel.name)
+        this.channels.delete(channel.name);
     }
 
     /**
@@ -44,11 +44,11 @@ class ChannelManager {
     find(search: string): Channel | undefined {
         for (const [name, channel] of this.channels.entries()) {
             if (name.indexOf(search) === 0) {
-                return channel
+                return channel;
             }
         }
-        return undefined
+        return undefined;
     }
 }
 
-export default ChannelManager
+export default ChannelManager;

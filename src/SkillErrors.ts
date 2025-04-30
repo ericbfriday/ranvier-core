@@ -1,4 +1,4 @@
-import type Effect from './Effect'
+import type Effect from './Effect';
 
 /**
  * Error used when trying to execute a skill and the player doesn't have enough resources
@@ -6,8 +6,8 @@ import type Effect from './Effect'
  */
 export class NotEnoughResourcesError extends Error {
     constructor(message?: string) {
-        super(message)
-        this.name = 'NotEnoughResourcesError'
+        super(message);
+        this.name = 'NotEnoughResourcesError';
     }
 }
 
@@ -17,8 +17,8 @@ export class NotEnoughResourcesError extends Error {
  */
 export class PassiveError extends Error {
     constructor(message?: string) {
-        super(message)
-        this.name = 'PassiveError'
+        super(message);
+        this.name = 'PassiveError';
     }
 }
 
@@ -28,14 +28,14 @@ export class PassiveError extends Error {
  * @extends Error
  */
 export class CooldownError extends Error {
-    effect: Effect
+    effect: Effect;
 
     /**
      * @param {Effect} effect Cooldown effect that triggered this error
      */
     constructor(effect: Effect) {
-        super()
-        this.name = 'CooldownError'
-        this.effect = effect
+        super();
+        this.name = 'CooldownError';
+        this.effect = effect;
     }
 }

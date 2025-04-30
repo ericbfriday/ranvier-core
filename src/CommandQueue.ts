@@ -8,14 +8,14 @@ interface CommandExecutable {
  * Keeps track of the queue off commands to execute for a player
  */
 class CommandQueue {
-    commands: Array<CommandExecutable & { lag: number }>
-    lag: number
-    lastRun: number
+    commands: Array<CommandExecutable & { lag: number }>;
+    lag: number;
+    lastRun: number;
 
     constructor() {
-        this.commands = []
-        this.lag = 0
-        this.lastRun = 0
+        this.commands = [];
+        this.lag = 0;
+        this.lastRun = 0;
     }
 
     /**
@@ -25,7 +25,7 @@ class CommandQueue {
      * @param {number} amount milliseconds of lag
      */
     addLag(amount: number): void {
-        this.lag += Math.max(0, amount)
+        this.lag += Math.max(0, amount);
     }
 
     /**
@@ -34,12 +34,12 @@ class CommandQueue {
      */
     enqueue(executable: CommandExecutable, lag: number): number {
         const newIndex
-      = this.commands.push(Object.assign({}, executable, { lag })) - 1
-        return newIndex
+      = this.commands.push(Object.assign({}, executable, { lag })) - 1;
+        return newIndex;
     }
 
     get hasPending(): boolean {
-        return this.commands.length > 0
+        return this.commands.length > 0;
     }
 
     /**
@@ -48,22 +48,22 @@ class CommandQueue {
      */
     execute(): boolean {
         if (!this.commands.length || this.msTilNextRun > 0) {
-            return false
+            return false;
         }
 
-        const command = this.commands.shift()!
+        const command = this.commands.shift()!;
 
-        this.lastRun = Date.now()
-        this.lag = command.lag
-        command.execute()
-        return true
+        this.lastRun = Date.now();
+        this.lag = command.lag;
+        command.execute();
+        return true;
     }
 
     /**
      * @type {Array<object>}
      */
     get queue(): Array<CommandExecutable & { lag: number }> {
-        return this.commands
+        return this.commands;
     }
 
     /**
@@ -73,7 +73,7 @@ class CommandQueue {
      * the reset() method.
      */
     flush(): void {
-        this.commands = []
+        this.commands = [];
     }
 
     /**
@@ -82,9 +82,9 @@ class CommandQueue {
      * clear commands without altering lag use flush()
      */
     reset(): void {
-        this.flush()
-        this.lastRun = 0
-        this.lag = 0
+        this.flush();
+        this.lastRun = 0;
+        this.lag = 0;
     }
 
     /**
@@ -92,7 +92,7 @@ class CommandQueue {
      * @type {number}
      */
     get lagRemaining(): number {
-        return this.msTilNextRun / 1000
+        return this.msTilNextRun / 1000;
     }
 
     /**
@@ -100,7 +100,7 @@ class CommandQueue {
      * @type {number}
      */
     get msTilNextRun(): number {
-        return Math.max(0, this.lastRun + this.lag - Date.now())
+        return Math.max(0, this.lastRun + this.lag - Date.now());
     }
 
     /**
@@ -109,7 +109,7 @@ class CommandQueue {
      * @return {number}
      */
     getTimeTilRun(commandIndex: number): number {
-        return this.getMsTilRun(commandIndex) / 1000
+        return this.getMsTilRun(commandIndex) / 1000;
     }
 
     /**
@@ -119,20 +119,20 @@ class CommandQueue {
      */
     getMsTilRun(commandIndex: number): number {
         if (!this.commands[commandIndex]) {
-            throw new RangeError('Invalid command index')
+            throw new RangeError('Invalid command index');
         }
 
-        let lagTotal = this.msTilNextRun
+        let lagTotal = this.msTilNextRun;
         for (let i = 0; i < this.commands.length; i++) {
             if (i === commandIndex) {
-                return lagTotal
+                return lagTotal;
             }
 
-            lagTotal += this.commands[i].lag
+            lagTotal += this.commands[i].lag;
         }
 
-        return lagTotal
+        return lagTotal;
     }
 }
 
-export default CommandQueue
+export default CommandQueue;

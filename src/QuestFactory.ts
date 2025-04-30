@@ -1,7 +1,7 @@
-import type GameState  from './GameState'
-import type Player from './Player'
-import Logger from './Logger'
-import Quest from './Quest'
+import type GameState from './GameState';
+import type Player from './Player';
+import Logger from './Logger';
+import Quest from './Quest';
 
 interface QuestConfig {
     entityReference?: string
@@ -33,20 +33,20 @@ interface QuestDefinition {
  * @property {Map} quests
  */
 class QuestFactory {
-    quests: Map<string, QuestDefinition>
+    quests: Map<string, QuestDefinition>;
 
     constructor() {
-        this.quests = new Map()
+        this.quests = new Map();
     }
 
     add(areaName: string, id: string | number, config: QuestConfig): void {
-        const entityRef = this.makeQuestKey(areaName, id)
-        config.entityReference = entityRef
-        this.quests.set(entityRef, { id, area: areaName, config })
+        const entityRef = this.makeQuestKey(areaName, id);
+        config.entityReference = entityRef;
+        this.quests.set(entityRef, { id, area: areaName, config });
     }
 
     set(qid: string, val: QuestDefinition): void {
-        this.quests.set(qid, val)
+        this.quests.set(qid, val);
     }
 
     /**
@@ -55,7 +55,7 @@ class QuestFactory {
      * @return {object}
      */
     get(qid: string): QuestDefinition | undefined {
-        return this.quests.get(qid)
+        return this.quests.get(qid);
     }
 
     /**
@@ -65,28 +65,28 @@ class QuestFactory {
      * @return {boolean}
      */
     canStart(player: Player, questRef: string): boolean {
-        const quest = this.get(questRef)
+        const quest = this.get(questRef);
         if (!quest) {
-            throw new Error(`Invalid quest id [${questRef}]`)
+            throw new Error(`Invalid quest id [${questRef}]`);
         }
 
-        const tracker = player.questTracker
+        const tracker = player.questTracker;
 
         if (tracker.completedQuests.has(questRef) && !quest.config.repeatable) {
-            return false
+            return false;
         }
 
         if (tracker.isActive(questRef)) {
-            return false
+            return false;
         }
 
         if (!quest.config.requires) {
-            return true
+            return true;
         }
 
         return quest.config.requires.every(requiresRef =>
             tracker.isComplete(requiresRef),
-        )
+        );
     }
 
     /**
@@ -102,63 +102,63 @@ class QuestFactory {
         player: Player,
     state: any[] = [],
     ): Quest {
-        const quest = this.quests.get(qid)
+        const quest = this.quests.get(qid);
         if (!quest) {
-            throw new Error(`Trying to create invalid quest id [${qid}]`)
+            throw new Error(`Trying to create invalid quest id [${qid}]`);
         }
 
-        const instance = new Quest(GameState, quest.id, quest.config, player)
-        instance.state = state
+        const instance = new Quest(GameState, quest.id, quest.config, player);
+        instance.state = state;
         for (const goal of quest.config.goals) {
-            const goalType = GameState.QuestGoalManager.get(goal.type)
-            instance.addGoal(new goalType(instance, goal.config, player))
+            const goalType = GameState.QuestGoalManager.get(goal.type);
+            instance.addGoal(new goalType(instance, goal.config, player));
         }
 
         instance.on('progress', (progress) => {
-            player.emit('questProgress', instance, progress)
-            player.save()
-        })
+            player.emit('questProgress', instance, progress);
+            player.save();
+        });
 
         instance.on('start', () => {
-            player.emit('questStart', instance)
-            instance.emit('progress', instance.getProgress())
-        })
+            player.emit('questStart', instance);
+            instance.emit('progress', instance.getProgress());
+        });
 
         instance.on('turn-in-ready', () => {
-            player.emit('questTurnInReady', instance)
-        })
+            player.emit('questTurnInReady', instance);
+        });
 
         instance.on('complete', () => {
-            player.emit('questComplete', instance)
-            player.questTracker.complete(instance.entityReference)
+            player.emit('questComplete', instance);
+            player.questTracker.complete(instance.entityReference);
 
             if (!quest.config.rewards) {
-                player.save()
-                return
+                player.save();
+                return;
             }
 
             for (const reward of quest.config.rewards) {
                 try {
-                    const rewardClass = GameState.QuestRewardManager.get(reward.type)
+                    const rewardClass = GameState.QuestRewardManager.get(reward.type);
 
                     if (!rewardClass) {
                         throw new Error(
                             `Quest [${qid}] has invalid reward type ${reward.type}`,
-                        )
+                        );
                     }
 
-                    rewardClass.reward(GameState, instance, reward.config, player)
-                    player.emit('questReward', reward)
+                    rewardClass.reward(GameState, instance, reward.config, player);
+                    player.emit('questReward', reward);
                 }
                 catch (e) {
-                    Logger.error(e.message)
+                    Logger.error(e.message);
                 }
             }
 
-            player.save()
-        })
+            player.save();
+        });
 
-        return instance
+        return instance;
     }
 
     /**
@@ -167,8 +167,8 @@ class QuestFactory {
      * @return {string}
      */
     makeQuestKey(area: string, id: string | number): string {
-        return `${area}:${id}`
+        return `${area}:${id}`;
     }
 }
 
-export default QuestFactory
+export default QuestFactory;

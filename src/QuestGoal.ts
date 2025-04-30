@@ -1,6 +1,6 @@
-import type { Player } from './Player'
-import type { Quest } from './Quest'
-import { EventEmitter } from 'node:events'
+import type { Player } from './Player';
+import type { Quest } from './Quest';
+import { EventEmitter } from 'node:events';
 
 interface QuestProgress {
     percent: number
@@ -14,10 +14,10 @@ interface QuestProgress {
  * @extends EventEmitter
  */
 abstract class QuestGoal extends EventEmitter {
-    config: Record<string, any>
-    quest: Quest
-    state: Record<string, any>
-    player: Player
+    config: Record<string, any>;
+    quest: Quest;
+    state: Record<string, any>;
+    player: Player;
 
     /**
      * @param {Quest} quest Quest this goal is for
@@ -25,17 +25,17 @@ abstract class QuestGoal extends EventEmitter {
      * @param {Player} player
      */
     constructor(quest: Quest, config: Record<string, any>, player: Player) {
-        super()
+        super();
 
         this.config = Object.assign(
             {
                 // no defaults currently
             },
             config,
-        )
-        this.quest = quest
-        this.state = {}
-        this.player = player
+        );
+        this.quest = quest;
+        this.state = {};
+        this.player = player;
     }
 
     /**
@@ -46,7 +46,7 @@ abstract class QuestGoal extends EventEmitter {
             percent: 0,
             display:
         '[WARNING] Quest does not have progress display configured. Please tell an admin',
-        }
+        };
     }
 
     /**
@@ -63,12 +63,12 @@ abstract class QuestGoal extends EventEmitter {
             state: this.state,
             progress: this.getProgress(),
             config: this.config,
-        }
+        };
     }
 
     hydrate(state: Record<string, any>): void {
-        this.state = state
+        this.state = state;
     }
 }
 
-export default QuestGoal
+export default QuestGoal;

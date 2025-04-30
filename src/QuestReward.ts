@@ -1,6 +1,6 @@
-import type  GameState  from './GameState'
-import type  Player  from './Player'
-import type  Quest  from './Quest'
+import type GameState from './GameState.ts';
+import type Player from './Player.ts';
+import type Quest from './Quest.ts';
 
 /**
  * Representation of a quest reward
@@ -21,7 +21,7 @@ abstract class QuestReward {
         config: Record<string, any>,
         player: Player,
     ): void {
-        throw new Error('Quest reward not implemented')
+        throw new Error('Quest reward not implemented');
     }
 
     /**
@@ -34,8 +34,8 @@ abstract class QuestReward {
         config: Record<string, any>,
         player: Player,
     ): string {
-        throw new Error('Quest reward display not implemented')
+        throw new Error('Quest reward display not implemented');
     }
 }
 
-export default QuestReward
+export default QuestReward;

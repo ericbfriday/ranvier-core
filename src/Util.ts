@@ -6,8 +6,8 @@ const Util = {
      * @return {boolean}
      */
     isIterable(obj: any): boolean {
-        return obj && typeof obj[Symbol.iterator] === 'function'
+        return obj && typeof obj[Symbol.iterator] === 'function';
     },
-}
+};
 
-export default Util
+export default Util;

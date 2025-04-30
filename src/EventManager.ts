@@ -1,7 +1,7 @@
-import type { EventEmitter } from 'node:events'
-import { isIterable } from './Util'
+import type { EventEmitter } from 'node:events';
+import { isIterable } from './Util';
 
-type Listener = (...args: any[]) => void
+type Listener = (...args: any[]) => void;
 
 /**
  * Generic array hash table to store listener definitions
@@ -9,10 +9,10 @@ type Listener = (...args: any[]) => void
  * `Set` of listeners to be attached for that event
  */
 export default class EventManager {
-    private events: Map<string, Set<Listener>>
+    private events: Map<string, Set<Listener>>;
 
     constructor() {
-        this.events = new Map()
+        this.events = new Map();
     }
 
     /**
@@ -20,7 +20,7 @@ export default class EventManager {
      * @param name - Event name
      */
     get(name: string): Set<Listener> | undefined {
-        return this.events.get(name)
+        return this.events.get(name);
     }
 
     /**
@@ -30,9 +30,9 @@ export default class EventManager {
      */
     add(eventName: string, listener: Listener): void {
         if (!this.events.has(eventName)) {
-            this.events.set(eventName, new Set())
+            this.events.set(eventName, new Set());
         }
-        this.events.get(eventName)!.add(listener)
+        this.events.get(eventName)!.add(listener);
     }
 
     /**
@@ -44,10 +44,10 @@ export default class EventManager {
         for (const [event, listeners] of this.events) {
             for (const listener of listeners) {
                 if (config) {
-                    emitter.on(event, listener.bind(emitter, config))
+                    emitter.on(event, listener.bind(emitter, config));
                 }
                 else {
-                    emitter.on(event, listener.bind(emitter))
+                    emitter.on(event, listener.bind(emitter));
                 }
             }
         }
@@ -66,17 +66,17 @@ export default class EventManager {
      */
     detach(emitter: EventEmitter, events?: string | Iterable<string>): void {
         if (typeof events === 'string') {
-            events = [events]
+            events = [events];
         }
         else if (!events) {
-            events = this.events.keys()
+            events = this.events.keys();
         }
         else if (!isIterable(events)) {
-            throw new TypeError('events list passed to detach() is not iterable')
+            throw new TypeError('events list passed to detach() is not iterable');
         }
 
         for (const event of events) {
-            emitter.removeAllListeners(event)
+            emitter.removeAllListeners(event);
         }
     }
 }

@@ -1,14 +1,14 @@
-import EventManager from './EventManager'
+import EventManager from './EventManager';
 
 /**
  * BehaviorManager keeps a map of BehaviorName:EventManager which is used
  * during Item and NPC hydrate() methods to attach events
  */
 export default class BehaviorManager {
-    behaviors: Map<string, EventManager>
+    behaviors: Map<string, EventManager>;
 
     constructor() {
-        this.behaviors = new Map()
+        this.behaviors = new Map();
     }
 
     /**
@@ -17,7 +17,7 @@ export default class BehaviorManager {
      * @return {EventManager}
      */
     get(name: string): EventManager | undefined {
-        return this.behaviors.get(name)
+        return this.behaviors.get(name);
     }
 
     /**
@@ -26,7 +26,7 @@ export default class BehaviorManager {
      * @return {boolean}
      */
     has(name: string): boolean {
-        return this.behaviors.has(name)
+        return this.behaviors.has(name);
     }
 
     /**
@@ -36,12 +36,12 @@ export default class BehaviorManager {
      */
     addListener(behaviorName: string, event: string, listener: () => any): void {
         if (!this.behaviors.has(behaviorName)) {
-            this.behaviors.set(behaviorName, new EventManager())
+            this.behaviors.set(behaviorName, new EventManager());
         }
 
-        const eventManager = this.behaviors.get(behaviorName)
+        const eventManager = this.behaviors.get(behaviorName);
         if (eventManager) {
-            eventManager.add(event, listener)
+            eventManager.add(event, listener);
         }
     }
 }

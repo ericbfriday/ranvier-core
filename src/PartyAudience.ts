@@ -1,5 +1,5 @@
-import type { Player } from './Player'
-import ChannelAudience = require('./ChannelAudience')
+import type { Player } from './Player';
+import ChannelAudience = require('./ChannelAudience');
 
 /**
  * Audience class representing other players in the same group as the sender
@@ -9,13 +9,13 @@ import ChannelAudience = require('./ChannelAudience')
 class PartyAudience extends ChannelAudience {
     getBroadcastTargets(): Player[] {
         if (!this.sender.party) {
-            return []
+            return [];
         }
 
         return this.sender.party
             .getBroadcastTargets()
-            .filter(player => player !== this.sender)
+            .filter(player => player !== this.sender);
     }
 }
 
-export default PartyAudience
+export default PartyAudience;

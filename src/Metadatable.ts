@@ -1,4 +1,4 @@
-import type { EventEmitter } from 'node:events'
+import type { EventEmitter } from 'node:events';
 
 interface MetadatableEntity extends EventEmitter {
     metadata: Record<string, any>
@@ -12,7 +12,7 @@ interface MetadatableEntity extends EventEmitter {
  */
 function Metadatable<T extends new (...args: any[]) => EventEmitter>(parentClass: T) {
     return class extends parentClass implements MetadatableEntity {
-        metadata!: Record<string, any>
+        metadata!: Record<string, any>;
 
         /**
          * Set a metadata value.
@@ -25,23 +25,23 @@ function Metadatable<T extends new (...args: any[]) => EventEmitter>(parentClass
          */
         setMeta(key: string, value: any): void {
             if (!this.metadata) {
-                throw new Error('Class does not have metadata property')
+                throw new Error('Class does not have metadata property');
             }
 
-            const parts = key.split('.')
-            const property = parts.pop() as string
-            let base = this.metadata
+            const parts = key.split('.');
+            const property = parts.pop() as string;
+            let base = this.metadata;
 
             while (parts.length) {
-                const part = parts.shift() as string
+                const part = parts.shift() as string;
                 if (!(part in base)) {
-                    throw new RangeError(`Metadata path invalid: ${key}`)
+                    throw new RangeError(`Metadata path invalid: ${key}`);
                 }
-                base = base[part]
+                base = base[part];
             }
 
-            const oldValue = base[property]
-            base[property] = value
+            const oldValue = base[property];
+            base[property] = value;
 
             /**
              * @event Metadatable#metadataUpdate
@@ -49,7 +49,7 @@ function Metadatable<T extends new (...args: any[]) => EventEmitter>(parentClass
              * @param {*} newValue
              * @param {*} oldValue
              */
-            this.emit('metadataUpdated', key, value, oldValue)
+            this.emit('metadataUpdated', key, value, oldValue);
         }
 
         /**
@@ -61,13 +61,13 @@ function Metadatable<T extends new (...args: any[]) => EventEmitter>(parentClass
          */
         getMeta(key: string): any {
             if (!this.metadata) {
-                throw new Error('Class does not have metadata property')
+                throw new Error('Class does not have metadata property');
             }
 
-            const base = this.metadata
-            return key.split('.').reduce((obj, index) => obj && obj[index], base)
+            const base = this.metadata;
+            return key.split('.').reduce((obj, index) => obj && obj[index], base);
         }
-    }
+    };
 }
 
-export default Metadatable
+export default Metadatable;

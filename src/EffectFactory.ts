@@ -1,6 +1,6 @@
-import type { GameState } from './GameState'
-import Effect from './Effect'
-import EventManager from './EventManager'
+import type { GameState } from './GameState';
+import Effect from './Effect';
+import EventManager from './EventManager';
 
 /** @typedef {{config: Object<string,*>, listeners: Object<String,function (...*)>}} */
 interface EffectConfig {
@@ -21,10 +21,10 @@ interface EffectEntry {
  * @property {Map} effects
  */
 class EffectFactory {
-    effects: Map<string, EffectEntry>
+    effects: Map<string, EffectEntry>;
 
     constructor() {
-        this.effects = new Map()
+        this.effects = new Map();
     }
 
     /**
@@ -34,26 +34,26 @@ class EffectFactory {
      */
     add(id: string, config: EffectConfig, state: GameState): void {
         if (this.effects.has(id)) {
-            return
+            return;
         }
 
-        const definition = Object.assign({}, config)
-        delete definition.listeners
-        let listeners = config.listeners || {}
+        const definition = Object.assign({}, config);
+        delete definition.listeners;
+        let listeners = config.listeners || {};
         if (typeof listeners === 'function') {
-            listeners = listeners(state)
+            listeners = listeners(state);
         }
 
-        const eventManager = new EventManager()
+        const eventManager = new EventManager();
         for (const event in listeners) {
-            eventManager.add(event, listeners[event])
+            eventManager.add(event, listeners[event]);
         }
 
-        this.effects.set(id, { definition, eventManager })
+        this.effects.set(id, { definition, eventManager });
     }
 
     has(id: string): boolean {
-        return this.effects.has(id)
+        return this.effects.has(id);
     }
 
     /**
@@ -62,7 +62,7 @@ class EffectFactory {
      * @return {object}
      */
     get(id: string): EffectEntry | undefined {
-        return this.effects.get(id)
+        return this.effects.get(id);
     }
 
     /**
@@ -76,18 +76,18 @@ class EffectFactory {
     config: Record<string, any> = {},
     state: Record<string, any> = {},
     ): Effect {
-        const entry = this.effects.get(id)
+        const entry = this.effects.get(id);
         if (!entry || !entry.definition) {
-            throw new Error(`No valid entry definition found for effect ${id}.`)
+            throw new Error(`No valid entry definition found for effect ${id}.`);
         }
-        const def = Object.assign({}, entry.definition)
-        def.config = Object.assign(def.config || {}, config)
-        def.state = Object.assign(def.state || {}, state)
-        const effect = new Effect(id, def)
-        entry.eventManager.attach(effect)
+        const def = Object.assign({}, entry.definition);
+        def.config = Object.assign(def.config || {}, config);
+        def.state = Object.assign(def.state || {}, state);
+        const effect = new Effect(id, def);
+        entry.eventManager.attach(effect);
 
-        return effect
+        return effect;
     }
 }
 
-export default EffectFactory
+export default EffectFactory;

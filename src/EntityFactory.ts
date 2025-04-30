@@ -1,17 +1,17 @@
-import type Area from './Area'
-import type GameEntity from './GameEntity'
-import BehaviorManager from './BehaviorManager'
+import type Area from './Area';
+import type GameEntity from './GameEntity';
+import BehaviorManager from './BehaviorManager';
 
 /**
  * Stores definitions of entities to allow for easy creation/cloning
  */
 export default class EntityFactory {
-    private entities: Map<string, any>
-    public scripts: BehaviorManager
+    private entities: Map<string, any>;
+    public scripts: BehaviorManager;
 
     constructor() {
-        this.entities = new Map()
-        this.scripts = new BehaviorManager()
+        this.entities = new Map();
+        this.scripts = new BehaviorManager();
     }
 
     /**
@@ -20,7 +20,7 @@ export default class EntityFactory {
      * @param id - Entity ID
      */
     createEntityRef(area: string, id: string | number): string {
-        return `${area}:${id}`
+        return `${area}:${id}`;
     }
 
     /**
@@ -28,7 +28,7 @@ export default class EntityFactory {
      * @param entityRef - Entity reference
      */
     getDefinition(entityRef: string): any {
-        return this.entities.get(entityRef)
+        return this.entities.get(entityRef);
     }
 
     /**
@@ -37,8 +37,8 @@ export default class EntityFactory {
      * @param def - Entity definition
      */
     setDefinition(entityRef: string, def: any): void {
-        def.entityReference = entityRef
-        this.entities.set(entityRef, def)
+        def.entityReference = entityRef;
+        this.entities.set(entityRef, def);
     }
 
     /**
@@ -53,7 +53,7 @@ export default class EntityFactory {
         event: string,
         listener: Function,
     ): void {
-        this.scripts.addListener(entityRef, event, listener)
+        this.scripts.addListener(entityRef, event, listener);
     }
 
     /**
@@ -70,24 +70,24 @@ export default class EntityFactory {
         entityRef: string,
         Type: new (area: Area, definition: any) => T,
     ): T {
-        const definition = this.getDefinition(entityRef)
+        const definition = this.getDefinition(entityRef);
         if (!definition) {
-            throw new Error(`No Entity definition found for ${entityRef}`)
+            throw new Error(`No Entity definition found for ${entityRef}`);
         }
-        const entity = new Type(area, definition)
+        const entity = new Type(area, definition);
 
         if (this.scripts.has(entityRef)) {
-            this.scripts.get(entityRef).attach(entity)
+            this.scripts.get(entityRef).attach(entity);
         }
 
-        return entity
+        return entity;
     }
 
     /**
      * Create an entity
      */
     create<T>(...args: any[]): T {
-        throw new Error('No type specified for Entity.create')
+        throw new Error('No type specified for Entity.create');
     }
 
     /**
@@ -95,6 +95,6 @@ export default class EntityFactory {
      * @param entity - Entity to clone
      */
     clone<T extends GameEntity>(entity: T): T {
-        return this.create(entity.area, entity.entityReference) as T
+        return this.create(entity.area, entity.entityReference) as T;
     }
 }

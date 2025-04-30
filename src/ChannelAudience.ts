@@ -1,5 +1,5 @@
-import type GameState from './GameState'
-import type Player from './Player'
+import type GameState from './GameState';
+import type Player from './Player';
 
 export interface AudienceOptions {
     state: GameState
@@ -18,9 +18,9 @@ export interface AudienceOptions {
  * Base channel audience class
  */
 export default class ChannelAudience {
-    state: GameState | null = null
-    sender: Player | null = null
-    message: string = ''
+    state: GameState | null = null;
+    sender: Player | null = null;
+    message: string = '';
 
     /**
      * Configure the current state for the audience. Called by {@link Channel#send}
@@ -30,9 +30,9 @@ export default class ChannelAudience {
      * @param {string} options.message
      */
     configure(options: AudienceOptions): void {
-        this.state = options.state
-        this.sender = options.sender
-        this.message = options.message
+        this.state = options.state;
+        this.sender = options.sender;
+        this.message = options.message;
     }
 
     /**
@@ -41,9 +41,9 @@ export default class ChannelAudience {
      */
     getBroadcastTargets(): Player[] {
         if (!this.state) {
-            return []
+            return [];
         }
-        return this.state.PlayerManager.getPlayersAsArray()
+        return this.state.PlayerManager.getPlayersAsArray();
     }
 
     /**
@@ -52,6 +52,6 @@ export default class ChannelAudience {
      * @return {string}
      */
     alterMessage(message: string): string {
-        return message
+        return message;
     }
 }

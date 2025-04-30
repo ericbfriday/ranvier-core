@@ -1,4 +1,4 @@
-import { Attribute } from './Attribute'
+import { Attribute } from './Attribute';
 
 /**
  * Container for a list of attributes for a {@link Character}
@@ -11,17 +11,17 @@ class Attributes extends Map<string, Attribute> {
      */
     add(attribute: Attribute): void {
         if (!(attribute instanceof Attribute)) {
-            throw new TypeError(`${attribute} not an Attribute`)
+            throw new TypeError(`${attribute} not an Attribute`);
         }
 
-        this.set(attribute.name, attribute)
+        this.set(attribute.name, attribute);
     }
 
     /**
      * @return {IterableIterator} see {@link Map#entries}
      */
     getAttributes(): IterableIterator<[string, Attribute]> {
-        return this.entries()
+        return this.entries();
     }
 
     /**
@@ -29,7 +29,7 @@ class Attributes extends Map<string, Attribute> {
      */
     clearDeltas(): void {
         for (const [_, attr] of this) {
-            attr.setDelta(0)
+            attr.setDelta(0);
         }
     }
 
@@ -38,13 +38,13 @@ class Attributes extends Map<string, Attribute> {
      * @return {Record<string, any>}
      */
     serialize(): Record<string, any> {
-        const data: Record<string, any> = {}
+        const data: Record<string, any> = {};
         for (const [name, attribute] of this.entries()) {
-            data[name] = attribute.serialize()
+            data[name] = attribute.serialize();
         }
 
-        return data
+        return data;
     }
 }
 
-export default Attributes
+export default Attributes;

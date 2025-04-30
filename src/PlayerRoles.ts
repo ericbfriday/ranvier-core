@@ -8,4 +8,4 @@ enum PlayerRoles {
     ADMIN = 2,
 }
 
-export default PlayerRoles
+export default PlayerRoles;

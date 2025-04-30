@@ -1,4 +1,4 @@
-import type Command from './Command'
+import type Command from './Command';
 
 interface CommandSearchResult {
     command: Command
@@ -9,10 +9,10 @@ interface CommandSearchResult {
  * Contains all active in game commands
  */
 class CommandManager {
-    commands: Map<string, Command>
+    commands: Map<string, Command>;
 
     constructor() {
-        this.commands = new Map()
+        this.commands = new Map();
     }
 
     /**
@@ -21,7 +21,7 @@ class CommandManager {
      * @return {Command}
      */
     get(command: string): Command | undefined {
-        return this.commands.get(command)
+        return this.commands.get(command);
     }
 
     /**
@@ -29,9 +29,9 @@ class CommandManager {
      * @param {Command}
      */
     add(command: Command): void {
-        this.commands.set(command.name, command)
+        this.commands.set(command.name, command);
         if (command.aliases) {
-            command.aliases.forEach(alias => this.commands.set(alias, command))
+            command.aliases.forEach(alias => this.commands.set(alias, command));
         }
     }
 
@@ -39,7 +39,7 @@ class CommandManager {
      * @param {Command}
      */
     remove(command: Command): void {
-        this.commands.delete(command.name)
+        this.commands.delete(command.name);
     }
 
     /**
@@ -54,11 +54,11 @@ class CommandManager {
     ): Command | CommandSearchResult | undefined {
         for (const [name, command] of this.commands.entries()) {
             if (name.indexOf(search) === 0) {
-                return returnAlias ? { command, alias: name } : command
+                return returnAlias ? { command, alias: name } : command;
             }
         }
-        return undefined
+        return undefined;
     }
 }
 
-export default CommandManager
+export default CommandManager;

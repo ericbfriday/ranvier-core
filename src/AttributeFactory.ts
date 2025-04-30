@@ -1,4 +1,4 @@
-import { Attribute, AttributeFormula } from './Attribute'
+import { Attribute, AttributeFormula } from './Attribute';
 
 interface AttributeDefinition {
     name: string
@@ -11,10 +11,10 @@ interface AttributeDefinition {
  * @property {Map} attributes
  */
 class AttributeFactory {
-    attributes: Map<string, AttributeDefinition>
+    attributes: Map<string, AttributeDefinition>;
 
     constructor() {
-        this.attributes = new Map()
+        this.attributes = new Map();
     }
 
     /**
@@ -30,7 +30,7 @@ class AttributeFactory {
     metadata: Record<string, any> = {},
     ): void {
         if (formula && !(formula instanceof AttributeFormula)) {
-            throw new TypeError('Formula not instance of AttributeFormula')
+            throw new TypeError('Formula not instance of AttributeFormula');
         }
 
         this.attributes.set(name, {
@@ -38,14 +38,14 @@ class AttributeFactory {
             base,
             formula,
             metadata,
-        })
+        });
     }
 
     /**
      * @see Map#has
      */
     has(name: string): boolean {
-        return this.attributes.has(name)
+        return this.attributes.has(name);
     }
 
     /**
@@ -54,7 +54,7 @@ class AttributeFactory {
      * @return {object}
      */
     get(name: string): AttributeDefinition | undefined {
-        return this.attributes.get(name)
+        return this.attributes.get(name);
     }
 
     /**
@@ -65,12 +65,12 @@ class AttributeFactory {
      */
     create(name: string, base: number | null = null, delta = 0): Attribute {
         if (!this.has(name)) {
-            throw new RangeError(`No attribute definition found for [${name}]`)
+            throw new RangeError(`No attribute definition found for [${name}]`);
         }
 
-        const def = this.attributes.get(name)
+        const def = this.attributes.get(name);
         if (!def) {
-            throw new Error(`Attribute definition for [${name}] is undefined`)
+            throw new Error(`Attribute definition for [${name}] is undefined`);
         }
 
         return new Attribute(
@@ -79,7 +79,7 @@ class AttributeFactory {
             delta,
             def.formula,
             def.metadata,
-        )
+        );
     }
 
     /**
@@ -87,23 +87,23 @@ class AttributeFactory {
      * @throws Error
      */
     validateAttributes(): void {
-        const references: Record<string, string[]> = {}
+        const references: Record<string, string[]> = {};
 
         for (const [attrName, def] of this.attributes.entries()) {
             if (!def.formula) {
-                continue
+                continue;
             }
 
-            references[attrName] = def.formula.requires
+            references[attrName] = def.formula.requires;
         }
 
         for (const attrName in references) {
-            const check = this._checkReferences(attrName, references)
+            const check = this._checkReferences(attrName, references);
             if (Array.isArray(check)) {
-                const path = check.concat(attrName).join(' -> ')
+                const path = check.concat(attrName).join(' -> ');
                 throw new Error(
                     `Attribute formula for [${attrName}] has circular dependency [${path}]`,
-                )
+                );
             }
         }
     }
@@ -121,13 +121,13 @@ class AttributeFactory {
     stack: string[] = [],
     ): boolean | string[] {
         if (stack.includes(attr)) {
-            return stack
+            return stack;
         }
 
-        const requires = references[attr]
+        const requires = references[attr];
 
         if (!requires || !requires.length) {
-            return true
+            return true;
         }
 
         for (const reqAttr of requires) {
@@ -135,14 +135,14 @@ class AttributeFactory {
                 reqAttr,
                 references,
                 stack.concat(attr),
-            )
+            );
             if (Array.isArray(check)) {
-                return check
+                return check;
             }
         }
 
-        return true
+        return true;
     }
 }
 
-export default AttributeFactory
+export default AttributeFactory;

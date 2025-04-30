@@ -1,5 +1,5 @@
-import type { Socket } from 'node:net'
-import * as sty from 'sty'
+import type { Socket } from 'node:net';
+import * as sty from 'sty';
 
 /**
  * Helper methods for colored output during input-events
@@ -10,7 +10,7 @@ class EventUtil {
      * @param socket - Network socket
      */
     static genWrite(socket: Socket): (string: string) => void {
-        return (string: string) => socket.write(sty.parse(string))
+        return (string: string) => socket.write(sty.parse(string));
     }
 
     /**
@@ -18,8 +18,8 @@ class EventUtil {
      * @param socket - Network socket
      */
     static genSay(socket: Socket): (string: string) => void {
-        return (string: string) => socket.write(sty.parse(`${string}\r\n`))
+        return (string: string) => socket.write(sty.parse(`${string}\r\n`));
     }
 }
 
-export default EventUtil
+export default EventUtil;

@@ -1,5 +1,5 @@
-import Area from './Area'
-import EntityFactory from './EntityFactory'
+import Area from './Area';
+import EntityFactory from './EntityFactory';
 
 interface AreaDefinition {
     bundle: string
@@ -21,29 +21,29 @@ class AreaFactory extends EntityFactory {
      * @return {Area}
      */
     override create(entityRef: string): Area {
-        const definition = this.getDefinition(entityRef) as AreaDefinition
+        const definition = this.getDefinition(entityRef) as AreaDefinition;
         if (!definition) {
-            throw new Error(`No Entity definition found for ${entityRef}`)
+            throw new Error(`No Entity definition found for ${entityRef}`);
         }
 
-        const area = new Area(definition.bundle, entityRef, definition.manifest)
+        const area = new Area(definition.bundle, entityRef, definition.manifest);
 
         if (this.scripts.has(entityRef)) {
-            const script = this.scripts.get(entityRef)
+            const script = this.scripts.get(entityRef);
             if (script) {
-                script.attach(area)
+                script.attach(area);
             }
         }
 
-        return area
+        return area;
     }
 
     /**
      * @see AreaFactory#create
      */
     clone(area: Area): Area {
-        return this.create(area.name)
+        return this.create(area.name);
     }
 }
 
-export default AreaFactory
+export default AreaFactory;

@@ -1,8 +1,8 @@
-import type Character from './Character'
-import type Damage from './Damage'
-import type GameState from './GameState'
-import type Skill from './Skill'
-import EventEmitter from 'node:events'
+import type Character from './Character';
+import type Damage from './Damage';
+import type GameState from './GameState';
+import type Skill from './Skill';
+import EventEmitter from 'node:events';
 
 /** @typedef EffectModifiers {{attributes: !Object<string,function>}} */
 interface EffectModifiers {
@@ -58,22 +58,22 @@ interface SerializedEffect {
  * See the {@link http://ranviermud.com/extending/effects/|Effect guide} for usage.
  */
 class Effect extends EventEmitter {
-    id: string
-    flags: string[]
-    config: EffectConfig
-    startedAt: number
-    paused: number | null
-    modifiers: EffectModifiers
-    state: EffectState
-    target?: Character
-    active?: boolean
-    skill?: Skill
+    id: string;
+    flags: string[];
+    config: EffectConfig;
+    startedAt: number;
+    paused: number | null;
+    modifiers: EffectModifiers;
+    state: EffectState;
+    target?: Character;
+    active?: boolean;
+    skill?: Skill;
 
     constructor(id: string, def: EffectDefinition) {
-        super()
+        super();
 
-        this.id = id
-        this.flags = def.flags || []
+        this.id = id;
+        this.flags = def.flags || [];
         this.config = Object.assign(
             {
                 autoActivate: true,
@@ -89,10 +89,10 @@ class Effect extends EventEmitter {
                 unique: true,
             },
             def.config,
-        )
+        );
 
-        this.startedAt = 0
-        this.paused = 0
+        this.startedAt = 0;
+        this.paused = 0;
         this.modifiers = Object.assign(
             {
                 attributes: {},
@@ -100,24 +100,24 @@ class Effect extends EventEmitter {
                 outgoingDamage: (damage: Damage, current: number) => current,
             },
             def.modifiers,
-        )
+        );
 
         // internal state saved across player load e.g., stacks, amount of damage shield remaining, whatever
         // Default state can be found in config.state
-        this.state = Object.assign({}, def.state)
+        this.state = Object.assign({}, def.state);
 
         if (this.config.maxStacks) {
-            this.state.stacks = 1
+            this.state.stacks = 1;
         }
 
         // If an effect has a tickInterval it should always apply when first activated
         if (this.config.tickInterval && !this.state.tickInterval) {
-            this.state.lastTick = -Infinity
-            this.state.ticks = 0
+            this.state.lastTick = -Infinity;
+            this.state.ticks = 0;
         }
 
         if (this.config.autoActivate) {
-            this.on('effectAdded', this.activate)
+            this.on('effectAdded', this.activate);
         }
     }
 
@@ -125,25 +125,25 @@ class Effect extends EventEmitter {
      * @type {string}
      */
     get name(): string {
-        return this.config.name || ''
+        return this.config.name || '';
     }
 
     /**
      * @type {string}
      */
     get description(): string {
-        return this.config.description || ''
+        return this.config.description || '';
     }
 
     /**
      * @type {number}
      */
     get duration(): number {
-        return this.config.duration || 0
+        return this.config.duration || 0;
     }
 
     set duration(dur: number) {
-        this.config.duration = dur
+        this.config.duration = dur;
     }
 
     /**
@@ -152,10 +152,10 @@ class Effect extends EventEmitter {
      */
     get elapsed(): number | null {
         if (!this.startedAt) {
-            return null
+            return null;
         }
 
-        return this.paused || Date.now() - this.startedAt
+        return this.paused || Date.now() - this.startedAt;
     }
 
     /**
@@ -163,8 +163,8 @@ class Effect extends EventEmitter {
      * @type {number}
      */
     get remaining(): number {
-        const elapsed = this.elapsed || 0
-        return this.config.duration || 0 - elapsed
+        const elapsed = this.elapsed || 0;
+        return this.config.duration || 0 - elapsed;
     }
 
     /**
@@ -172,8 +172,8 @@ class Effect extends EventEmitter {
      * @return {boolean}
      */
     isCurrent(): boolean {
-        const elapsed = this.elapsed || 0
-        return elapsed < (this.config.duration || 0)
+        const elapsed = this.elapsed || 0;
+        return elapsed < (this.config.duration || 0);
     }
 
     /**
@@ -182,19 +182,19 @@ class Effect extends EventEmitter {
      */
     activate(): void {
         if (!this.target) {
-            throw new Error('Cannot activate an effect without a target')
+            throw new Error('Cannot activate an effect without a target');
         }
 
         if (this.active) {
-            return
+            return;
         }
 
-        this.startedAt = Date.now() - (this.elapsed || 0)
-        this.active = true
+        this.startedAt = Date.now() - (this.elapsed || 0);
+        this.active = true;
         /**
          * @event Effect#effectActivated
          */
-        this.emit('effectActivated')
+        this.emit('effectActivated');
     }
 
     /**
@@ -203,15 +203,15 @@ class Effect extends EventEmitter {
      */
     deactivate(): void {
         if (!this.active) {
-            return
+            return;
         }
 
-        this.active = false
+        this.active = false;
 
         /**
          * @event Effect#effectDeactivated
          */
-        this.emit('effectDeactivated')
+        this.emit('effectDeactivated');
     }
 
     /**
@@ -222,22 +222,22 @@ class Effect extends EventEmitter {
     /**
      * @event Effect#remove
      */
-        this.emit('remove')
+        this.emit('remove');
     }
 
     /**
      * Stop this effect from having any effect temporarily
      */
     pause(): void {
-        this.paused = this.elapsed
+        this.paused = this.elapsed;
     }
 
     /**
      * Resume a paused effect
      */
     resume(): void {
-        this.startedAt = Date.now() - (this.paused || 0)
-        this.paused = null
+        this.startedAt = Date.now() - (this.paused || 0);
+        this.paused = null;
     }
 
     /**
@@ -246,23 +246,23 @@ class Effect extends EventEmitter {
      * @return {number} attribute modified by effect
      */
     modifyAttribute(attrName: string, currentValue: number): number {
-        let modifier: (current: number) => number = (current: number) => current
+        let modifier: (current: number) => number = (current: number) => current;
 
         if (typeof this.modifiers.attributes === 'function') {
             modifier = (current: number) => {
                 return (this.modifiers.attributes as Function).bind(this)(
                     attrName,
                     current,
-                )
-            }
+                );
+            };
         }
         else if (attrName in this.modifiers.attributes) {
             modifier = (
                 this.modifiers.attributes as Record<string, (current: number) => number>
-            )[attrName]
+            )[attrName];
         }
 
-        return modifier.bind(this)(currentValue)
+        return modifier.bind(this)(currentValue);
     }
 
     /**
@@ -271,8 +271,8 @@ class Effect extends EventEmitter {
      * @return {number}
      */
     modifyIncomingDamage(damage: Damage, currentAmount: number): number {
-        const modifier = this.modifiers.incomingDamage.bind(this)
-        return modifier(damage, currentAmount)
+        const modifier = this.modifiers.incomingDamage.bind(this);
+        return modifier(damage, currentAmount);
     }
 
     /**
@@ -281,8 +281,8 @@ class Effect extends EventEmitter {
      * @return {number}
      */
     modifyOutgoingDamage(damage: Damage, currentAmount: number): number {
-        const modifier = this.modifiers.outgoingDamage.bind(this)
-        return modifier(damage, currentAmount)
+        const modifier = this.modifiers.outgoingDamage.bind(this);
+        return modifier(damage, currentAmount);
     }
 
     /**
@@ -290,14 +290,14 @@ class Effect extends EventEmitter {
      * @return {object}
      */
     serialize(): SerializedEffect {
-        const config = Object.assign({}, this.config)
+        const config = Object.assign({}, this.config);
         config.duration
-      = config.duration === Infinity ? ('inf' as any) : config.duration
+      = config.duration === Infinity ? ('inf' as any) : config.duration;
 
-        const state = Object.assign({}, this.state)
+        const state = Object.assign({}, this.state);
         // store lastTick as a difference so we can make sure to start where we left off when we hydrate
         if (state.lastTick && isFinite(state.lastTick)) {
-            state.lastTick = Date.now() - state.lastTick
+            state.lastTick = Date.now() - state.lastTick;
         }
 
         return {
@@ -307,7 +307,7 @@ class Effect extends EventEmitter {
             remaining: this.remaining,
             skill: this.skill && this.skill.id,
             state,
-        }
+        };
     }
 
     /**
@@ -317,24 +317,24 @@ class Effect extends EventEmitter {
      */
     hydrate(state: GameState, data: SerializedEffect): void {
         data.config.duration
-      = data.config.duration === 'inf' ? Infinity : data.config.duration
-        this.config = data.config
+      = data.config.duration === 'inf' ? Infinity : data.config.duration;
+        this.config = data.config;
 
         if (!isNaN(data.elapsed)) {
-            this.startedAt = Date.now() - data.elapsed
+            this.startedAt = Date.now() - data.elapsed;
         }
 
         if (!isNaN(data.state.lastTick as number)) {
-            data.state.lastTick = Date.now() - (data.state.lastTick as number)
+            data.state.lastTick = Date.now() - (data.state.lastTick as number);
         }
-        this.state = data.state
+        this.state = data.state;
 
         if (data.skill) {
             this.skill
         = state.SkillManager.get(data.skill)
-            || state.SpellManager.get(data.skill)
+            || state.SpellManager.get(data.skill);
         }
     }
 }
 
-export default Effect
+export default Effect;

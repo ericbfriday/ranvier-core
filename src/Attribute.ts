@@ -12,11 +12,11 @@
  * @property {object} metadata any custom info for this attribute
  */
 class Attribute {
-    name: string
-    base: number
-    delta: number
-    formula: AttributeFormula | null
-    metadata: Record<string, any>
+    name: string;
+    base: number;
+    delta: number;
+    formula: AttributeFormula | null;
+    metadata: Record<string, any>;
 
     /**
      * @param {string} name
@@ -33,22 +33,22 @@ class Attribute {
     metadata: Record<string, any> = {},
     ) {
         if (Number.isNaN(base)) {
-            throw new TypeError(`Base attribute must be a number, got ${base}.`)
+            throw new TypeError(`Base attribute must be a number, got ${base}.`);
         }
         if (Number.isNaN(delta)) {
-            throw new TypeError(`Attribute delta must be a number, got ${delta}.`)
+            throw new TypeError(`Attribute delta must be a number, got ${delta}.`);
         }
         if (formula && !(formula instanceof AttributeFormula)) {
             throw new TypeError(
                 'Attribute formula must be instance of AttributeFormula',
-            )
+            );
         }
 
-        this.name = name
-        this.base = base
-        this.delta = delta
-        this.formula = formula
-        this.metadata = metadata
+        this.name = name;
+        this.base = base;
+        this.delta = delta;
+        this.formula = formula;
+        this.metadata = metadata;
     }
 
     /**
@@ -56,7 +56,7 @@ class Attribute {
      * @param {number} amount
      */
     lower(amount: number): void {
-        this.raise(-amount)
+        this.raise(-amount);
     }
 
     /**
@@ -64,8 +64,8 @@ class Attribute {
      * @param {number} amount
      */
     raise(amount: number): void {
-        const newDelta = Math.min(this.delta + amount, 0)
-        this.delta = newDelta
+        const newDelta = Math.min(this.delta + amount, 0);
+        this.delta = newDelta;
     }
 
     /**
@@ -73,7 +73,7 @@ class Attribute {
      * @param {number} amount
      */
     setBase(amount: number): void {
-        this.base = Math.max(amount, 0)
+        this.base = Math.max(amount, 0);
     }
 
     /**
@@ -81,12 +81,12 @@ class Attribute {
      * @param {amount}
      */
     setDelta(amount: number): void {
-        this.delta = Math.min(amount, 0)
+        this.delta = Math.min(amount, 0);
     }
 
     serialize(): { delta: number, base: number } {
-        const { delta, base } = this
-        return { delta, base }
+        const { delta, base } = this;
+        return { delta, base };
     }
 }
 
@@ -95,30 +95,30 @@ class Attribute {
  * @property {function (...number) : number} formula
  */
 class AttributeFormula {
-    requires: string[]
-    formula: (...args: any[]) => number
+    requires: string[];
+    formula: (...args: any[]) => number;
 
     constructor(requires: string[], fn: (...args: any[]) => number) {
         if (!Array.isArray(requires)) {
-            throw new TypeError('requires not an array')
+            throw new TypeError('requires not an array');
         }
 
         if (typeof fn !== 'function') {
-            throw new TypeError('Formula function is not a function')
+            throw new TypeError('Formula function is not a function');
         }
 
-        this.requires = requires
-        this.formula = fn
+        this.requires = requires;
+        this.formula = fn;
     }
 
     evaluate(attribute: Attribute, ...args: any[]): number {
         if (typeof this.formula !== 'function') {
-            throw new Error(`Formula is not callable ${this.formula}`)
-            return 0
+            throw new Error(`Formula is not callable ${this.formula}`);
+            return 0;
         }
 
-        return this.formula.bind(attribute)(...args)
+        return this.formula.bind(attribute)(...args);
     }
 }
 
-export { Attribute, AttributeFormula }
+export { Attribute, AttributeFormula };

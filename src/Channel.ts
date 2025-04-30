@@ -1,10 +1,10 @@
-import type GameState from './GameState'
-import type Player from './Player'
-import type PlayerRoles from './PlayerRoles'
-import Broadcast from './Broadcast'
-import PartyAudience from './PartyAudience'
-import PrivateAudience from './PrivateAudience'
-import WorldAudience from './WorldAudience'
+import type GameState from './GameState';
+import type Player from './Player';
+import type PlayerRoles from './PlayerRoles';
+import Broadcast from './Broadcast';
+import PartyAudience from './PartyAudience';
+import PrivateAudience from './PrivateAudience';
+import WorldAudience from './WorldAudience';
 
 export interface ChannelAudience {
     configure: (options: {
@@ -49,13 +49,13 @@ export interface ChannelConfig {
  * @property {{sender: Function, target: Function}} [formatter]
  */
 export default class Channel {
-    name: string
-    minRequiredRole: PlayerRoles | null
-    description?: string
-    bundle: string | null
-    audience: ChannelAudience
-    color: string | string[] | null
-    aliases?: string[]
+    name: string;
+    minRequiredRole: PlayerRoles | null;
+    description?: string;
+    bundle: string | null;
+    audience: ChannelAudience;
+    color: string | string[] | null;
+    aliases?: string[];
     formatter: {
         sender: (
             sender: Player,
@@ -69,7 +69,7 @@ export default class Channel {
             message: string,
             colorify: (message: string) => string
         ) => string
-    }
+    };
 
     /**
      * @param {object}  config
@@ -82,25 +82,25 @@ export default class Channel {
      */
     constructor(config: ChannelConfig) {
         if (!config.name) {
-            throw new Error('Channels must have a name to be usable.')
+            throw new Error('Channels must have a name to be usable.');
         }
         if (!config.audience) {
-            throw new Error(`Channel ${config.name} is missing a valid audience.`)
+            throw new Error(`Channel ${config.name} is missing a valid audience.`);
         }
-        this.name = config.name
+        this.name = config.name;
         this.minRequiredRole
       = typeof config.minRequiredRole !== 'undefined'
                 ? config.minRequiredRole
-                : null
-        this.description = config.description
-        this.bundle = config.bundle || null // for debugging purposes, which bundle it came from
-        this.audience = config.audience || new WorldAudience()
-        this.color = config.color || null
-        this.aliases = config.aliases
+                : null;
+        this.description = config.description;
+        this.bundle = config.bundle || null; // for debugging purposes, which bundle it came from
+        this.audience = config.audience || new WorldAudience();
+        this.color = config.color || null;
+        this.aliases = config.aliases;
         this.formatter = config.formatter || {
             sender: this.formatToSender.bind(this),
             target: this.formatToReceipient.bind(this),
-        }
+        };
     }
 
     /**
@@ -112,29 +112,29 @@ export default class Channel {
     send(state: GameState, sender: Player, message: string): void {
     // If they don't include a message, explain how to use the channel.
         if (!message.length) {
-            throw new NoMessageError()
+            throw new NoMessageError();
         }
 
         if (!this.audience) {
             throw new Error(
                 `Channel [${this.name} has invalid audience [${this.audience}]`,
-            )
+            );
         }
 
-        this.audience.configure({ state, sender, message })
-        const targets = this.audience.getBroadcastTargets()
+        this.audience.configure({ state, sender, message });
+        const targets = this.audience.getBroadcastTargets();
 
         if (this.audience instanceof PartyAudience && !targets.length) {
-            throw new NoPartyError()
+            throw new NoPartyError();
         }
 
         // Allow audience to change message e.g., strip target name.
-        message = this.audience.alterMessage(message)
+        message = this.audience.alterMessage(message);
 
         // Private channels also send the target player to the formatter
         if (this.audience instanceof PrivateAudience) {
             if (!targets.length) {
-                throw new NoRecipientError()
+                throw new NoRecipientError();
             }
             Broadcast.sayAt(
                 sender,
@@ -144,13 +144,13 @@ export default class Channel {
                     message,
                     this.colorify.bind(this),
                 ),
-            )
+            );
         }
         else {
             Broadcast.sayAt(
                 sender,
                 this.formatter.sender(sender, null, message, this.colorify.bind(this)),
-            )
+            );
         }
 
         // send to audience targets
@@ -160,11 +160,11 @@ export default class Channel {
                 target,
                 message,
                 this.colorify.bind(this),
-            )
-        })
+            );
+        });
 
         // strip color tags
-        const rawMessage = message.replace(/<\/?\w+>/g, '')
+        const rawMessage = message.replace(/<\/?\w+>/g, '');
 
         for (const target of targets) {
             /**
@@ -176,24 +176,24 @@ export default class Channel {
              * @param {Character} sender
              * @param {string} rawMessage
              */
-            target.emit('channelReceive', this, sender, rawMessage)
+            target.emit('channelReceive', this, sender, rawMessage);
         }
     }
 
     describeSelf(sender: Player): void {
-        Broadcast.sayAt(sender, `\r\nChannel: ${this.name}`)
-        Broadcast.sayAt(sender, `Syntax: ${this.getUsage()}`)
+        Broadcast.sayAt(sender, `\r\nChannel: ${this.name}`);
+        Broadcast.sayAt(sender, `Syntax: ${this.getUsage()}`);
         if (this.description) {
-            Broadcast.sayAt(sender, this.description)
+            Broadcast.sayAt(sender, this.description);
         }
     }
 
     getUsage(): string {
         if (this.audience instanceof PrivateAudience) {
-            return `${this.name} <target> [message]`
+            return `${this.name} <target> [message]`;
         }
 
-        return `${this.name} [message]`
+        return `${this.name} [message]`;
     }
 
     /**
@@ -210,7 +210,7 @@ export default class Channel {
         message: string,
         colorify: (message: string) => string,
     ): string {
-        return colorify(`[${this.name}] ${sender.name}: ${message}`)
+        return colorify(`[${this.name}] ${sender.name}: ${message}`);
     }
 
     /**
@@ -228,23 +228,23 @@ export default class Channel {
         message: string,
         colorify: (message: string) => string,
     ): string {
-        return this.formatToSender(sender, target, message, colorify)
+        return this.formatToSender(sender, target, message, colorify);
     }
 
     colorify(message: string): string {
         if (!this.color) {
-            return message
+            return message;
         }
 
-        const colors = Array.isArray(this.color) ? this.color : [this.color]
+        const colors = Array.isArray(this.color) ? this.color : [this.color];
 
-        const open = colors.map(color => `<${color}>`).join('')
+        const open = colors.map(color => `<${color}>`).join('');
         const close = colors
             .reverse()
             .map(color => `</${color}>`)
-            .join('')
+            .join('');
 
-        return open + message + close
+        return open + message + close;
     }
 }
 

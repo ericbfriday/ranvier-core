@@ -1,5 +1,6 @@
 {
     "name": "ranvier",
+    "type": "module",
     "version": "3.0.6",
     "packageManager": "yarn@4.9.1",
     "description": "MUD game engine",
@@ -8,7 +9,6 @@
     "homepage": "https://ranviermud.com",
     "repository": "github:ranviermud/core",
     "bugs": "https://github.com/ranviermud/core/issues",
-    "type": "module",
     "scripts": {
         "build": "tsc",
         "test": "nyc --reporter=html --reporter=text --include=src --all mocha --recursive",

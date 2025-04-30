@@ -1,7 +1,7 @@
-import ansi from 'sty' // force ansi on even when there isn't a tty for the server
-import wrap from 'wrap-ansi'
+import ansi from 'sty'; // force ansi on even when there isn't a tty for the server
+import wrap from 'wrap-ansi';
 
-ansi.enable()
+ansi.enable();
 
 /** @typedef {{getBroadcastTargets: function(): Array}} */
 export interface Broadcastable {
@@ -19,7 +19,7 @@ export interface Target {
     socket: Socket
 }
 
-export type Formatter = (target: any, message: string) => string
+export type Formatter = (target: any, message: string) => string;
 
 /**
  * Class used for sending text to the player. All output to the player should happen through this
@@ -44,29 +44,29 @@ export default class Broadcast {
         if (!Broadcast.isBroadcastable(source)) {
             throw new Error(
                 `Tried to broadcast message to non-broadcastable object: MESSAGE [${message}]`,
-            )
+            );
         }
 
-        useColor = typeof useColor === 'boolean' ? useColor : true
-        formatter = formatter || ((target, message) => message)
+        useColor = typeof useColor === 'boolean' ? useColor : true;
+        formatter = formatter || ((target, message) => message);
 
-        message = Broadcast._fixNewlines(message)
+        message = Broadcast._fixNewlines(message);
 
         for (const target of source.getBroadcastTargets()) {
             if (!target.socket || !target.socket.writable) {
-                continue
+                continue;
             }
 
             if (target.socket._prompted) {
-                target.socket.write('\r\n')
-                target.socket._prompted = false
+                target.socket.write('\r\n');
+                target.socket._prompted = false;
             }
 
-            let targetMessage = formatter(target, message)
+            let targetMessage = formatter(target, message);
             targetMessage = wrapWidth
                 ? Broadcast.wrap(targetMessage, wrapWidth as number)
-                : ansi.parse(targetMessage)
-            target.socket.write(targetMessage)
+                : ansi.parse(targetMessage);
+            target.socket.write(targetMessage);
         }
     }
 
@@ -91,21 +91,21 @@ export default class Broadcast {
         if (!Broadcast.isBroadcastable(source)) {
             throw new Error(
                 `Tried to broadcast message to non-broadcastable object: MESSAGE [${message}]`,
-            )
+            );
         }
 
         // Could be an array or a single target.
-        excludes = [].concat(excludes)
+        excludes = [].concat(excludes);
 
         const targets = source
             .getBroadcastTargets()
-            .filter(target => !excludes.includes(target))
+            .filter(target => !excludes.includes(target));
 
         const newSource = {
             getBroadcastTargets: () => targets,
-        }
+        };
 
-        Broadcast.at(newSource, message, wrapWidth, useColor, formatter)
+        Broadcast.at(newSource, message, wrapWidth, useColor, formatter);
     }
 
     /**
@@ -124,7 +124,7 @@ export default class Broadcast {
         wrapWidth?: number | boolean,
         useColor?: boolean,
     ): void {
-        Broadcast.at(source, message, wrapWidth, useColor, formatter)
+        Broadcast.at(source, message, wrapWidth, useColor, formatter);
     }
 
     /**
@@ -139,8 +139,8 @@ export default class Broadcast {
         formatter?: Formatter,
     ): void {
         Broadcast.at(source, message, wrapWidth, useColor, (target, message) => {
-            return `${formatter ? formatter(target, message) : message}\r\n`
-        })
+            return `${formatter ? formatter(target, message) : message}\r\n`;
+        });
     }
 
     /**
@@ -162,9 +162,9 @@ export default class Broadcast {
             wrapWidth,
             useColor,
             (target, message) => {
-                return `${formatter ? formatter(target, message) : message}\r\n`
+                return `${formatter ? formatter(target, message) : message}\r\n`;
             },
-        )
+        );
     }
 
     /**
@@ -178,7 +178,7 @@ export default class Broadcast {
         wrapWidth?: number | boolean,
         useColor?: boolean,
     ): void {
-        Broadcast.sayAt(source, message, wrapWidth, useColor, formatter)
+        Broadcast.sayAt(source, message, wrapWidth, useColor, formatter);
     }
 
     /**
@@ -194,32 +194,32 @@ export default class Broadcast {
         wrapWidth?: number | boolean,
         useColor?: boolean,
     ): void {
-        player.socket._prompted = false
+        player.socket._prompted = false;
         Broadcast.at(
             player,
             `\r\n${player.interpolatePrompt(player.prompt, extra)} `,
             wrapWidth,
             useColor,
-        )
-        const needsNewline = player.extraPrompts.size > 0
+        );
+        const needsNewline = player.extraPrompts.size > 0;
         if (needsNewline) {
-            Broadcast.sayAt(player)
+            Broadcast.sayAt(player);
         }
 
         for (const [id, extraPrompt] of player.extraPrompts) {
-            Broadcast.sayAt(player, extraPrompt.renderer(), wrapWidth, useColor)
+            Broadcast.sayAt(player, extraPrompt.renderer(), wrapWidth, useColor);
             if (extraPrompt.removeOnRender) {
-                player.removePrompt(id)
+                player.removePrompt(id);
             }
         }
 
         if (needsNewline) {
-            Broadcast.at(player, '> ')
+            Broadcast.at(player, '> ');
         }
 
-        player.socket._prompted = true
+        player.socket._prompted = true;
         if (player.socket.writable) {
-            player.socket.command('goAhead')
+            player.socket.command('goAhead');
         }
     }
 
@@ -241,24 +241,24 @@ export default class Broadcast {
     fillChar: string = ' ',
     delimiters: string = '()',
     ): string {
-        percent = Math.max(0, percent)
-        width -= 3 // account for delimiters and tip of bar
+        percent = Math.max(0, percent);
+        width -= 3; // account for delimiters and tip of bar
         if (percent === 100) {
-            width++ // 100% bar doesn't have a second right delimiter
+            width++; // 100% bar doesn't have a second right delimiter
         }
-        barChar = barChar[0]
-        fillChar = fillChar[0]
-        const [leftDelim, rightDelim] = delimiters
-        const openColor = `<${color}>`
-        const closeColor = `</${color}>`
-        let buf = `${openColor + leftDelim}<bold>`
-        const widthPercent = Math.round((percent / 100) * width)
+        barChar = barChar[0];
+        fillChar = fillChar[0];
+        const [leftDelim, rightDelim] = delimiters;
+        const openColor = `<${color}>`;
+        const closeColor = `</${color}>`;
+        let buf = `${openColor + leftDelim}<bold>`;
+        const widthPercent = Math.round((percent / 100) * width);
         buf
       += Broadcast.line(widthPercent, barChar)
-          + (percent === 100 ? '' : rightDelim)
-        buf += Broadcast.line(width - widthPercent, fillChar)
-        buf += `</bold>${rightDelim}${closeColor}`
-        return buf
+          + (percent === 100 ? '' : rightDelim);
+        buf += Broadcast.line(width - widthPercent, fillChar);
+        buf += `</bold>${rightDelim}${closeColor}`;
+        return buf;
     }
 
     /**
@@ -275,12 +275,12 @@ export default class Broadcast {
         color?: string,
     fillChar: string | null = ' ',
     ): string {
-        const padWidth = width / 2 - message.length / 2
-        let openColor = ''
-        let closeColor = ''
+        const padWidth = width / 2 - message.length / 2;
+        let openColor = '';
+        let closeColor = '';
         if (color) {
-            openColor = `<${color}>`
-            closeColor = `</${color}>`
+            openColor = `<${color}>`;
+            closeColor = `</${color}>`;
         }
 
         return (
@@ -289,7 +289,7 @@ export default class Broadcast {
             + message
             + Broadcast.line(Math.ceil(padWidth), fillChar)
             + closeColor
-        )
+        );
     }
 
     /**
@@ -304,13 +304,13 @@ export default class Broadcast {
     fillChar: string = '-',
     color: string | null = null,
     ): string {
-        let openColor = ''
-        let closeColor = ''
+        let openColor = '';
+        let closeColor = '';
         if (color) {
-            openColor = `<${color}>`
-            closeColor = `</${color}>`
+            openColor = `<${color}>`;
+            closeColor = `</${color}>`;
         }
-        return openColor + Array.from({ length: width + 1 }).join(fillChar) + closeColor
+        return openColor + Array.from({ length: width + 1 }).join(fillChar) + closeColor;
     }
 
     /**
@@ -320,7 +320,7 @@ export default class Broadcast {
      * @return {string}
      */
     static wrap(message: string, width: number | null = 80): string {
-        return Broadcast._fixNewlines(wrap(ansi.parse(message), width))
+        return Broadcast._fixNewlines(wrap(ansi.parse(message), width));
     }
 
     /**
@@ -330,9 +330,9 @@ export default class Broadcast {
      * @return {string}
      */
     static indent(message: string, indent: number): string {
-        message = Broadcast._fixNewlines(message)
-        const padding = Broadcast.line(indent, ' ')
-        return padding + message.replace(/\r\n/g, `\r\n${padding}`)
+        message = Broadcast._fixNewlines(message);
+        const padding = Broadcast.line(indent, ' ');
+        return padding + message.replace(/\r\n/g, `\r\n${padding}`);
     }
 
     /**
@@ -347,13 +347,13 @@ export default class Broadcast {
             .replace(/\r\n/g, '<NEWLINE>')
             .split('\n')
             .join('\r\n')
-            .replace(/<NEWLINE>/g, '\r\n')
+            .replace(/<NEWLINE>/g, '\r\n');
         // fix sty's incredibly stupid default of always appending ^[[0m
         // eslint-disable-next-line no-control-regex
-        return message.replace(/\x1B\[0m$/, '')
+        return message.replace(/\x1B\[0m$/, '');
     }
 
     static isBroadcastable(source: any): source is Broadcastable {
-        return source && typeof source.getBroadcastTargets === 'function'
+        return source && typeof source.getBroadcastTargets === 'function';
     }
 }

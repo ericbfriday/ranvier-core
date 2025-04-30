@@ -1,19 +1,19 @@
-import Area from './Area'
-import BehaviorManager from './BehaviorManager'
-import Room from './Room'
+import Area from './Area';
+import BehaviorManager from './BehaviorManager';
+import Room from './Room';
 
 /**
  * Stores references to, and handles distribution of, active areas
  * @property {Map<string,Area>} areas
  */
 export default class AreaManager {
-    areas: Map<string, Area>
-    scripts: BehaviorManager
-    private _placeholder?: Area
+    areas: Map<string, Area>;
+    scripts: BehaviorManager;
+    private _placeholder?: Area;
 
     constructor() {
-        this.areas = new Map()
-        this.scripts = new BehaviorManager()
+        this.areas = new Map();
+        this.scripts = new BehaviorManager();
     }
 
     /**
@@ -21,7 +21,7 @@ export default class AreaManager {
      * @return Area
      */
     getArea(name: string): Area | undefined {
-        return this.areas.get(name)
+        return this.areas.get(name);
     }
 
     /**
@@ -29,22 +29,22 @@ export default class AreaManager {
      * @return Area
      */
     getAreaByReference(entityRef: string): Area | undefined {
-        const [name] = entityRef.split(':')
-        return this.getArea(name)
+        const [name] = entityRef.split(':');
+        return this.getArea(name);
     }
 
     /**
      * @param {Area} area
      */
     addArea(area: Area): void {
-        this.areas.set(area.name, area)
+        this.areas.set(area.name, area);
     }
 
     /**
      * @param {Area} area
      */
     removeArea(area: Area): void {
-        this.areas.delete(area.name)
+        this.areas.delete(area.name);
     }
 
     /**
@@ -58,7 +58,7 @@ export default class AreaManager {
              * @see Area#update
              * @event Area#updateTick
              */
-            area.emit('updateTick', state)
+            area.emit('updateTick', state);
         }
     }
 
@@ -70,22 +70,22 @@ export default class AreaManager {
      */
     getPlaceholderArea(): Area {
         if (this._placeholder) {
-            return this._placeholder
+            return this._placeholder;
         }
 
         this._placeholder = new Area(null, 'placeholder', {
             title: 'Placeholder',
-        })
+        });
 
         const placeholderRoom = new Room(this._placeholder, {
             id: 'placeholder',
             title: 'Placeholder',
             description:
         'You are not in a valid room. Please contact an administrator.',
-        })
+        });
 
-        this._placeholder.addRoom(placeholderRoom)
+        this._placeholder.addRoom(placeholderRoom);
 
-        return this._placeholder
+        return this._placeholder;
     }
 }

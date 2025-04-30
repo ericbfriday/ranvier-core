@@ -1,5 +1,5 @@
-import type Player from './Player.js'
-import ChannelAudience from './ChannelAudience.js'
+import type Player from './Player.js';
+import ChannelAudience from './ChannelAudience.js';
 
 interface RoleAudienceOptions {
     minRole: number
@@ -7,22 +7,22 @@ interface RoleAudienceOptions {
 }
 
 class RoleAudience extends ChannelAudience {
-    minRole: number
+    minRole: number;
 
     constructor(options: RoleAudienceOptions) {
-        super()
+        super();
         // eslint-disable-next-line no-prototype-builtins
         if (!options.hasOwnProperty('minRole')) {
-            throw new Error('No role given for role audience')
+            throw new Error('No role given for role audience');
         }
-        this.minRole = options.minRole
+        this.minRole = options.minRole;
     }
 
     getBroadcastTargets(): Player[] {
         return this.state.PlayerManager.filter(
             player => player.role >= this.minRole && player !== this.sender,
-        )
+        );
     }
 }
 
-export default RoleAudience
+export default RoleAudience;

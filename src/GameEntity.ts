@@ -1,6 +1,6 @@
-import { EventEmitter } from 'node:events'
-import Metadatable from './Metadatable'
-import Scriptable from './Scriptable'
+import { EventEmitter } from 'node:events';
+import Metadatable from './Metadatable';
+import Scriptable from './Scriptable';
 
 /**
  * Base entity class for all game objects
@@ -8,8 +8,8 @@ import Scriptable from './Scriptable'
  * @mixes Metadatable
  * @mixes Scriptable
  */
-export default class GameEntity extends Scriptable(Metadatable(EventEmitter)) {  
+export default class GameEntity extends Scriptable(Metadatable(EventEmitter)) {
     constructor() {
-    super();
-  }
+        super();
+    }
 }

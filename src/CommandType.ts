@@ -7,6 +7,6 @@ const CommandType = {
     SKILL: Symbol('SKILL'),
     CHANNEL: Symbol('CHANNEL'),
     MOVEMENT: Symbol('MOVEMENT'),
-} as const
+} as const;
 
-export default CommandType
+export default CommandType;

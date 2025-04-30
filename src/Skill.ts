@@ -1,9 +1,9 @@
-import type Effect from './Effect'
-import Broadcast from './Broadcast'
-import Damage from './Damage'
-import * as SkillErrors from './SkillErrors'
-import SkillFlag from './SkillFlag'
-import SkillType from './SkillType'
+import type Effect from './Effect';
+import Broadcast from './Broadcast';
+import Damage from './Damage';
+import * as SkillErrors from './SkillErrors';
+import SkillFlag from './SkillFlag';
+import SkillType from './SkillType';
 
 export interface SkillConfig {
     configureEffect?: (effect: Effect) => Effect
@@ -33,22 +33,22 @@ export interface SkillConfig {
  * @property {SkillType}        type
  */
 export default class Skill {
-    configureEffect: (effect: Effect) => Effect
-    cooldownGroup: string | null
-    cooldownLength: number | null
-    effect: string | null
-    flags: (typeof SkillFlag)[]
-    id: string
-    info: (player?: any) => string
-    initiatesCombat: boolean
-    name: string
-    options: Record<string, any>
-    requiresTarget: boolean
-    resource: any | any[]
-    run: (args: string, player: any, target: any) => any
-    state: any
-    targetSelf: boolean
-    type: typeof SkillType
+    configureEffect: (effect: Effect) => Effect;
+    cooldownGroup: string | null;
+    cooldownLength: number | null;
+    effect: string | null;
+    flags: (typeof SkillFlag)[];
+    id: string;
+    info: (player?: any) => string;
+    initiatesCombat: boolean;
+    name: string;
+    options: Record<string, any>;
+    requiresTarget: boolean;
+    resource: any | any[];
+    run: (args: string, player: any, target: any) => any;
+    state: any;
+    targetSelf: boolean;
+    type: typeof SkillType;
 
     /**
      * @param {string} id
@@ -70,32 +70,32 @@ export default class Skill {
             targetSelf = false,
             type = SkillType.SKILL,
             options = {},
-        } = config
+        } = config;
 
-        this.configureEffect = configureEffect
+        this.configureEffect = configureEffect;
 
-        this.cooldownGroup = null
+        this.cooldownGroup = null;
         if (cooldown && typeof cooldown === 'object') {
-            this.cooldownGroup = cooldown.group
-            this.cooldownLength = cooldown.length
+            this.cooldownGroup = cooldown.group;
+            this.cooldownLength = cooldown.length;
         }
         else {
-            this.cooldownLength = cooldown
+            this.cooldownLength = cooldown;
         }
 
-        this.effect = effect
-        this.flags = flags
-        this.id = id
-        this.info = info.bind(this)
-        this.initiatesCombat = initiatesCombat
-        this.name = name
-        this.options = options
-        this.requiresTarget = requiresTarget
-        this.resource = resource
-        this.run = run.bind(this)
-        this.state = state
-        this.targetSelf = targetSelf
-        this.type = type
+        this.effect = effect;
+        this.flags = flags;
+        this.id = id;
+        this.info = info.bind(this);
+        this.initiatesCombat = initiatesCombat;
+        this.name = name;
+        this.options = options;
+        this.requiresTarget = requiresTarget;
+        this.resource = resource;
+        this.run = run.bind(this);
+        this.state = state;
+        this.targetSelf = targetSelf;
+        this.type = type;
     }
 
     /**
@@ -106,33 +106,33 @@ export default class Skill {
      */
     execute(args: string, player: any, target: any): boolean {
         if (this.flags.includes(SkillFlag.PASSIVE)) {
-            throw new SkillErrors.PassiveError()
+            throw new SkillErrors.PassiveError();
         }
 
-        const cdEffect = this.onCooldown(player)
+        const cdEffect = this.onCooldown(player);
         if (this.cooldownLength && cdEffect) {
-            throw new SkillErrors.CooldownError(cdEffect)
+            throw new SkillErrors.CooldownError(cdEffect);
         }
 
         if (this.resource) {
             if (!this.hasEnoughResources(player)) {
-                throw new SkillErrors.NotEnoughResourcesError()
+                throw new SkillErrors.NotEnoughResourcesError();
             }
         }
 
         if (target !== player && this.initiatesCombat) {
-            player.initiateCombat(target)
+            player.initiateCombat(target);
         }
 
         // allow skills to not incur the cooldown if they return false in run
         if (this.run(args, player, target) !== false) {
-            this.cooldown(player)
+            this.cooldown(player);
             if (this.resource) {
-                this.payResourceCosts(player)
+                this.payResourceCosts(player);
             }
         }
 
-        return true
+        return true;
     }
 
     /**
@@ -140,15 +140,15 @@ export default class Skill {
      * @return {boolean} If the player has paid the resource cost(s).
      */
     payResourceCosts(player: any): boolean {
-        const hasMultipleResourceCosts = Array.isArray(this.resource)
+        const hasMultipleResourceCosts = Array.isArray(this.resource);
         if (hasMultipleResourceCosts) {
             for (const resourceCost of this.resource) {
-                this.payResourceCost(player, resourceCost)
+                this.payResourceCost(player, resourceCost);
             }
-            return true
+            return true;
         }
 
-        return this.payResourceCost(player, this.resource)
+        return this.payResourceCost(player, this.resource);
     }
 
     // Helper to pay a single resource cost.
@@ -157,28 +157,28 @@ export default class Skill {
     // could potentially reduce resource costs
         const damage = new Damage(resource.attribute, resource.cost, player, this, {
             hidden: true,
-        })
+        });
 
-        damage.commit(player)
-        return true
+        damage.commit(player);
+        return true;
     }
 
     activate(player: any): void {
         if (!this.flags.includes(SkillFlag.PASSIVE)) {
-            return
+            return;
         }
 
         if (!this.effect) {
-            throw new Error('Passive skill has no attached effect')
+            throw new Error('Passive skill has no attached effect');
         }
 
         let effect = this.state.EffectFactory.create(this.effect, {
             description: this.info(player),
-        })
-        effect = this.configureEffect(effect)
-        effect.skill = this
-        player.addEffect(effect)
-        this.run(null, player, null)
+        });
+        effect = this.configureEffect(effect);
+        effect.skill = this;
+        player.addEffect(effect);
+        this.run(null, player, null);
     }
 
     /**
@@ -191,11 +191,11 @@ export default class Skill {
                 effect.id === 'cooldown'
                 && effect.state.cooldownId === this.getCooldownId()
             ) {
-                return effect
+                return effect;
             }
         }
 
-        return false
+        return false;
     }
 
     /**
@@ -205,16 +205,16 @@ export default class Skill {
      */
     cooldown(character: any): void {
         if (!this.cooldownLength) {
-            return
+            return;
         }
 
-        character.addEffect(this.createCooldownEffect())
+        character.addEffect(this.createCooldownEffect());
     }
 
     getCooldownId(): string {
         return this.cooldownGroup
             ? `skillgroup:${this.cooldownGroup}`
-            : `skill:${this.id}`
+            : `skill:${this.id}`;
     }
 
     /**
@@ -225,17 +225,17 @@ export default class Skill {
      */
     createCooldownEffect(): Effect {
         if (!this.state.EffectFactory.has('cooldown')) {
-            this.state.EffectFactory.add('cooldown', this.getDefaultCooldownConfig())
+            this.state.EffectFactory.add('cooldown', this.getDefaultCooldownConfig());
         }
 
         const effect = this.state.EffectFactory.create(
             'cooldown',
             { name: `Cooldown: ${this.name}`, duration: this.cooldownLength! * 1000 },
             { cooldownId: this.getCooldownId() },
-        )
-        effect.skill = this
+        );
+        effect.skill = this;
 
-        return effect
+        return effect;
     }
 
     getDefaultCooldownConfig(): any {
@@ -254,10 +254,10 @@ export default class Skill {
                     Broadcast.sayAt(
                         this.target,
                         `You may now use <bold>${this.skill.name}</bold> again.`,
-                    )
+                    );
                 },
             },
-        }
+        };
     }
 
     /**
@@ -268,9 +268,9 @@ export default class Skill {
         if (Array.isArray(this.resource)) {
             return this.resource.every(resource =>
                 this.hasEnoughResource(character, resource),
-            )
+            );
         }
-        return this.hasEnoughResource(character, this.resource)
+        return this.hasEnoughResource(character, this.resource);
     }
 
     /**
@@ -286,6 +286,6 @@ export default class Skill {
             !resource.cost
             || (character.hasAttribute(resource.attribute)
                 && character.getAttribute(resource.attribute) >= resource.cost)
-        )
+        );
     }
 }

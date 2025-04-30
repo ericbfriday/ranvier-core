@@ -11,4 +11,4 @@ enum ItemType {
     RESOURCE = 6,
 }
 
-export default ItemType
+export default ItemType;

@@ -5,6 +5,6 @@
 const EffectFlag = {
     BUFF: Symbol('BUFF'),
     DEBUFF: Symbol('DEBUFF'),
-} as const
+} as const;
 
-export default EffectFlag
+export default EffectFlag;

@@ -1,13 +1,13 @@
-import type Helpfile from './Helpfile'
+import type Helpfile from './Helpfile';
 
 /**
  * Contain/look up helpfiles
  */
 export default class HelpManager {
-    private helps: Map<string, Helpfile>
+    private helps: Map<string, Helpfile>;
 
     constructor() {
-        this.helps = new Map()
+        this.helps = new Map();
     }
 
     /**
@@ -15,7 +15,7 @@ export default class HelpManager {
      * @param help - Helpfile name
      */
     get(help: string): Helpfile | undefined {
-        return this.helps.get(help)
+        return this.helps.get(help);
     }
 
     /**
@@ -23,7 +23,7 @@ export default class HelpManager {
      * @param help - Helpfile to add
      */
     add(help: Helpfile): void {
-        this.helps.set(help.name, help)
+        this.helps.set(help.name, help);
     }
 
     /**
@@ -31,17 +31,17 @@ export default class HelpManager {
      * @param search - Search term
      */
     find(search: string): Map<string, Helpfile> {
-        const results = new Map<string, Helpfile>()
+        const results = new Map<string, Helpfile>();
         for (const [name, help] of this.helps.entries()) {
             if (name.indexOf(search) === 0) {
-                results.set(name, help)
-                continue
+                results.set(name, help);
+                continue;
             }
             if (help.keywords.some(keyword => keyword.includes(search))) {
-                results.set(name, help)
+                results.set(name, help);
             }
         }
-        return results
+        return results;
     }
 
     /**
@@ -49,17 +49,17 @@ export default class HelpManager {
      * @param help - Search term
      */
     getFirst(help: string): Helpfile | null {
-        const results = this.find(help)
+        const results = this.find(help);
 
         if (!results.size) {
             /**
              * No results found
              */
-            return null
+            return null;
         }
 
-        const [_, hfile] = [...results][0]
+        const [_, hfile] = [...results][0];
 
-        return hfile
+        return hfile;
     }
 }

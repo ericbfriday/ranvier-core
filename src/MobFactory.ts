@@ -1,6 +1,6 @@
-import type Area from './Area'
-import EntityFactory = require('./EntityFactory')
-import Npc = require('./Npc')
+import type Area from './Area';
+import EntityFactory = require('./EntityFactory');
+import Npc = require('./Npc');
 
 /**
  * Stores definitions of npcs to allow for easy creation/cloning
@@ -17,10 +17,10 @@ class MobFactory extends EntityFactory {
      * @return {Npc}
      */
     create(area: Area, entityRef: string): Npc {
-        const npc = this.createByType(area, entityRef, Npc)
-        npc.area = area
-        return npc
+        const npc = this.createByType(area, entityRef, Npc);
+        npc.area = area;
+        return npc;
     }
 }
 
-export default MobFactory
+export default MobFactory;

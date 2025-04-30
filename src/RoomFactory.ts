@@ -1,6 +1,6 @@
-import type Area from './Area'
-import EntityFactory from './EntityFactory'
-import Room from './Room'
+import type Area from './Area';
+import EntityFactory from './EntityFactory';
+import Room from './Room';
 
 /**
  * Stores definitions of npcs to allow for easy creation/cloning
@@ -15,10 +15,10 @@ class RoomFactory extends EntityFactory {
      * @return {Room}
      */
     create(area: Area, entityRef: string): Room {
-        const room = this.createByType(area, entityRef, Room)
-        room.area = area
-        return room
+        const room = this.createByType(area, entityRef, Room);
+        room.area = area;
+        return room;
     }
 }
 
-export default RoomFactory
+export default RoomFactory;

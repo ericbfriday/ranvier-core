@@ -1,8 +1,8 @@
 const SkillFlag = {
     PASSIVE: Symbol('PASSIVE'),
     ACTIVE: Symbol('ACTIVE'),
-} as const
+} as const;
 
-export type SkillFlagType = (typeof SkillFlag)[keyof typeof SkillFlag]
+export type SkillFlagType = (typeof SkillFlag)[keyof typeof SkillFlag];
 
-export default SkillFlag
+export default SkillFlag;

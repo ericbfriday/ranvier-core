@@ -1,4 +1,4 @@
-import { EventEmitter } from 'node:events'
+import { EventEmitter } from 'node:events';
 
 // Assuming commander is a type from a package
 interface Commander {
@@ -16,7 +16,7 @@ class GameServer extends EventEmitter {
      * @event GameServer#startup
      * @param {commander} commander
      */
-        this.emit('startup', commander)
+        this.emit('startup', commander);
     }
 
     /**
@@ -27,8 +27,8 @@ class GameServer extends EventEmitter {
     /**
      * @event GameServer#shutdown
      */
-        this.emit('shutdown')
+        this.emit('shutdown');
     }
 }
 
-export default GameServer
+export default GameServer;

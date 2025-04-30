@@ -1,6 +1,6 @@
-import type { Area } from './Area'
-import EntityFactory = require('./EntityFactory')
-import Item = require('./Item')
+import type { Area } from './Area';
+import EntityFactory = require('./EntityFactory');
+import Item = require('./Item');
 
 /**
  * Stores definitions of items to allow for easy creation/cloning of objects
@@ -17,10 +17,10 @@ class ItemFactory extends EntityFactory {
      * @return {Item}
      */
     create(area: Area, entityRef: string): Item {
-        const item = this.createByType(area, entityRef, Item)
-        item.area = area
-        return item
+        const item = this.createByType(area, entityRef, Item);
+        item.area = area;
+        return item;
     }
 }
 
-export default ItemFactory
+export default ItemFactory;

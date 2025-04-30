@@ -1,13 +1,13 @@
-import type Character from './Character'
-import type GameState from './GameState'
-import Item from './Item'
+import type Character from './Character';
+import type GameState from './GameState';
+import Item from './Item';
 
 /**
  * Representation of a `Character` or container `Item` inventory
  * @extends Map
  */
 export default class Inventory extends Map<string, Item> {
-    maxSize: number
+    maxSize: number;
 
     /**
      * @param {object} init
@@ -21,31 +21,31 @@ export default class Inventory extends Map<string, Item> {
                 max: Infinity,
             },
             init,
-        )
+        );
 
-        super(safeInit.items)
-        this.maxSize = safeInit.max
+        super(safeInit.items);
+        this.maxSize = safeInit.max;
     }
 
     /**
      * @param {number} size
      */
     setMax(size: number): void {
-        this.maxSize = size
+        this.maxSize = size;
     }
 
     /**
      * @return {number}
      */
     getMax(): number {
-        return this.maxSize
+        return this.maxSize;
     }
 
     /**
      * @return {boolean}
      */
     get isFull(): boolean {
-        return this.size >= this.maxSize
+        return this.size >= this.maxSize;
     }
 
     /**
@@ -53,16 +53,16 @@ export default class Inventory extends Map<string, Item> {
      */
     addItem(item: Item): void {
         if (this.isFull) {
-            throw new InventoryFullError()
+            throw new InventoryFullError();
         }
-        this.set(item.uuid, item)
+        this.set(item.uuid, item);
     }
 
     /**
      * @param {Item} item
      */
     removeItem(item: Item): void {
-        this.delete(item.uuid)
+        this.delete(item.uuid);
     }
 
     serialize(): { items: Array<[string, any]>, max: number } {
@@ -70,18 +70,18 @@ export default class Inventory extends Map<string, Item> {
         const data = {
             items: [] as Array<[string, any]>,
             max: this.maxSize,
-        }
+        };
 
         for (const [uuid, item] of this) {
             if (!(item instanceof Item)) {
-                this.delete(uuid)
-                continue
+                this.delete(uuid);
+                continue;
             }
 
-            data.items.push([uuid, item.serialize()])
+            data.items.push([uuid, item.serialize()]);
         }
 
-        return data
+        return data;
     }
 
     /**
@@ -92,22 +92,22 @@ export default class Inventory extends Map<string, Item> {
     // Circular dependency is handled by dynamic import in the original code
         for (const [uuid, def] of this) {
             if (def instanceof Item) {
-                def.carriedBy = carriedBy
-                continue
+                def.carriedBy = carriedBy;
+                continue;
             }
             // @ts-expect-error IDK wtf this is doing.
             if (!def.entityReference) {
-                continue
+                continue;
             }
 
-            const area = state.AreaManager.getAreaByReference(def.entityReference)
-            const newItem = state.ItemFactory.create(area, def.entityReference)
-            newItem.uuid = uuid
-            newItem.carriedBy = carriedBy
-            newItem.initializeInventory(def.inventory)
-            newItem.hydrate(state, def)
-            this.set(uuid, newItem)
-            state.ItemManager.add(newItem)
+            const area = state.AreaManager.getAreaByReference(def.entityReference);
+            const newItem = state.ItemFactory.create(area, def.entityReference);
+            newItem.uuid = uuid;
+            newItem.carriedBy = carriedBy;
+            newItem.initializeInventory(def.inventory);
+            newItem.hydrate(state, def);
+            this.set(uuid, newItem);
+            state.ItemManager.add(newItem);
         }
     }
 }
@@ -117,7 +117,7 @@ export default class Inventory extends Map<string, Item> {
  */
 export class InventoryFullError extends Error {
     constructor(message?: string) {
-        super(message || 'Inventory full')
-        this.name = 'InventoryFullError'
+        super(message || 'Inventory full');
+        this.name = 'InventoryFullError';
     }
 }

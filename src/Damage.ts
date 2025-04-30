@@ -1,4 +1,4 @@
-import type Character from './Character'
+import type Character from './Character';
 
 interface DamageMetadata {
     type?: string
@@ -15,11 +15,11 @@ interface DamageMetadata {
  * @property {object} metadata Extra info about the damage: type, hidden, critical, etc.
  */
 class Damage {
-    attribute: string
-    amount: number
-    attacker: Character | null
-    source: any
-    metadata: DamageMetadata
+    attribute: string;
+    amount: number;
+    attacker: Character | null;
+    source: any;
+    metadata: DamageMetadata;
 
     /**
      * @param {string} attribute Attribute the damage is going to apply to
@@ -38,18 +38,18 @@ class Damage {
         if (!Number.isFinite(amount)) {
             throw new TypeError(
                 `Damage amount must be a finite Number, got ${amount}.`,
-            )
+            );
         }
 
         if (typeof attribute !== 'string') {
-            throw new TypeError('Damage attribute name must be a string')
+            throw new TypeError('Damage attribute name must be a string');
         }
 
-        this.attacker = attacker
-        this.attribute = attribute
-        this.amount = amount
-        this.source = source
-        this.metadata = metadata
+        this.attacker = attacker;
+        this.attribute = attribute;
+        this.amount = amount;
+        this.source = source;
+        this.metadata = metadata;
     }
 
     /**
@@ -58,13 +58,13 @@ class Damage {
      * @return {number} Final damage amount
      */
     evaluate(target: Character): number {
-        let amount = this.amount
+        let amount = this.amount;
 
         if (this.attacker) {
-            amount = this.attacker.evaluateOutgoingDamage(this, amount, target)
+            amount = this.attacker.evaluateOutgoingDamage(this, amount, target);
         }
 
-        return target.evaluateIncomingDamage(this, amount)
+        return target.evaluateIncomingDamage(this, amount);
     }
 
     /**
@@ -74,8 +74,8 @@ class Damage {
      * @fires Character#damaged
      */
     commit(target: Character): void {
-        const finalAmount = this.evaluate(target)
-        target.lowerAttribute(this.attribute, finalAmount)
+        const finalAmount = this.evaluate(target);
+        target.lowerAttribute(this.attribute, finalAmount);
 
         if (this.attacker) {
             /**
@@ -84,7 +84,7 @@ class Damage {
              * @param {Character} target
              * @param {number} finalAmount
              */
-            this.attacker.emit('hit', this, target, finalAmount)
+            this.attacker.emit('hit', this, target, finalAmount);
         }
 
         /**
@@ -92,8 +92,8 @@ class Damage {
          * @param {Damage} damage
          * @param {number} finalAmount
          */
-        target.emit('damaged', this, finalAmount)
+        target.emit('damaged', this, finalAmount);
     }
 }
 
-export default Damage
+export default Damage;

@@ -1,5 +1,5 @@
-import type EntityLoader from './EntityLoader'
-import Account from './Account'
+import type EntityLoader from './EntityLoader';
+import Account from './Account';
 
 /**
  * Creates/loads {@linkplain Account|Accounts}
@@ -7,12 +7,12 @@ import Account from './Account'
  * @property {EntityLoader} loader
  */
 class AccountManager {
-    accounts: Map<string, Account>
-    loader: EntityLoader | null
+    accounts: Map<string, Account>;
+    loader: EntityLoader | null;
 
     constructor() {
-        this.accounts = new Map()
-        this.loader = null
+        this.accounts = new Map();
+        this.loader = null;
     }
 
     /**
@@ -20,14 +20,14 @@ class AccountManager {
      * @param {EntityLoader} loader
      */
     setLoader(loader: EntityLoader): void {
-        this.loader = loader
+        this.loader = loader;
     }
 
     /**
      * @param {Account} acc
      */
     addAccount(acc: Account): void {
-        this.accounts.set(acc.username, acc)
+        this.accounts.set(acc.username, acc);
     }
 
     /**
@@ -35,7 +35,7 @@ class AccountManager {
      * @return {Account|undefined}
      */
     getAccount(username: string): Account | undefined {
-        return this.accounts.get(username)
+        return this.accounts.get(username);
     }
 
     /**
@@ -44,20 +44,20 @@ class AccountManager {
      */
     async loadAccount(username: string, force?: boolean): Promise<Account> {
         if (this.accounts.has(username) && !force) {
-            return this.getAccount(username)!
+            return this.getAccount(username)!;
         }
 
         if (!this.loader) {
-            throw new Error('No entity loader configured for accounts')
+            throw new Error('No entity loader configured for accounts');
         }
 
-        const data = await this.loader.fetch(username)
+        const data = await this.loader.fetch(username);
 
-        const account = new Account(data)
-        this.addAccount(account)
+        const account = new Account(data);
+        this.addAccount(account);
 
-        return account
+        return account;
     }
 }
 
-export default AccountManager
+export default AccountManager;

@@ -1,7 +1,7 @@
-import type Npc from './Npc'
-import type Room from './Room'
-import AreaFloor from './AreaFloor'
-import GameEntity from './GameEntity'
+import type Npc from './Npc';
+import type Room from './Room';
+import AreaFloor from './AreaFloor';
+import GameEntity from './GameEntity';
 
 export interface AreaManifest {
     title: string
@@ -40,31 +40,31 @@ export interface Broadcastable {
  * @extends GameEntity
  */
 export default class Area extends GameEntity implements Broadcastable {
-    bundle: string
-    name: string
-    title: string
-    metadata: Record<string, any> = {}
-    rooms: Map<string, Room>
-    npcs: Set<Npc>
-    map: Map<number, AreaFloor>
-    script?: string
+    bundle: string;
+    name: string;
+    title: string;
+    metadata: Record<string, any> = {};
+    rooms: Map<string, Room>;
+    npcs: Set<Npc>;
+    map: Map<number, AreaFloor>;
+    script?: string;
     behaviors: Map<string, any> = new Map();
 
     constructor(bundle: string, name: string, manifest: AreaManifest) {
-        super()
-        this.bundle = bundle
-        this.name = name
-        this.title = manifest.title
-        this.metadata = manifest.metadata || {}
-        this.rooms = new Map()
-        this.npcs = new Set()
-        this.map = new Map()
-        this.script = manifest.script
-        this.behaviors = new Map(Object.entries(manifest.behaviors || {}))
+        super();
+        this.bundle = bundle;
+        this.name = name;
+        this.title = manifest.title;
+        this.metadata = manifest.metadata || {};
+        this.rooms = new Map();
+        this.npcs = new Set();
+        this.map = new Map();
+        this.script = manifest.script;
+        this.behaviors = new Map(Object.entries(manifest.behaviors || {}));
 
         this.on('updateTick', (state) => {
-            this.update(state)
-        })
+            this.update(state);
+        });
     }
 
     /**
@@ -72,7 +72,7 @@ export default class Area extends GameEntity implements Broadcastable {
      * @return {string}
      */
     get areaPath(): string {
-        return `${this.bundle}/areas/${this.name}`
+        return `${this.bundle}/areas/${this.name}`;
     }
 
     /**
@@ -80,7 +80,7 @@ export default class Area extends GameEntity implements Broadcastable {
      * @return {Array<number>}
      */
     get floors(): number[] {
-        return [...this.map.keys()].sort()
+        return [...this.map.keys()].sort();
     }
 
     /**
@@ -88,7 +88,7 @@ export default class Area extends GameEntity implements Broadcastable {
      * @return {Room|undefined}
      */
     getRoomById(id: string): Room | undefined {
-        return this.rooms.get(id)
+        return this.rooms.get(id);
     }
 
     /**
@@ -96,17 +96,17 @@ export default class Area extends GameEntity implements Broadcastable {
      * @fires Area#roomAdded
      */
     addRoom(room: Room): void {
-        this.rooms.set(String(room.id), room)
+        this.rooms.set(String(room.id), room);
 
         if (room.coordinates) {
-            this.addRoomToMap(room)
+            this.addRoomToMap(room);
         }
 
         /**
          * @event Area#roomAdded
          * @param {Room} room
          */
-        this.emit('roomAdded', room)
+        this.emit('roomAdded', room);
     }
 
     /**
@@ -114,13 +114,13 @@ export default class Area extends GameEntity implements Broadcastable {
      * @fires Area#roomRemoved
      */
     removeRoom(room: Room): void {
-        this.rooms.delete(String(room.id))
+        this.rooms.delete(String(room.id));
 
         /**
          * @event Area#roomRemoved
          * @param {Room} room
          */
-        this.emit('roomRemoved', room)
+        this.emit('roomRemoved', room);
     }
 
     /**
@@ -129,18 +129,18 @@ export default class Area extends GameEntity implements Broadcastable {
      */
     addRoomToMap(room: Room): void {
         if (!room.coordinates) {
-            throw new Error('Room does not have coordinates')
+            throw new Error('Room does not have coordinates');
         }
 
-        const { x, y, z } = room.coordinates
+        const { x, y, z } = room.coordinates;
 
         if (!this.map.has(z)) {
-            this.map.set(z, new AreaFloor(z))
+            this.map.set(z, new AreaFloor(z));
         }
 
-        const floor = this.map.get(z)
+        const floor = this.map.get(z);
         if (floor) {
-            floor.addRoom(x, y, room)
+            floor.addRoom(x, y, room);
         }
     }
 
@@ -152,15 +152,15 @@ export default class Area extends GameEntity implements Broadcastable {
      * @return {Room|boolean}
      */
     getRoomAtCoordinates(x: number, y: number, z: number): Room | undefined {
-        const floor = this.map.get(z)
-        return floor && floor.getRoom(x, y)
+        const floor = this.map.get(z);
+        return floor && floor.getRoom(x, y);
     }
 
     /**
      * @param {Npc} npc
      */
     addNpc(npc: Npc): void {
-        this.npcs.add(npc)
+        this.npcs.add(npc);
     }
 
     /**
@@ -168,7 +168,7 @@ export default class Area extends GameEntity implements Broadcastable {
      * @param {Npc} npc
      */
     removeNpc(npc: Npc): void {
-        this.npcs.delete(npc)
+        this.npcs.delete(npc);
     }
 
     /**
@@ -186,7 +186,7 @@ export default class Area extends GameEntity implements Broadcastable {
              * @see Area#update
              * @event Room#updateTick
              */
-            room.emit('updateTick')
+            room.emit('updateTick');
         }
 
         for (const npc of this.npcs) {
@@ -194,23 +194,23 @@ export default class Area extends GameEntity implements Broadcastable {
              * @see Area#update
              * @event Npc#updateTick
              */
-            npc.emit('updateTick')
+            npc.emit('updateTick');
         }
     }
 
     hydrate(state: any): void {
-        this.setupBehaviors(state.AreaBehaviorManager)
-        const { rooms } = state.AreaFactory.getDefinition(this.name)
+        this.setupBehaviors(state.AreaBehaviorManager);
+        const { rooms } = state.AreaFactory.getDefinition(this.name);
         for (const roomRef of rooms) {
-            const room = state.RoomFactory.create(this, roomRef)
-            this.addRoom(room)
-            state.RoomManager.addRoom(room)
-            room.hydrate(state)
+            const room = state.RoomFactory.create(this, roomRef);
+            this.addRoom(room);
+            state.RoomManager.addRoom(room);
+            room.hydrate(state);
             /**
              * Fires after the room is hydrated and added to its area
              * @event Room#ready
              */
-            room.emit('ready')
+            room.emit('ready');
         }
     }
 
@@ -224,7 +224,7 @@ export default class Area extends GameEntity implements Broadcastable {
             (acc: Broadcastable[], [, room]) =>
                 acc.concat(room.getBroadcastTargets()),
             [],
-        )
-        return [this, ...roomTargets]
+        );
+        return [this, ...roomTargets];
     }
 }

@@ -1,5 +1,5 @@
-import type { DataSource } from './DataSource'
-import { EntityLoader } from './EntityLoader'
+import type { DataSource } from './DataSource';
+import { EntityLoader } from './EntityLoader';
 
 export interface EntityLoaderConfig {
     [key: string]: {
@@ -23,27 +23,27 @@ export default class EntityLoaderRegistry extends Map<string, EntityLoader> {
     ): void {
         for (const [name, settings] of Object.entries(config)) {
             if (!settings.hasOwnProperty('source')) {
-                throw new Error(`EntityLoader [${name}] does not specify a 'source'`)
+                throw new Error(`EntityLoader [${name}] does not specify a 'source'`);
             }
 
             if (typeof settings.source !== 'string') {
-                throw new TypeError(`EntityLoader [${name}] has an invalid 'source'`)
+                throw new TypeError(`EntityLoader [${name}] has an invalid 'source'`);
             }
 
-            const source = sourceRegistry.get(settings.source)
+            const source = sourceRegistry.get(settings.source);
 
             if (!source) {
                 throw new Error(
                     `Invalid source [${settings.source}] for entity [${name}]`,
-                )
+                );
             }
 
-            const sourceConfig = settings.config || {}
+            const sourceConfig = settings.config || {};
 
             this.set(
                 name,
                 new EntityLoader(sourceRegistry.get(settings.source)!, sourceConfig),
-            )
+            );
         }
     }
 }

@@ -1,17 +1,17 @@
-import { EventEmitter } from 'node:events'
+import { EventEmitter } from 'node:events';
 
 /**
  * Base class for anything that should be sending or receiving data from the player
  */
 class TransportStream extends EventEmitter {
-    socket: any
+    socket: any;
 
     get readable(): boolean {
-        return true
+        return true;
     }
 
     get writable(): boolean {
-        return true
+        return true;
     }
 
     write(): void {
@@ -27,16 +27,16 @@ class TransportStream extends EventEmitter {
      */
     command(command: string, ...args: any[]): any {
         if (!command || !command.length) {
-            throw new RangeError('Must specify a command to the stream')
+            throw new RangeError('Must specify a command to the stream');
         }
-        const methodName = `execute${command[0].toUpperCase()}${command.substr(1)}`
+        const methodName = `execute${command[0].toUpperCase()}${command.substr(1)}`;
         if (typeof (this as any)[methodName] === 'function') {
-            return (this as any)[methodName](...args)
+            return (this as any)[methodName](...args);
         }
     }
 
     address(): null {
-        return null
+        return null;
     }
 
     end(): void {
@@ -64,12 +64,12 @@ class TransportStream extends EventEmitter {
      * @param {any} socket
      */
     attach(socket: any): void {
-        this.socket = socket
+        this.socket = socket;
 
         this.socket.on('close', () => {
-            this.emit('close')
-        })
+            this.emit('close');
+        });
     }
 }
 
-export default TransportStream
+export default TransportStream;

@@ -1,17 +1,17 @@
-import type Attribute from './Attribute'
-import type Damage from './Damage'
-import type Effect from './Effect'
-import type { GameState } from './GameState'
-import type Item from './Item'
-import type Party from './Party'
-import type Room from './Room'
-import { EventEmitter } from 'node:events'
-import Attributes from './Attributes'
-import Config from './Config'
-import EffectList from './EffectList'
-import { EquipAlreadyEquippedError, EquipSlotTakenError } from './EquipErrors'
-import { Inventory, InventoryFullError } from './Inventory'
-import Metadatable from './Metadatable'
+import type Attribute from './Attribute';
+import type Damage from './Damage';
+import type Effect from './Effect';
+import type { GameState } from './GameState';
+import type Item from './Item';
+import type Party from './Party';
+import type Room from './Room';
+import { EventEmitter } from 'node:events';
+import Attributes from './Attributes';
+import Config from './Config';
+import EffectList from './EffectList';
+import { EquipAlreadyEquippedError, EquipSlotTakenError } from './EquipErrors';
+import { Inventory, InventoryFullError } from './Inventory';
+import Metadatable from './Metadatable';
 
 interface CharacterConfig {
     name: string
@@ -39,46 +39,46 @@ interface CharacterConfig {
  * @mixes Metadatable
  */
 class Character extends Metadatable(EventEmitter) {
-    name: string
-    inventory: Inventory
-    equipment: Map<string, Item>
-    combatants: Set<Character>
-    combatData: Record<string, any>
-    level: number
-    room: Room | null
-    attributes: Attributes
-    followers: Set<Character>
-    following: Character | null
-    party: Party | null
-    effects: EffectList
-    metadata: Record<string, any> = Metadatable(EventEmitter)
-    __hydrated?: boolean
+    name: string;
+    inventory: Inventory;
+    equipment: Map<string, Item>;
+    combatants: Set<Character>;
+    combatData: Record<string, any>;
+    level: number;
+    room: Room | null;
+    attributes: Attributes;
+    followers: Set<Character>;
+    following: Character | null;
+    party: Party | null;
+    effects: EffectList;
+    metadata: Record<string, any> = Metadatable(EventEmitter);
+    __hydrated?: boolean;
 
     constructor(data: CharacterConfig) {
-        super()
+        super();
 
-        this.name = data.name
-        this.inventory = new Inventory(data.inventory || {})
-        this.equipment = data.equipment || new Map()
-        this.combatants = new Set()
-        this.combatData = {}
-        this.level = data.level || 1
-        this.room = data.room || null
-        this.attributes = data.attributes || new Attributes()
+        this.name = data.name;
+        this.inventory = new Inventory(data.inventory || {});
+        this.equipment = data.equipment || new Map();
+        this.combatants = new Set();
+        this.combatData = {};
+        this.level = data.level || 1;
+        this.room = data.room || null;
+        this.attributes = data.attributes || new Attributes();
 
-        this.followers = new Set()
-        this.following = null
-        this.party = null
+        this.followers = new Set();
+        this.following = null;
+        this.party = null;
 
-        this.effects = new EffectList(this, data.effects)
+        this.effects = new EffectList(this, data.effects);
 
         // Arbitrary data bundles are free to shove whatever they want in
         // WARNING: values must be JSON.stringify-able
         if (data.metadata) {
-            this.metadata = JSON.parse(JSON.stringify(data.metadata))
+            this.metadata = JSON.parse(JSON.stringify(data.metadata));
         }
         else {
-            this.metadata = {}
+            this.metadata = {};
         }
     }
 
@@ -88,10 +88,10 @@ class Character extends Metadatable(EventEmitter) {
      * @param {...*}   args
      */
     emit(event: string, ...args: any[]): boolean {
-        super.emit(event, ...args)
+        super.emit(event, ...args);
 
-        this.effects.emit(event, ...args)
-        return true
+        this.effects.emit(event, ...args);
+        return true;
     }
 
     /**
@@ -99,7 +99,7 @@ class Character extends Metadatable(EventEmitter) {
      * @return {boolean}
      */
     hasAttribute(attr: string): boolean {
-        return this.attributes.has(attr)
+        return this.attributes.has(attr);
     }
 
     /**
@@ -109,35 +109,35 @@ class Character extends Metadatable(EventEmitter) {
      */
     getMaxAttribute(attr: string): number {
         if (!this.hasAttribute(attr)) {
-            throw new RangeError(`Character does not have attribute [${attr}]`)
+            throw new RangeError(`Character does not have attribute [${attr}]`);
         }
 
-        const attribute = this.attributes.get(attr)
-        const currentVal = this.effects.evaluateAttribute(attribute)
+        const attribute = this.attributes.get(attr);
+        const currentVal = this.effects.evaluateAttribute(attribute);
 
         if (!attribute.formula) {
-            return currentVal
+            return currentVal;
         }
 
-        const { formula } = attribute
+        const { formula } = attribute;
 
         const requiredValues = formula.requires.map((reqAttr: string) =>
             this.getMaxAttribute(reqAttr),
-        )
+        );
 
         return formula.evaluate.apply(formula, [
             attribute,
             this,
             currentVal,
             ...requiredValues,
-        ])
+        ]);
     }
 
     /**
      * @see {@link Attributes#add}
      */
     addAttribute(attribute: Attribute): void {
-        this.attributes.add(attribute)
+        this.attributes.add(attribute);
     }
 
     /**
@@ -147,10 +147,10 @@ class Character extends Metadatable(EventEmitter) {
      */
     getAttribute(attr: string): number {
         if (!this.hasAttribute(attr)) {
-            throw new RangeError(`Character does not have attribute [${attr}]`)
+            throw new RangeError(`Character does not have attribute [${attr}]`);
         }
 
-        return this.getMaxAttribute(attr) + this.attributes.get(attr).delta
+        return this.getMaxAttribute(attr) + this.attributes.get(attr).delta;
     }
 
     /**
@@ -159,8 +159,8 @@ class Character extends Metadatable(EventEmitter) {
      * @return {number}
      */
     getBaseAttribute(attr: string): number {
-        var attr = this.attributes.get(attr)
-        return attr && attr.base
+        var attr = this.attributes.get(attr);
+        return attr && attr.base;
     }
 
     /**
@@ -177,11 +177,11 @@ class Character extends Metadatable(EventEmitter) {
      */
     setAttributeToMax(attr: string): void {
         if (!this.hasAttribute(attr)) {
-            throw new Error(`Invalid attribute ${attr}`)
+            throw new Error(`Invalid attribute ${attr}`);
         }
 
-        this.attributes.get(attr).setDelta(0)
-        this.emit('attributeUpdate', attr, this.getAttribute(attr))
+        this.attributes.get(attr).setDelta(0);
+        this.emit('attributeUpdate', attr, this.getAttribute(attr));
     }
 
     /**
@@ -193,11 +193,11 @@ class Character extends Metadatable(EventEmitter) {
      */
     raiseAttribute(attr: string, amount: number): void {
         if (!this.hasAttribute(attr)) {
-            throw new Error(`Invalid attribute ${attr}`)
+            throw new Error(`Invalid attribute ${attr}`);
         }
 
-        this.attributes.get(attr).raise(amount)
-        this.emit('attributeUpdate', attr, this.getAttribute(attr))
+        this.attributes.get(attr).raise(amount);
+        this.emit('attributeUpdate', attr, this.getAttribute(attr));
     }
 
     /**
@@ -209,11 +209,11 @@ class Character extends Metadatable(EventEmitter) {
      */
     lowerAttribute(attr: string, amount: number): void {
         if (!this.hasAttribute(attr)) {
-            throw new Error(`Invalid attribute ${attr}`)
+            throw new Error(`Invalid attribute ${attr}`);
         }
 
-        this.attributes.get(attr).lower(amount)
-        this.emit('attributeUpdate', attr, this.getAttribute(attr))
+        this.attributes.get(attr).lower(amount);
+        this.emit('attributeUpdate', attr, this.getAttribute(attr));
     }
 
     /**
@@ -231,11 +231,11 @@ class Character extends Metadatable(EventEmitter) {
      */
     setAttributeBase(attr: string, newBase: number): void {
         if (!this.hasAttribute(attr)) {
-            throw new Error(`Invalid attribute ${attr}`)
+            throw new Error(`Invalid attribute ${attr}`);
         }
 
-        this.attributes.get(attr).setBase(newBase)
-        this.emit('attributeUpdate', attr, this.getAttribute(attr))
+        this.attributes.get(attr).setBase(newBase);
+        this.emit('attributeUpdate', attr, this.getAttribute(attr));
     }
 
     /**
@@ -244,7 +244,7 @@ class Character extends Metadatable(EventEmitter) {
      * @see {@link Effect}
      */
     hasEffectType(type: string): boolean {
-        return this.effects.hasEffectType(type)
+        return this.effects.hasEffectType(type);
     }
 
     /**
@@ -252,7 +252,7 @@ class Character extends Metadatable(EventEmitter) {
      * @return {boolean}
      */
     addEffect(effect: Effect): boolean {
-        return this.effects.add(effect)
+        return this.effects.add(effect);
     }
 
     /**
@@ -260,7 +260,7 @@ class Character extends Metadatable(EventEmitter) {
      * @see {@link Effect#remove}
      */
     removeEffect(effect: Effect): void {
-        this.effects.remove(effect)
+        this.effects.remove(effect);
     }
 
     /**
@@ -271,29 +271,29 @@ class Character extends Metadatable(EventEmitter) {
      */
     initiateCombat(target: Character, lag = 0): void {
         if (!this.isInCombat()) {
-            this.combatData.lag = lag
-            this.combatData.roundStarted = Date.now()
+            this.combatData.lag = lag;
+            this.combatData.roundStarted = Date.now();
             /**
              * Fired when Character#initiateCombat is called
              * @event Character#combatStart
              */
-            this.emit('combatStart')
+            this.emit('combatStart');
         }
 
         if (this.isInCombat(target)) {
-            return
+            return;
         }
 
         // this doesn't use `addCombatant` because `addCombatant` automatically
         // adds this to the target's combatants list as well
-        this.combatants.add(target)
-        this.emit('combatantAdded', target)
+        this.combatants.add(target);
+        this.emit('combatantAdded', target);
         if (!target.isInCombat()) {
             // TODO: This hardcoded 2.5 second lag on the target needs to be refactored
-            target.initiateCombat(this, 2500)
+            target.initiateCombat(this, 2500);
         }
 
-        target.addCombatant(this)
+        target.addCombatant(this);
     }
 
     /**
@@ -303,7 +303,7 @@ class Character extends Metadatable(EventEmitter) {
      * @return boolean
      */
     isInCombat(target?: Character): boolean {
-        return target ? this.combatants.has(target) : this.combatants.size > 0
+        return target ? this.combatants.has(target) : this.combatants.size > 0;
     }
 
     /**
@@ -312,16 +312,16 @@ class Character extends Metadatable(EventEmitter) {
      */
     addCombatant(target: Character): void {
         if (this.isInCombat(target)) {
-            return
+            return;
         }
 
-        this.combatants.add(target)
-        target.addCombatant(this)
+        this.combatants.add(target);
+        target.addCombatant(this);
         /**
          * @event Character#combatantAdded
          * @param {Character} target
          */
-        this.emit('combatantAdded', target)
+        this.emit('combatantAdded', target);
     }
 
     /**
@@ -331,23 +331,23 @@ class Character extends Metadatable(EventEmitter) {
      */
     removeCombatant(target: Character): void {
         if (!this.combatants.has(target)) {
-            return
+            return;
         }
 
-        this.combatants.delete(target)
-        target.removeCombatant(this)
+        this.combatants.delete(target);
+        target.removeCombatant(this);
 
         /**
          * @event Character#combatantRemoved
          * @param {Character} target
          */
-        this.emit('combatantRemoved', target)
+        this.emit('combatantRemoved', target);
 
         if (!this.combatants.size) {
             /**
              * @event Character#combatEnd
              */
-            this.emit('combatEnd')
+            this.emit('combatEnd');
         }
     }
 
@@ -356,11 +356,11 @@ class Character extends Metadatable(EventEmitter) {
      */
     removeFromCombat(): void {
         if (!this.isInCombat()) {
-            return
+            return;
         }
 
         for (const combatant of this.combatants) {
-            this.removeCombatant(combatant)
+            this.removeCombatant(combatant);
         }
     }
 
@@ -370,8 +370,8 @@ class Character extends Metadatable(EventEmitter) {
      * @return {number}
      */
     evaluateIncomingDamage(damage: Damage, currentAmount: number): number {
-        const amount = this.effects.evaluateIncomingDamage(damage, currentAmount)
-        return Math.floor(amount)
+        const amount = this.effects.evaluateIncomingDamage(damage, currentAmount);
+        return Math.floor(amount);
     }
 
     /**
@@ -381,7 +381,7 @@ class Character extends Metadatable(EventEmitter) {
      * @return {number}
      */
     evaluateOutgoingDamage(damage: Damage, currentAmount: number): number {
-        return this.effects.evaluateOutgoingDamage(damage, currentAmount)
+        return this.effects.evaluateOutgoingDamage(damage, currentAmount);
     }
 
     /**
@@ -395,31 +395,31 @@ class Character extends Metadatable(EventEmitter) {
      */
     equip(item: Item, slot: string): void {
         if (this.equipment.has(slot)) {
-            throw new EquipSlotTakenError()
+            throw new EquipSlotTakenError();
         }
 
         if (item.isEquipped) {
-            throw new EquipAlreadyEquippedError()
+            throw new EquipAlreadyEquippedError();
         }
 
         if (this.inventory) {
-            this.removeItem(item)
+            this.removeItem(item);
         }
 
-        this.equipment.set(slot, item)
-        item.isEquipped = true
-        item.equippedBy = this
+        this.equipment.set(slot, item);
+        item.isEquipped = true;
+        item.equippedBy = this;
         /**
          * @event Item#equip
          * @param {Character} equipper
          */
-        item.emit('equip', this)
+        item.emit('equip', this);
         /**
          * @event Character#equip
          * @param {string} slot
          * @param {Item} item
          */
-        this.emit('equip', slot, item)
+        this.emit('equip', slot, item);
     }
 
     /**
@@ -432,29 +432,29 @@ class Character extends Metadatable(EventEmitter) {
      */
     unequip(slot: string): void {
         if (this.isInventoryFull()) {
-            throw new InventoryFullError()
+            throw new InventoryFullError();
         }
 
-        const item = this.equipment.get(slot)
+        const item = this.equipment.get(slot);
         if (!item) {
-            return
+            return;
         }
 
-        item.isEquipped = false
-        item.equippedBy = null
-        this.equipment.delete(slot)
+        item.isEquipped = false;
+        item.equippedBy = null;
+        this.equipment.delete(slot);
         /**
          * @event Item#unequip
          * @param {Character} equipper
          */
-        item.emit('unequip', this)
+        item.emit('unequip', this);
         /**
          * @event Character#unequip
          * @param {string} slot
          * @param {Item} item
          */
-        this.emit('unequip', slot, item)
-        this.addItem(item)
+        this.emit('unequip', slot, item);
+        this.addItem(item);
     }
 
     /**
@@ -462,9 +462,9 @@ class Character extends Metadatable(EventEmitter) {
      * @param {Item} item
      */
     addItem(item: Item): void {
-        this._setupInventory()
-        this.inventory.addItem(item)
-        item.carriedBy = this
+        this._setupInventory();
+        this.inventory.addItem(item);
+        item.carriedBy = this;
     }
 
     /**
@@ -474,16 +474,16 @@ class Character extends Metadatable(EventEmitter) {
      * @param {Item} item
      */
     removeItem(item: Item): void {
-        this.inventory.removeItem(item)
+        this.inventory.removeItem(item);
 
         // if we removed the last item unset the inventory
         // This ensures that when it's reloaded it won't try to set
         // its default inventory. Instead it will persist the fact
         // that all the items were removed from it
         if (!this.inventory.size) {
-            this.inventory = null as unknown as Inventory
+            this.inventory = null as unknown as Inventory;
         }
-        item.carriedBy = null
+        item.carriedBy = null;
     }
 
     /**
@@ -494,29 +494,29 @@ class Character extends Metadatable(EventEmitter) {
     hasItem(itemReference: string): Item | false {
         for (const [uuid, item] of this.inventory) {
             if (item.entityReference === itemReference) {
-                return item
+                return item;
             }
         }
 
-        return false
+        return false;
     }
 
     /**
      * @return {boolean}
      */
     isInventoryFull(): boolean {
-        this._setupInventory()
-        return this.inventory.isFull
+        this._setupInventory();
+        return this.inventory.isFull;
     }
 
     /**
      * @private
      */
     _setupInventory(): void {
-        this.inventory = this.inventory || new Inventory()
+        this.inventory = this.inventory || new Inventory();
         // Default max inventory size config
         if (!this.isNpc && !isFinite(this.inventory.getMax())) {
-            this.inventory.setMax(Config.get('defaultMaxPlayerInventory') || 20)
+            this.inventory.setMax(Config.get('defaultMaxPlayerInventory') || 20);
         }
     }
 
@@ -526,17 +526,17 @@ class Character extends Metadatable(EventEmitter) {
      */
     follow(target: Character): void {
         if (target === this) {
-            this.unfollow()
-            return
+            this.unfollow();
+            return;
         }
 
-        this.following = target
-        target.addFollower(this)
+        this.following = target;
+        target.addFollower(this);
         /**
          * @event Character#followed
          * @param {Character} target
          */
-        this.emit('followed', target)
+        this.emit('followed', target);
     }
 
     /**
@@ -545,16 +545,16 @@ class Character extends Metadatable(EventEmitter) {
      */
     unfollow(): void {
         if (!this.following) {
-            return
+            return;
         }
 
-        this.following.removeFollower(this)
+        this.following.removeFollower(this);
         /**
          * @event Character#unfollowed
          * @param {Character} following
          */
-        this.emit('unfollowed', this.following)
-        this.following = null
+        this.emit('unfollowed', this.following);
+        this.following = null;
     }
 
     /**
@@ -562,13 +562,13 @@ class Character extends Metadatable(EventEmitter) {
      * @fires Character#gainedFollower
      */
     addFollower(follower: Character): void {
-        this.followers.add(follower)
-        follower.following = this
+        this.followers.add(follower);
+        follower.following = this;
         /**
          * @event Character#gainedFollower
          * @param {Character} follower
          */
-        this.emit('gainedFollower', follower)
+        this.emit('gainedFollower', follower);
     }
 
     /**
@@ -576,13 +576,13 @@ class Character extends Metadatable(EventEmitter) {
      * @fires Character#lostFollower
      */
     removeFollower(follower: Character): void {
-        this.followers.delete(follower)
-        follower.following = null
+        this.followers.delete(follower);
+        follower.following = null;
         /**
          * @event Character#lostFollower
          * @param {Character} follower
          */
-        this.emit('lostFollower', follower)
+        this.emit('lostFollower', follower);
     }
 
     /**
@@ -590,7 +590,7 @@ class Character extends Metadatable(EventEmitter) {
      * @return {boolean}
      */
     isFollowing(target: Character): boolean {
-        return this.following === target
+        return this.following === target;
     }
 
     /**
@@ -598,7 +598,7 @@ class Character extends Metadatable(EventEmitter) {
      * @return {boolean}
      */
     hasFollower(target: Character): boolean {
-        return this.followers.has(target)
+        return this.followers.has(target);
     }
 
     /**
@@ -607,31 +607,31 @@ class Character extends Metadatable(EventEmitter) {
      */
     hydrate(state: GameState): boolean {
         if (this.__hydrated) {
-            Logger.warn('Attempted to hydrate already hydrated character.')
-            return false
+            Logger.warn('Attempted to hydrate already hydrated character.');
+            return false;
         }
 
         if (!(this.attributes instanceof Attributes)) {
-            const attributes = this.attributes
-            this.attributes = new Attributes()
+            const attributes = this.attributes;
+            this.attributes = new Attributes();
 
             for (const attr in attributes) {
-                let attrConfig = attributes[attr]
+                let attrConfig = attributes[attr];
                 if (typeof attrConfig === 'number') {
-                    attrConfig = { base: attrConfig }
+                    attrConfig = { base: attrConfig };
                 }
 
                 if (typeof attrConfig !== 'object' || !('base' in attrConfig)) {
                     throw new Error(
                         `Invalid base value given to attributes.\n${
                             JSON.stringify(attributes, null, 2)}`,
-                    )
+                    );
                 }
 
                 if (!state.AttributeFactory.has(attr)) {
                     throw new Error(
                         `Entity trying to hydrate with invalid attribute ${attr}`,
-                    )
+                    );
                 }
 
                 this.addAttribute(
@@ -640,16 +640,16 @@ class Character extends Metadatable(EventEmitter) {
                         attrConfig.base,
                         attrConfig.delta || 0,
                     ),
-                )
+                );
             }
         }
 
-        this.effects.hydrate(state)
+        this.effects.hydrate(state);
 
         // inventory is hydrated in the subclasses because npc and players hydrate their inventories differently
 
-        this.__hydrated = true
-        return true
+        this.__hydrated = true;
+        return true;
     }
 
     /**
@@ -663,22 +663,22 @@ class Character extends Metadatable(EventEmitter) {
             name: this.name,
             room: this.room ? this.room.entityReference : null,
             effects: this.effects.serialize(),
-        }
+        };
     }
 
     /**
      * @see {@link Broadcast}
      */
     getBroadcastTargets(): Character[] {
-        return [this]
+        return [this];
     }
 
     /**
      * @return {boolean}
      */
     get isNpc(): boolean {
-        return false
+        return false;
     }
 }
 
-export default Character
+export default Character;

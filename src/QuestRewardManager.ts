@@ -1,8 +1,8 @@
-import type QuestReward from './QuestReward'
+import type QuestReward from './QuestReward';
 
 /**
  * Simple map of quest reward name => class instance
  */
 class QuestRewardManager extends Map<string, typeof QuestReward> {}
 
-export default QuestRewardManager
+export default QuestRewardManager;

@@ -1,6 +1,6 @@
-import type { GameState } from './GameState'
-import type { Player } from './Player'
-import type { Quest } from './Quest'
+import type { GameState } from './GameState';
+import type { Player } from './Player';
+import type { Quest } from './Quest';
 
 interface CompletedQuest {
     started: string
@@ -15,9 +15,9 @@ interface CompletedQuest {
  * @property {Map}    activeQuests
  */
 class QuestTracker {
-    player: Player
-    activeQuests: Map<string, Quest>
-    completedQuests: Map<string, CompletedQuest>
+    player: Player;
+    activeQuests: Map<string, Quest>;
+    completedQuests: Map<string, CompletedQuest>;
 
     /**
      * @param {Player} player
@@ -29,10 +29,10 @@ class QuestTracker {
         active: [string, Quest][],
         completed: [string, CompletedQuest][],
     ) {
-        this.player = player
+        this.player = player;
 
-        this.activeQuests = new Map(active)
-        this.completedQuests = new Map(completed)
+        this.activeQuests = new Map(active);
+        this.completedQuests = new Map(completed);
     }
 
     /**
@@ -41,8 +41,8 @@ class QuestTracker {
      * @param {...*}   args
      */
     emit(event: string, ...args: any[]): void {
-        for (const [qid, quest] of this.activeQuests) {
-            quest.emit(event, ...args)
+        for (const [_qid, quest] of this.activeQuests) {
+            quest.emit(event, ...args);
         }
     }
 
@@ -51,7 +51,7 @@ class QuestTracker {
      * @return {boolean}
      */
     isActive(qid: string): boolean {
-        return this.activeQuests.has(qid)
+        return this.activeQuests.has(qid);
     }
 
     /**
@@ -59,11 +59,11 @@ class QuestTracker {
      * @return {boolean}
      */
     isComplete(qid: string): boolean {
-        return this.completedQuests.has(qid)
+        return this.completedQuests.has(qid);
     }
 
     get(qid: string): Quest | undefined {
-        return this.activeQuests.get(qid)
+        return this.activeQuests.get(qid);
     }
 
     /**
@@ -71,31 +71,31 @@ class QuestTracker {
      */
     complete(qid: string): void {
         if (!this.isActive(qid)) {
-            throw new Error('Quest not started')
+            throw new Error('Quest not started');
         }
 
-        const quest = this.activeQuests.get(qid)!
+        const quest = this.activeQuests.get(qid)!;
 
         this.completedQuests.set(qid, {
             started: quest.started,
             completedAt: new Date().toJSON(),
-        })
+        });
 
-        this.activeQuests.delete(qid)
+        this.activeQuests.delete(qid);
     }
 
     /**
      * @param {Quest} quest
      */
     start(quest: Quest): void {
-        const qid = quest.entityReference
+        const qid = quest.entityReference;
         if (this.activeQuests.has(qid)) {
-            throw new Error('Quest already started')
+            throw new Error('Quest already started');
         }
 
-        quest.started = new Date().toJSON()
-        this.activeQuests.set(qid, quest)
-        quest.emit('start')
+        quest.started = new Date().toJSON();
+        this.activeQuests.set(qid, quest);
+        quest.emit('start');
     }
 
     /**
@@ -109,11 +109,11 @@ class QuestTracker {
                 qid,
                 this.player,
                 data.state,
-            )
-            quest.started = data.started
-            quest.hydrate()
+            );
+            quest.started = data.started;
+            quest.hydrate();
 
-            this.activeQuests.set(qid, quest)
+            this.activeQuests.set(qid, quest);
         }
     }
 
@@ -130,8 +130,8 @@ class QuestTracker {
                 qid,
                 quest.serialize(),
             ]),
-        }
+        };
     }
 }
 
-export default QuestTracker
+export default QuestTracker;
