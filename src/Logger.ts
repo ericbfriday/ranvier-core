@@ -1,12 +1,11 @@
+import process from 'node:process';
 import longJohn from 'longjohn';
 import PrettyError from 'pretty-error';
 import winston from 'winston';
 
 // Reset Console transport and configure it to include ISO timestamp.
 winston.remove(winston.transports.Console);
-winston.add(winston.transports.Console, {
-    timestamp: true,
-});
+winston.add(winston.transports.Console);
 
 const logExt = '.log';
 
@@ -26,7 +25,7 @@ export class Logger {
     Medium priority logging, default.
   */
     static log(...messages: any[]): void {
-        winston.log('info', ...messages);
+        winston.log('info', messages);
     }
 
     /*
@@ -34,14 +33,14 @@ export class Logger {
     Highest priority logging.
   */
     static error(...messages: any[]): void {
-        winston.log('error', ...messages);
+        winston.log('error', messages);
     }
 
     /*
     Less high priority than error, still higher visibility than default.
   */
     static warn(...messages: any[]): void {
-        winston.log('warn', ...messages);
+        winston.log('warn', messages);
     }
 
     /*
@@ -49,7 +48,7 @@ export class Logger {
     Only logs if the environment variable is set to VERBOSE.
   */
     static verbose(...messages: any[]): void {
-        winston.log('verbose', ...messages);
+        winston.log('verbose', messages);
     }
 
     // TODO: Be able to set and deactivate file logging via a server command.
@@ -58,7 +57,7 @@ export class Logger {
             path += logExt;
         }
         console.log(`Adding file logging at ${path}`);
-        winston.add(winston.transports.File, { filename: path, timestamp: true });
+        winston.add(winston.transports.File);
     }
 
     static deactivateFileLogging(): void {
