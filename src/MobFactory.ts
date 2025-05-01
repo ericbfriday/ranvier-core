@@ -1,6 +1,6 @@
-import type Area from './Area';
-import EntityFactory = require('./EntityFactory');
-import Npc = require('./Npc');
+import type Area from './Area.js';
+import EntityFactory from './EntityFactory';
+import Npc from './Npc';
 
 /**
  * Stores definitions of npcs to allow for easy creation/cloning

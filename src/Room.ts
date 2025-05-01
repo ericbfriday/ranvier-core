@@ -1,11 +1,11 @@
-import type Area from './Area';
-import type Character from './Character';
-import type { GameState } from './GameState';
-import type Item from './Item';
-import type Npc from './Npc';
-import type Player from './Player';
-import GameEntity from './GameEntity';
-import Logger from './Logger';
+import type Area from './Area.js';
+import type Character from './Character.js';
+import type { GameState } from './GameState.js';
+import type Item from './Item.js';
+import type Npc from './Npc.js';
+import type Player from './Player.js';
+import GameEntity from './GameEntity.js';
+import Logger from './Logger.js';
 
 interface Coordinates {
     x: number

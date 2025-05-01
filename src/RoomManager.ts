@@ -1,4 +1,4 @@
-import type Room from './Room';
+import type Room from './Room.js';
 
 /**
  * Keeps track of all the individual rooms in the game

@@ -1,4 +1,4 @@
-import EventManager from './EventManager';
+import EventManager from './EventManager.js';
 
 /**
  * BehaviorManager keeps a map of BehaviorName:EventManager which is used

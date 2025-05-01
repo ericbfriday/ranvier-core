@@ -1,5 +1,5 @@
-import type { Player } from './Player';
-import { Party } from './Party';
+import type { Player } from './Player.js';
+import { Party } from './Party.js';
 
 /**
  * Keeps track of active in game parties and is used to create new parties

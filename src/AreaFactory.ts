@@ -1,5 +1,5 @@
-import Area from './Area';
-import EntityFactory from './EntityFactory';
+import Area from './Area.js';
+import EntityFactory from './EntityFactory.js';
 
 interface AreaDefinition {
     bundle: string

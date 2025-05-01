@@ -1,6 +1,6 @@
-import type { Area } from './Area';
-import EntityFactory = require('./EntityFactory');
-import Item = require('./Item');
+import type { Area } from './Area.js';
+import EntityFactory from './EntityFactory.js';
+import Item from './Item.js';
 
 /**
  * Stores definitions of items to allow for easy creation/cloning of objects

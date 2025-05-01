@@ -1,6 +1,6 @@
-import Area from './Area';
-import BehaviorManager from './BehaviorManager';
-import Room from './Room';
+import Area from './Area.js';
+import BehaviorManager from './BehaviorManager.js';
+import Room from './Room.js';
 
 /**
  * Stores references to, and handles distribution of, active areas

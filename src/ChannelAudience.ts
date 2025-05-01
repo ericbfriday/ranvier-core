@@ -1,5 +1,5 @@
-import type GameState from './GameState';
-import type Player from './Player';
+import type GameState from './GameState.js';
+import type Player from './Player.js';
 
 export interface AudienceOptions {
     state: GameState

@@ -1,8 +1,8 @@
-import type EntityLoader from './EntityLoader';
+import type EntityLoader from './EntityLoader.js';
 import { EventEmitter } from 'node:events';
-import Data from './Data';
-import EventManager from './EventManager';
-import Player from './Player';
+import Data from './Data.js';
+import EventManager from './EventManager.js';
+import Player from './Player.js';
 
 /**
  * Keeps track of all active players in game

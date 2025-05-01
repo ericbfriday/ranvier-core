@@ -1,14 +1,14 @@
-import type Area from './Area';
-import type Character from './Character';
-import type { GameState } from './GameState';
-import type Room from './Room';
+import type Area from './Area.js';
+import type Character from './Character.js';
+import type { GameState } from './GameState.js';
+import type Room from './Room.js';
 import EventEmitter from 'node:events';
 import { v4 as uuid } from 'uuid';
-import GameEntity from './GameEntity';
-import { Inventory } from './Inventory';
-import ItemType from './ItemType';
-import Logger from './Logger';
-import Metadatable from './Metadatable';
+import GameEntity from './GameEntity.js';
+import { Inventory } from './Inventory.js';
+import ItemType from './ItemType.js';
+import Logger from './Logger.js';
+import Metadatable from './Metadatable.js';
 
 interface ItemDefinition {
     id: number | string

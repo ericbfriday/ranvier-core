@@ -1,6 +1,6 @@
-import type { GameState } from './GameState';
-import type { Player } from './Player';
-import type { Quest } from './Quest';
+import type { GameState } from './GameState.js';
+import type { Player } from './Player.js';
+import type { Quest } from './Quest.js';
 
 interface CompletedQuest {
     started: string

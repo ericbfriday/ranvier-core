@@ -1,6 +1,6 @@
-import type { GameState } from './GameState';
-import Effect from './Effect';
-import EventManager from './EventManager';
+import type { GameState } from './GameState.js';
+import Effect from './Effect.js';
+import EventManager from './EventManager.js';
 
 /** @typedef {{config: Object<string,*>, listeners: Object<String,function (...*)>}} */
 interface EffectConfig {

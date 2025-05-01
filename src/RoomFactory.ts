@@ -1,6 +1,6 @@
-import type Area from './Area';
-import EntityFactory from './EntityFactory';
-import Room from './Room';
+import type Area from './Area.js';
+import EntityFactory from './EntityFactory.js';
+import Room from './Room.js';
 
 /**
  * Stores definitions of npcs to allow for easy creation/cloning

@@ -1,9 +1,9 @@
-import type DataSource from './DataSource';
+import type DataSource from './DataSource.js';
 
 /**
  * Used to CRUD an entity from a configured DataSource
  */
-export default class EntityLoader {
+export class EntityLoader {
     private dataSource: DataSource;
     public config: any;
 
@@ -87,3 +87,4 @@ export default class EntityLoader {
         return this.dataSource.update(this.config, id, data);
     }
 }
+export default EntityLoader;

@@ -1,4 +1,4 @@
-import type Character from './Character';
+import type Character from './Character.js';
 
 interface DamageMetadata {
     type?: string

@@ -1,7 +1,7 @@
-import type Attribute from './Attribute';
-import type Character from './Character';
-import type Damage from './Damage';
-import type Effect from './Effect';
+import type Attribute from './Attribute.js';
+import type Character from './Character.js';
+import type Damage from './Damage.js';
+import type Effect from './Effect.js';
 
 /**
  * Self-managing list of effects for a target

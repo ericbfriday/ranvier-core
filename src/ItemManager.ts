@@ -1,4 +1,4 @@
-import type { Item } from './Item';
+import type { Item } from './Item.js';
 import ItemType = require('./ItemType');
 
 /**

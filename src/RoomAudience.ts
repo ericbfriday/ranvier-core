@@ -1,5 +1,5 @@
-import type { GameEntity } from './GameEntity';
-import ChannelAudience from './ChannelAudience';
+import type { GameEntity } from './GameEntity.js';
+import ChannelAudience from './ChannelAudience.js';
 
 /**
  * Audience class representing other players in the same room as the sender

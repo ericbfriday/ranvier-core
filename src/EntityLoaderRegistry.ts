@@ -1,5 +1,5 @@
-import type { DataSource } from './DataSource';
-import { EntityLoader } from './EntityLoader';
+import type { DataSource } from './DataSource.js';
+import { EntityLoader } from './EntityLoader.ts';
 
 export interface EntityLoaderConfig {
     [key: string]: {
@@ -22,7 +22,7 @@ export default class EntityLoaderRegistry extends Map<string, EntityLoader> {
     config: EntityLoaderConfig = {},
     ): void {
         for (const [name, settings] of Object.entries(config)) {
-            if (!settings.hasOwnProperty('source')) {
+            if (!Object.prototype.hasOwnProperty.call(settings, 'source')) {
                 throw new Error(`EntityLoader [${name}] does not specify a 'source'`);
             }
 

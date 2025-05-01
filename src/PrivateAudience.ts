@@ -1,5 +1,5 @@
-import type Player from './Player';
-import ChannelAudience from './ChannelAudience';
+import type Player from './Player.js';
+import ChannelAudience from './ChannelAudience.js';
 
 /**
  * Audience class representing a specific targeted player.

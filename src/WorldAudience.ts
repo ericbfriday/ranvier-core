@@ -1,6 +1,6 @@
-import type GameState from './GameState';
-import type Player from './Player';
-import ChannelAudience from './ChannelAudience';
+import type GameState from './GameState.js';
+import type Player from './Player.js';
+import ChannelAudience from './ChannelAudience.js';
 
 /**
  * Audience class representing everyone in the game, except sender.

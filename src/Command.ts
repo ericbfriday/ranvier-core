@@ -1,6 +1,6 @@
-import type Player from './Player';
-import CommandType from './CommandType';
-import PlayerRoles from './PlayerRoles';
+import type Player from './Player.js';
+import CommandType from './CommandType.js';
+import PlayerRoles from './PlayerRoles.js';
 
 interface CommandDefinition {
     type?: typeof CommandType

@@ -1,5 +1,5 @@
 import type { EventEmitter } from 'node:events';
-import { isIterable } from './Util';
+import { isIterable } from './Util.js';
 
 type Listener = (...args: any[]) => void;
 

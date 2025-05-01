@@ -1,10 +1,10 @@
-import type GameState from './GameState';
-import type Player from './Player';
-import type PlayerRoles from './PlayerRoles';
-import Broadcast from './Broadcast';
-import PartyAudience from './PartyAudience';
-import PrivateAudience from './PrivateAudience';
-import WorldAudience from './WorldAudience';
+import type GameState from './GameState.js';
+import type Player from './Player.js';
+import type PlayerRoles from './PlayerRoles.js';
+import Broadcast from './Broadcast.js';
+import PartyAudience from './PartyAudience.js';
+import PrivateAudience from './PrivateAudience.js';
+import WorldAudience from './WorldAudience.js';
 
 export interface ChannelAudience {
     configure: (options: {

@@ -1,6 +1,6 @@
 import { EventEmitter } from 'node:events';
-import Metadatable from './Metadatable';
-import Scriptable from './Scriptable';
+import Metadatable from './Metadatable.js';
+import Scriptable from './Scriptable.js';
 
 /**
  * Base entity class for all game objects

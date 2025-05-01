@@ -1,6 +1,6 @@
-import type Area from './Area';
-import type GameEntity from './GameEntity';
-import BehaviorManager from './BehaviorManager';
+import type Area from './Area.js';
+import type GameEntity from './GameEntity.js';
+import BehaviorManager from './BehaviorManager.js';
 
 /**
  * Stores definitions of entities to allow for easy creation/cloning

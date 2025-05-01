@@ -1,6 +1,6 @@
-import type Character from './Character';
-import type GameState from './GameState';
-import Item from './Item';
+import type Character from './Character.js';
+import type GameState from './GameState.js';
+import Item from './Item.js';
 
 /**
  * Representation of a `Character` or container `Item` inventory

@@ -1,15 +1,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
-import { AttributeFormula } from './Attribute';
-import Command from './Command';
-import Data from './Data';
-import Helpfile from './Helpfile';
-import Logger from './Logger';
-import QuestGoal from './QuestGoal';
-import QuestReward from './QuestReward';
-import Skill from './Skill';
-import SkillType from './SkillType';
+import { AttributeFormula } from './Attribute.js';
+import Command from './Command.js';
+import Data from './Data.js';
+import Helpfile from './Helpfile.js';
+import Logger from './Logger.js';
+import QuestGoal from './QuestGoal.js';
+import QuestReward from './QuestReward.js';
+import Skill from './Skill.js';
+import SkillType from './SkillType.js';
 
 const srcPath = `${__dirname}/`;
 

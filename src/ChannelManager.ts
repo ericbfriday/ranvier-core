@@ -1,4 +1,4 @@
-import type { Channel } from './Channel';
+import type { Channel } from './Channel.js';
 
 /**
  * Contains registered channels

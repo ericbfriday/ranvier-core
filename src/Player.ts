@@ -1,11 +1,11 @@
-import type Account from './Account';
-import type Room from './Room';
-import Character from './Character';
-import CommandQueue from './CommandQueue';
-import Config from './Config';
-import Logger from './Logger';
-import PlayerRoles from './PlayerRoles';
-import QuestTracker from './QuestTracker';
+import type Account from './Account.js';
+import type Room from './Room.js';
+import Character from './Character.js';
+import CommandQueue from './CommandQueue.js';
+import Config from './Config.js';
+import Logger from './Logger.js';
+import PlayerRoles from './PlayerRoles.js';
+import QuestTracker from './QuestTracker.js';
 
 interface PlayerData {
     account?: Account | string | null

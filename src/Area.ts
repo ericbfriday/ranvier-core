@@ -1,7 +1,7 @@
-import type Npc from './Npc';
-import type Room from './Room';
-import AreaFloor from './AreaFloor';
-import GameEntity from './GameEntity';
+import type Npc from './Npc.js';
+import type Room from './Room.js';
+import AreaFloor from './AreaFloor.js';
+import GameEntity from './GameEntity.js';
 
 export interface AreaManifest {
     title: string

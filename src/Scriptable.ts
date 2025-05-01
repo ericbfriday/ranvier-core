@@ -1,5 +1,5 @@
-import type BehaviorManager from './BehaviorManager';
-import Logger from './Logger';
+import type BehaviorManager from './BehaviorManager.js';
+import Logger from './Logger.js';
 
 /**
  * @ignore

@@ -1,5 +1,5 @@
-import type EntityLoader from './EntityLoader';
-import Account from './Account';
+import type EntityLoader from './EntityLoader.js';
+import Account from './Account.js';
 
 /**
  * Creates/loads {@linkplain Account|Accounts}

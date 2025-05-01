@@ -1,4 +1,4 @@
-import { Attribute } from './Attribute';
+import { Attribute } from './Attribute.js';
 
 /**
  * Container for a list of attributes for a {@link Character}

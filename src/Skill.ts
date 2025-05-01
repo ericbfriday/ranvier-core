@@ -1,9 +1,9 @@
-import type Effect from './Effect';
-import Broadcast from './Broadcast';
-import Damage from './Damage';
-import * as SkillErrors from './SkillErrors';
-import SkillFlag from './SkillFlag';
-import SkillType from './SkillType';
+import type Effect from './Effect.js';
+import Broadcast from './Broadcast.js';
+import Damage from './Damage.js';
+import * as SkillErrors from './SkillErrors.js';
+import SkillFlag from './SkillFlag.js';
+import SkillType from './SkillType.js';
 
 export interface SkillConfig {
     configureEffect?: (effect: Effect) => Effect

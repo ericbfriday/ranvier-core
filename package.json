@@ -29,11 +29,13 @@
     },
     "devDependencies": {
         "@antfu/eslint-config": "^4.11.0",
+        "@hypermod/cli": "^0.25.0",
         "@types/bcryptjs": "2.4.6",
         "@types/js-yaml": "4.0.9",
         "@types/node": "^22.13.13",
         "@types/uuid": "10.0.0",
         "@typescript-eslint/utils": "^8.28.0",
+        "codemod": "^0.18.5",
         "coveralls": "^3.0.2",
         "eslint": "^9.25.1",
         "eslint-plugin-command": "^3.2.0",

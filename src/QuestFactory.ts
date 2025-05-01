@@ -1,7 +1,7 @@
-import type GameState from './GameState';
-import type Player from './Player';
-import Logger from './Logger';
-import Quest from './Quest';
+import type GameState from './GameState.js';
+import type Player from './Player.js';
+import Logger from './Logger.js';
+import Quest from './Quest.js';
 
 interface QuestConfig {
     entityReference?: string

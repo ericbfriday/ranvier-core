@@ -1,4 +1,4 @@
-import { Attribute, AttributeFormula } from './Attribute';
+import { Attribute, AttributeFormula } from './Attribute.js';
 
 interface AttributeDefinition {
     name: string

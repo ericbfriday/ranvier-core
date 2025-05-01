@@ -1,4 +1,4 @@
-import type QuestGoal from './QuestGoal';
+import type QuestGoal from './QuestGoal.js';
 
 /**
  * Simple map of quest goal name => class definition

@@ -1,5 +1,5 @@
-import type Character from './Character';
-import Damage from './Damage';
+import type Character from './Character.js';
+import Damage from './Damage.js';
 
 /**
  * Heal is `Damage` that raises an attribute instead of lowering it

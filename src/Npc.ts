@@ -1,12 +1,12 @@
-import type Area from './Area';
-import type GameState from './GameState';
-import type Item from './Item';
-import type Room from './Room';
+import type Area from './Area.js';
+import type GameState from './GameState.js';
+import type Item from './Item.js';
+import type Room from './Room.js';
 import uuid from 'uuid/v8';
-import Character from './Character';
-import CommandQueue from './CommandQueue';
-import Logger from './Logger';
-import Scriptable from './Scriptable';
+import Character from './Character.js';
+import CommandQueue from './CommandQueue.js';
+import Logger from './Logger.js';
+import Scriptable from './Scriptable.js';
 
 interface NpcConfig {
     keywords: string[]

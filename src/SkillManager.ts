@@ -1,5 +1,5 @@
-import type Skill from './Skill';
-import SkillFlag from './SkillFlag';
+import type Skill from './Skill.js';
+import SkillFlag from './SkillFlag.js';
 
 /**
  * Keeps track of registered skills

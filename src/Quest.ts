@@ -1,6 +1,6 @@
-import type { GameState } from './GameState';
-import type Player from './Player';
-import type QuestGoal from './QuestGoal';
+import type { GameState } from './GameState.js';
+import type Player from './Player.js';
+import type QuestGoal from './QuestGoal.js';
 import { EventEmitter } from 'node:events';
 
 interface QuestConfig {

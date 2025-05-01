@@ -1,4 +1,4 @@
-import type Effect from './Effect';
+import type Effect from './Effect.js';
 
 /**
  * Error used when trying to execute a skill and the player doesn't have enough resources

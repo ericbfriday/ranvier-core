@@ -12,7 +12,8 @@
         "declaration": true,
         "outDir": "dist",
         "sourceMap": true,
-        "skipDefaultLibCheck": true
+        "skipDefaultLibCheck": true,
+        "rewriteRelativeImportExtensions": true
     },
     "include": ["index.ts", "src/**/*"],
     "exclude": ["node_modules", "dist", "src/js/**/*"]

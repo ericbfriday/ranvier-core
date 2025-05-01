@@ -1,17 +1,17 @@
-import type Attribute from './Attribute';
-import type Damage from './Damage';
-import type Effect from './Effect';
-import type { GameState } from './GameState';
-import type Item from './Item';
-import type Party from './Party';
-import type Room from './Room';
+import type Attribute from './Attribute.js';
+import type Damage from './Damage.js';
+import type Effect from './Effect.js';
+import type { GameState } from './GameState.js';
+import type Item from './Item.js';
+import type Party from './Party.js';
+import type Room from './Room.js';
 import { EventEmitter } from 'node:events';
-import Attributes from './Attributes';
-import Config from './Config';
-import EffectList from './EffectList';
-import { EquipAlreadyEquippedError, EquipSlotTakenError } from './EquipErrors';
-import { Inventory, InventoryFullError } from './Inventory';
-import Metadatable from './Metadatable';
+import Attributes from './Attributes.js';
+import Config from './Config.js';
+import EffectList from './EffectList.js';
+import { EquipAlreadyEquippedError, EquipSlotTakenError } from './EquipErrors.js';
+import { Inventory, InventoryFullError } from './Inventory.js';
+import Metadatable from './Metadatable.js';
 
 interface CharacterConfig {
     name: string

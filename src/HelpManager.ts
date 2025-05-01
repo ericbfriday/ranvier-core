@@ -1,4 +1,4 @@
-import type Helpfile from './Helpfile';
+import type Helpfile from './Helpfile.js';
 
 /**
  * Contain/look up helpfiles

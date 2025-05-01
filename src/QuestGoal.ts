@@ -1,5 +1,5 @@
-import type { Player } from './Player';
-import type { Quest } from './Quest';
+import type { Player } from './Player.js';
+import type { Quest } from './Quest.js';
 import { EventEmitter } from 'node:events';
 
 interface QuestProgress {

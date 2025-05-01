@@ -1,7 +1,7 @@
-import type Character from './Character';
-import type Damage from './Damage';
-import type GameState from './GameState';
-import type Skill from './Skill';
+import type Character from './Character.js';
+import type Damage from './Damage.js';
+import type GameState from './GameState.js';
+import type Skill from './Skill.js';
 import EventEmitter from 'node:events';
 
 /** @typedef EffectModifiers {{attributes: !Object<string,function>}} */
@@ -296,7 +296,7 @@ class Effect extends EventEmitter {
 
         const state = Object.assign({}, this.state);
         // store lastTick as a difference so we can make sure to start where we left off when we hydrate
-        if (state.lastTick && isFinite(state.lastTick)) {
+        if (state.lastTick && Number.isFinite(state.lastTick)) {
             state.lastTick = Date.now() - state.lastTick;
         }
 
@@ -320,11 +320,11 @@ class Effect extends EventEmitter {
       = data.config.duration === 'inf' ? Infinity : data.config.duration;
         this.config = data.config;
 
-        if (!isNaN(data.elapsed)) {
+        if (!Number.isNaN(data.elapsed)) {
             this.startedAt = Date.now() - data.elapsed;
         }
 
-        if (!isNaN(data.state.lastTick as number)) {
+        if (!Number.isNaN(data.state.lastTick as number)) {
             data.state.lastTick = Date.now() - (data.state.lastTick as number);
         }
         this.state = data.state;

@@ -1,4 +1,4 @@
-import type { Npc } from './Npc';
+import type { Npc } from './Npc.js';
 
 /**
  * Keeps track of all the individual mobs in the game
