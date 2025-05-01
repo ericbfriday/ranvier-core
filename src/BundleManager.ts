@@ -192,7 +192,7 @@ export default class BundleManager {
 
             const goalName = path.basename(goalFile, path.extname(goalFile));
             const loader = require(goalPath);
-            const goalImport = QuestGoal.isPrototypeOf(loader)
+            const goalImport = Object.prototype.isPrototypeOf.call(QuestGoal, loader)
                 ? loader
                 : loader(srcPath);
             Logger.verbose(`\t\t${goalName}`);

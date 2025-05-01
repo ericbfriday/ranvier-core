@@ -3,7 +3,7 @@ import type Character from './Character.js';
 import type { GameState } from './GameState.js';
 import type Item from './Item.js';
 import type Npc from './Npc.js';
-import type Player from './Player.js';
+import type { Player } from './Player.js';
 import GameEntity from './GameEntity.js';
 import Logger from './Logger.js';
 

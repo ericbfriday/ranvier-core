@@ -1,3 +1,5 @@
+import longJohn from 'longjohn';
+import PrettyError from 'pretty-error'
 import winston from 'winston';
 
 // Reset Console transport and configure it to include ISO timestamp.
@@ -64,10 +66,17 @@ class Logger {
     }
 
     static enablePrettyErrors(): void {
-        const longjohn = require('longjohn');
-        const pe = require('pretty-error').start();
-        pe.skipNodeFiles(); // Ignore native node files in stacktrace.
-    }
+        this.enableLongJohn();
+
+        const pe = new PrettyError().start();
+        pe.skipNodeFiles();
+    };
+
+    static enableLongJohn(): void {
+        longJohn.asyncTraceLimit = 10;
+        longJohn.asyncCaptureStackTraces = true;
+        longJohn.install();
+    };
 }
 
 export default Logger;

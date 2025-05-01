@@ -1,5 +1,5 @@
 import type { Player } from './Player.js';
-import ChannelAudience = require('./ChannelAudience');
+import ChannelAudience from './ChannelAudience.js';
 
 /**
  * Audience class representing other players in the same group as the sender

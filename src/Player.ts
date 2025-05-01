@@ -7,7 +7,7 @@ import Logger from './Logger.js';
 import PlayerRoles from './PlayerRoles.js';
 import QuestTracker from './QuestTracker.js';
 
-interface PlayerData {
+export interface PlayerData {
     account?: Account | string | null
     experience?: number
     password?: string
@@ -21,11 +21,11 @@ interface PlayerData {
     [key: string]: any // Allow other properties to pass through to Character
 }
 
-interface PromptData {
+export interface PromptData {
     [key: string]: any
 }
 
-interface ExtraPrompt {
+export interface ExtraPrompt {
     removeOnRender: boolean
     renderer: () => string
 }
@@ -41,7 +41,7 @@ interface ExtraPrompt {
  * @property {{completed: Array, active: Array}} questData
  * @extends Character
  */
-class Player extends Character {
+export class Player extends Character {
     account: Account | null;
     experience: number;
     extraPrompts: Map<string, ExtraPrompt>;
@@ -78,7 +78,7 @@ class Player extends Character {
         this.role = data.role || PlayerRoles.PLAYER;
 
         // Default max inventory size config
-        if (!isFinite(this.inventory.getMax())) {
+        if (!Number.isFinite(this.inventory.getMax())) {
             this.inventory.setMax(Config.get('defaultMaxPlayerInventory') || 20);
         }
     }
@@ -292,5 +292,3 @@ class Player extends Character {
         return data;
     }
 }
-
-export default Player;

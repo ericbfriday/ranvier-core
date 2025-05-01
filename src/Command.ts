@@ -1,4 +1,4 @@
-import type Player from './Player.js';
+import type { Player } from './Player.js';
 import CommandType from './CommandType.js';
 import PlayerRoles from './PlayerRoles.js';
 

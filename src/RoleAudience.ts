@@ -1,4 +1,4 @@
-import type Player from './Player.js';
+import type { Player } from './Player.js';
 import ChannelAudience from './ChannelAudience.js';
 
 interface RoleAudienceOptions {

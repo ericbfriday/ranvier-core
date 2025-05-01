@@ -1,5 +1,5 @@
 import type GameState from './GameState.js';
-import type Player from './Player.js';
+import type { Player } from './Player.js';
 import type PlayerRoles from './PlayerRoles.js';
 import Broadcast from './Broadcast.js';
 import PartyAudience from './PartyAudience.js';
