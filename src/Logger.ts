@@ -1,5 +1,5 @@
 import longJohn from 'longjohn';
-import PrettyError from 'pretty-error'
+import PrettyError from 'pretty-error';
 import winston from 'winston';
 
 // Reset Console transport and configure it to include ISO timestamp.
@@ -13,7 +13,7 @@ const logExt = '.log';
 /**
  * Wrapper around Winston
  */
-class Logger {
+export class Logger {
     static getLevel(): string {
         return winston.level || process.env.LOG_LEVEL || 'debug';
     }

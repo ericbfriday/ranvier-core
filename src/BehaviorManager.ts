@@ -4,7 +4,7 @@ import EventManager from './EventManager.js';
  * BehaviorManager keeps a map of BehaviorName:EventManager which is used
  * during Item and NPC hydrate() methods to attach events
  */
-export default class BehaviorManager {
+export class BehaviorManager {
     behaviors: Map<string, EventManager>;
 
     constructor() {
@@ -45,3 +45,4 @@ export default class BehaviorManager {
         }
     }
 }
+export default BehaviorManager;

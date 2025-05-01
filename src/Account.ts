@@ -18,7 +18,7 @@ export interface AccountData {
  * @property {string} password Hashed password
  * @property {boolean} banned Whether this account is banned or not
  */
-export default class Account {
+export class Account {
     username: string;
     characters: Array<{ username: string, deleted: boolean }>;
     password: string;
@@ -159,3 +159,4 @@ export default class Account {
         };
     }
 }
+export default Account;

@@ -6,7 +6,7 @@ import Room from './Room.js';
  * Stores references to, and handles distribution of, active areas
  * @property {Map<string,Area>} areas
  */
-export default class AreaManager {
+export class AreaManager {
     areas: Map<string, Area>;
     scripts: BehaviorManager;
     private _placeholder?: Area;
@@ -89,3 +89,4 @@ export default class AreaManager {
         return this._placeholder;
     }
 }
+export default AreaManager;

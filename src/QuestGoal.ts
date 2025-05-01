@@ -2,7 +2,7 @@ import type { Player } from './Player.js';
 import type { Quest } from './Quest.js';
 import { EventEmitter } from 'node:events';
 
-interface QuestProgress {
+export interface QuestProgress {
     percent: number
     display: string
 }

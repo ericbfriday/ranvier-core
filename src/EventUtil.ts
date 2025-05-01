@@ -4,7 +4,7 @@ import * as sty from 'sty';
 /**
  * Helper methods for colored output during input-events
  */
-class EventUtil {
+export class EventUtil {
     /**
      * Generate a function for writing colored output to a socket
      * @param socket - Network socket

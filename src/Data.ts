@@ -10,7 +10,7 @@ type Callback = () => void;
 /**
  * Class for loading/parsing data files from disk
  */
-class Data {
+export class Data {
     static setDataPath(newPath: string): void {
         dataPath = newPath;
     }

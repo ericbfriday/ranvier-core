@@ -3,7 +3,7 @@ import type { Player } from './Player.js';
 import Logger from './Logger.js';
 import Quest from './Quest.js';
 
-interface QuestConfig {
+export interface QuestConfig {
     entityReference?: string
     title: string
     description: string
@@ -23,7 +23,7 @@ interface QuestConfig {
     [key: string]: any
 }
 
-interface QuestDefinition {
+export interface QuestDefinition {
     id: string | number
     area: string
     config: QuestConfig
@@ -32,7 +32,7 @@ interface QuestDefinition {
 /**
  * @property {Map} quests
  */
-class QuestFactory {
+export class QuestFactory {
     quests: Map<string, QuestDefinition>;
 
     constructor() {

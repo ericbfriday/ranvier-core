@@ -1,10 +1,10 @@
 import type { Item } from './Item.js';
-import ItemType = require('./ItemType');
+import ItemType from './ItemType.js';
 
 /**
  * Keep track of all items in game
  */
-class ItemManager {
+export class ItemManager {
     items: Set<Item>;
 
     constructor() {

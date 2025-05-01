@@ -7,7 +7,7 @@ import ChannelAudience from './ChannelAudience.js';
  * @memberof ChannelAudience
  * @extends ChannelAudience
  */
-class WorldAudience extends ChannelAudience {
+export class WorldAudience extends ChannelAudience {
     state: GameState;
     sender: Player;
 

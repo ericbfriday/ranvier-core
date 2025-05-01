@@ -5,7 +5,7 @@ import type Skill from './Skill.js';
 import EventEmitter from 'node:events';
 
 /** @typedef EffectModifiers {{attributes: !Object<string,function>}} */
-interface EffectModifiers {
+export interface EffectModifiers {
     attributes:
         | {
             [attribute: string]: (currentValue: number) => number
@@ -16,7 +16,7 @@ interface EffectModifiers {
     [key: string]: any
 }
 
-interface EffectConfig {
+export interface EffectConfig {
     autoActivate?: boolean
     description?: string
     duration?: number
@@ -31,21 +31,21 @@ interface EffectConfig {
     [key: string]: any
 }
 
-interface EffectState {
+export interface EffectState {
     stacks?: number
     lastTick?: number
     ticks?: number
     [key: string]: any
 }
 
-interface EffectDefinition {
+export interface EffectDefinition {
     config?: EffectConfig
     state?: EffectState
     flags?: string[]
     modifiers?: Partial<EffectModifiers>
 }
 
-interface SerializedEffect {
+export interface SerializedEffect {
     config: EffectConfig
     elapsed: number
     id: string
@@ -57,7 +57,7 @@ interface SerializedEffect {
 /**
  * See the {@link http://ranviermud.com/extending/effects/|Effect guide} for usage.
  */
-class Effect extends EventEmitter {
+export class Effect extends EventEmitter {
     id: string;
     flags: string[];
     config: EffectConfig;

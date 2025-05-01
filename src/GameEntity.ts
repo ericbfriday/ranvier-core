@@ -8,8 +8,9 @@ import Scriptable from './Scriptable.js';
  * @mixes Metadatable
  * @mixes Scriptable
  */
-export default class GameEntity extends Scriptable(Metadatable(EventEmitter)) {
+export class GameEntity extends Scriptable(Metadatable(EventEmitter)) {
     constructor() {
         super();
     }
 }
+export default GameEntity;

@@ -5,7 +5,7 @@ import type { Channel } from './Channel.js';
  *
  * TODO: should probably refactor this to just extend `Map`
  */
-class ChannelManager {
+export class ChannelManager {
     channels: Map<string, Channel>;
 
     constructor() {

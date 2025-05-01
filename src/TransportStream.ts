@@ -3,7 +3,7 @@ import { EventEmitter } from 'node:events';
 /**
  * Base class for anything that should be sending or receiving data from the player
  */
-class TransportStream extends EventEmitter {
+export class TransportStream extends EventEmitter {
     socket: any;
 
     get readable(): boolean {

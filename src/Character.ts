@@ -13,7 +13,7 @@ import { EquipAlreadyEquippedError, EquipSlotTakenError } from './EquipErrors.js
 import { Inventory, InventoryFullError } from './Inventory.js';
 import Metadatable from './Metadatable.js';
 
-interface CharacterConfig {
+export interface CharacterConfig {
     name: string
     inventory?: any
     equipment?: Map<string, Item>
@@ -38,7 +38,7 @@ interface CharacterConfig {
  * @extends EventEmitter
  * @mixes Metadatable
  */
-class Character extends Metadatable(EventEmitter) {
+export class Character extends Metadatable(EventEmitter) {
     name: string;
     inventory: Inventory;
     equipment: Map<string, Item>;

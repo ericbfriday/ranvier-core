@@ -6,7 +6,7 @@ import Item from './Item.js';
  * Representation of a `Character` or container `Item` inventory
  * @extends Map
  */
-export default class Inventory extends Map<string, Item> {
+export class Inventory extends Map<string, Item> {
     maxSize: number;
 
     /**
@@ -121,3 +121,5 @@ export class InventoryFullError extends Error {
         this.name = 'InventoryFullError';
     }
 }
+
+export default Inventory;

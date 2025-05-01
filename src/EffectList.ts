@@ -6,7 +6,7 @@ import type Effect from './Effect.js';
 /**
  * Self-managing list of effects for a target
  */
-class EffectList {
+export class EffectList {
     /** Set of effects */
     private effects: Set<Effect>;
     /** Target character */

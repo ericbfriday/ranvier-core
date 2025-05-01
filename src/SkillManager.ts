@@ -4,7 +4,7 @@ import SkillFlag from './SkillFlag.js';
 /**
  * Keeps track of registered skills
  */
-export default class SkillManager {
+export class SkillManager {
     skills: Map<string, Skill>;
 
     constructor() {
@@ -52,3 +52,4 @@ export default class SkillManager {
         return undefined;
     }
 }
+export default SkillManager;

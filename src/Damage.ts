@@ -1,6 +1,6 @@
 import type Character from './Character.js';
 
-interface DamageMetadata {
+export interface DamageMetadata {
     type?: string
     hidden?: boolean
     critical?: boolean
@@ -14,7 +14,7 @@ interface DamageMetadata {
  * @property {*} source Where the damage came from: skill, item, room, etc.
  * @property {object} metadata Extra info about the damage: type, hidden, critical, etc.
  */
-class Damage {
+export class Damage {
     attribute: string;
     amount: number;
     attacker: Character | null;

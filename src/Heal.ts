@@ -5,7 +5,7 @@ import Damage from './Damage.js';
  * Heal is `Damage` that raises an attribute instead of lowering it
  * @extends Damage
  */
-class Heal extends Damage {
+export class Heal extends Damage {
     /**
      * Raise a given attribute
      * @param target - Target character

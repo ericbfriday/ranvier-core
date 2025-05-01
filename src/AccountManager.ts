@@ -6,7 +6,7 @@ import Account from './Account.js';
  * @property {Map<string,Account>} accounts
  * @property {EntityLoader} loader
  */
-class AccountManager {
+export class AccountManager {
     accounts: Map<string, Account>;
     loader: EntityLoader | null;
 

@@ -11,7 +11,7 @@
  * @property {AttributeFormula} formula
  * @property {object} metadata any custom info for this attribute
  */
-class Attribute {
+export class Attribute {
     name: string;
     base: number;
     delta: number;
@@ -94,7 +94,7 @@ class Attribute {
  * @property {Array<string>} requires Array of attributes required for this formula to run
  * @property {function (...number) : number} formula
  */
-class AttributeFormula {
+export class AttributeFormula {
     requires: string[];
     formula: (...args: any[]) => number;
 

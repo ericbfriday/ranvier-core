@@ -1,5 +1,5 @@
 /** @typedef {{ execute: function (), label: string, lag: number= }} */
-interface CommandExecutable {
+export interface CommandExecutable {
     execute: () => any
     lag?: number
 }
@@ -7,7 +7,7 @@ interface CommandExecutable {
 /**
  * Keeps track of the queue off commands to execute for a player
  */
-class CommandQueue {
+export class CommandQueue {
     commands: Array<CommandExecutable & { lag: number }>;
     lag: number;
     lastRun: number;

@@ -7,26 +7,26 @@ import type { Player } from './Player.js';
 import GameEntity from './GameEntity.js';
 import Logger from './Logger.js';
 
-interface Coordinates {
+export interface Coordinates {
     x: number
     y: number
     z: number
 }
 
-interface Exit {
+export interface Exit {
     id?: string
     roomId?: string
     direction: string
     inferred?: boolean
 }
 
-interface Door {
+export interface Door {
     lockedBy?: string
     locked: boolean
     closed: boolean
 }
 
-interface RoomDefinition {
+export interface RoomDefinition {
     title: string
     description: string
     id: string | number
@@ -58,7 +58,7 @@ interface RoomDefinition {
  *
  * @extends GameEntity
  */
-class Room extends GameEntity {
+export class Room extends GameEntity {
     area: Area;
     def: RoomDefinition;
     defaultItems: Array<string | { id: string }>;

@@ -6,7 +6,7 @@ import ChannelAudience from './ChannelAudience.js';
  * @memberof ChannelAudience
  * @extends ChannelAudience
  */
-class AreaAudience extends ChannelAudience {
+export class AreaAudience extends ChannelAudience {
     getBroadcastTargets(): Player[] {
         if (!this.sender.room) {
             return [];

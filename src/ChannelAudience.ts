@@ -17,7 +17,7 @@ export interface AudienceOptions {
 /**
  * Base channel audience class
  */
-export default class ChannelAudience {
+export class ChannelAudience {
     state: GameState | null = null;
     sender: Player | null = null;
     message: string = '';
@@ -55,3 +55,4 @@ export default class ChannelAudience {
         return message;
     }
 }
+export default ChannelAudience;

@@ -1,7 +1,7 @@
 import Area from './Area.js';
 import EntityFactory from './EntityFactory.js';
 
-interface AreaDefinition {
+export interface AreaDefinition {
     bundle: string
     manifest: any
 }
@@ -9,7 +9,7 @@ interface AreaDefinition {
 /**
  * Stores definitions of items to allow for easy creation/cloning of objects
  */
-class AreaFactory extends EntityFactory {
+export class AreaFactory extends EntityFactory {
     /**
      * Create a new instance of an area by name. Resulting area will not have
      * any of its contained entities (items, npcs, rooms) hydrated. You will

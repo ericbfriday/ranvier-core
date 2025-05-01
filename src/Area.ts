@@ -39,7 +39,7 @@ export interface Broadcastable {
  *
  * @extends GameEntity
  */
-export default class Area extends GameEntity implements Broadcastable {
+export class Area extends GameEntity implements Broadcastable {
     bundle: string;
     name: string;
     title: string;
@@ -230,3 +230,4 @@ export default class Area extends GameEntity implements Broadcastable {
         return [this, ...roomTargets];
     }
 }
+export default Area;

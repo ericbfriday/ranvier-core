@@ -5,7 +5,7 @@ import { Attribute } from './Attribute.js';
  *
  * @extends Map
  */
-class Attributes extends Map<string, Attribute> {
+export class Attributes extends Map<string, Attribute> {
     /**
      * @param {Attribute} attribute
      */

@@ -2,7 +2,7 @@ import type { Player } from './Player.js';
 import CommandType from './CommandType.js';
 import PlayerRoles from './PlayerRoles.js';
 
-interface CommandDefinition {
+export interface CommandDefinition {
     type?: typeof CommandType
     command: (args: string, player: Player, arg0: string) => any
     aliases?: string[]
@@ -22,7 +22,7 @@ interface CommandDefinition {
  * @property {PlayerRoles} requiredRole
  * @property {object} metadata General use configuration object
  */
-class Command {
+export class Command {
     bundle: string;
     type: typeof CommandType;
     name: string;

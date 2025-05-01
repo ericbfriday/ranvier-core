@@ -3,7 +3,7 @@ import type { Player } from './Player.js';
 import type QuestGoal from './QuestGoal.js';
 import { EventEmitter } from 'node:events';
 
-interface QuestConfig {
+export interface QuestConfig {
     entityReference: string
     title: string
     description: string
@@ -24,7 +24,7 @@ interface QuestConfig {
     [key: string]: any
 }
 
-interface QuestProgress {
+export interface QuestProgress {
     percent: number
     display: string
 }
@@ -35,7 +35,7 @@ interface QuestProgress {
  * @property {object} state  Current completion state
  * @extends EventEmitter
  */
-class Quest extends EventEmitter {
+export class Quest extends EventEmitter {
     id: string | number;
     entityReference: string;
     config: QuestConfig;

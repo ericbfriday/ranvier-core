@@ -21,7 +21,7 @@
 // Import Room type - you'll need to create this interface based on your Room implementation
 import type Room from './Room.js';
 
-class AreaFloor {
+export class AreaFloor {
     z: number;
     lowX: number;
     highX: number;

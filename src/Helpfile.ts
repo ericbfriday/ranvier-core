@@ -9,7 +9,7 @@ export interface HelpfileOptions {
 /**
  * Representation of an in game helpfile
  */
-export default class Helpfile {
+export class Helpfile {
     bundle: string;
     name: string;
     keywords: string[];
@@ -38,3 +38,4 @@ export default class Helpfile {
         this.body = options.body;
     }
 }
+export default Helpfile;

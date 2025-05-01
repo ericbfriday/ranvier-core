@@ -6,7 +6,7 @@ import Npc from './Npc';
  * Stores definitions of npcs to allow for easy creation/cloning
  * @extends EntityFactory
  */
-class MobFactory extends EntityFactory {
+export class MobFactory extends EntityFactory {
     /**
      * Create a new instance of a given npc definition. Resulting npc will not
      * have its default inventory.  If you want to also populate its default

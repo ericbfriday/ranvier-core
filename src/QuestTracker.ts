@@ -2,7 +2,7 @@ import type { GameState } from './GameState.js';
 import type { Player } from './Player.js';
 import type { Quest } from './Quest.js';
 
-interface CompletedQuest {
+export interface CompletedQuest {
     started: string
     completedAt: string
 }
@@ -14,7 +14,7 @@ interface CompletedQuest {
  * @property {Map}    completedQuests
  * @property {Map}    activeQuests
  */
-class QuestTracker {
+export class QuestTracker {
     player: Player;
     activeQuests: Map<string, Quest>;
     completedQuests: Map<string, CompletedQuest>;

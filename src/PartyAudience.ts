@@ -6,7 +6,7 @@ import ChannelAudience from './ChannelAudience.js';
  * @memberof ChannelAudience
  * @extends ChannelAudience
  */
-class PartyAudience extends ChannelAudience {
+export class PartyAudience extends ChannelAudience {
     getBroadcastTargets(): Player[] {
         if (!this.sender.party) {
             return [];

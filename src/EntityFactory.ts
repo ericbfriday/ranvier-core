@@ -5,7 +5,7 @@ import BehaviorManager from './BehaviorManager.js';
 /**
  * Stores definitions of entities to allow for easy creation/cloning
  */
-export default class EntityFactory {
+export class EntityFactory {
     private entities: Map<string, any>;
     public scripts: BehaviorManager;
 
@@ -98,3 +98,4 @@ export default class EntityFactory {
         return this.create(entity.area, entity.entityReference) as T;
     }
 }
+export default EntityFactory;

@@ -25,7 +25,7 @@ export type Formatter = (target: any, message: string) => string;
  * Class used for sending text to the player. All output to the player should happen through this
  * class.
  */
-export default class Broadcast {
+export class Broadcast {
     /**
      * @param {Broadcastable} source Target to send the broadcast to
      * @param {string} message
@@ -357,3 +357,4 @@ export default class Broadcast {
         return source && typeof source.getBroadcastTargets === 'function';
     }
 }
+export default Broadcast;

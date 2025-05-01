@@ -5,7 +5,7 @@ import Item from './Item.js';
 /**
  * Stores definitions of items to allow for easy creation/cloning of objects
  */
-class ItemFactory extends EntityFactory {
+export class ItemFactory extends EntityFactory {
     /**
      * Create a new instance of an item by EntityReference. Resulting item will
      * not be held or equipped and will _not_ have its default contents. If you

@@ -1,11 +1,11 @@
 import { EventEmitter } from 'node:events';
 
 // Assuming commander is a type from a package
-interface Commander {
+export interface Commander {
     [key: string]: any
 }
 
-class GameServer extends EventEmitter {
+export class GameServer extends EventEmitter {
     /**
      * Start the game server
      * @param commander - Commander instance

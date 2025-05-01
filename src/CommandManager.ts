@@ -1,6 +1,6 @@
 import type Command from './Command.js';
 
-interface CommandSearchResult {
+export interface CommandSearchResult {
     command: Command
     alias: string
 }
@@ -8,7 +8,7 @@ interface CommandSearchResult {
 /**
  * Contains all active in game commands
  */
-class CommandManager {
+export class CommandManager {
     commands: Map<string, Command>;
 
     constructor() {

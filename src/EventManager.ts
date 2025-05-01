@@ -8,7 +8,7 @@ type Listener = (...args: any[]) => void;
  * `events` is a `Map` whose keys are event names values are the
  * `Set` of listeners to be attached for that event
  */
-export default class EventManager {
+export class EventManager {
     private events: Map<string, Set<Listener>>;
 
     constructor() {
@@ -80,3 +80,4 @@ export default class EventManager {
         }
     }
 }
+export default EventManager;

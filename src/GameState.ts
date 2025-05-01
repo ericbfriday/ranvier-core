@@ -27,7 +27,7 @@ import SkillManager from './SkillManager.js';
  * The GameState is the central store for all game data and subsystem managers
  * It represents the current state of the game world at any given moment
  */
-export default class GameState {
+export class GameState {
     AccountManager: AccountManager;
     AreaManager: AreaManager;
     AreaBehaviorManager: BehaviorManager;
@@ -151,3 +151,4 @@ export default class GameState {
         this.GameServer.shutdown();
     }
 }
+export default GameState;

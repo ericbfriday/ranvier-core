@@ -10,7 +10,7 @@ import ItemType from './ItemType.js';
 import Logger from './Logger.js';
 import Metadatable from './Metadatable.js';
 
-interface ItemDefinition {
+export interface ItemDefinition {
     id: number | string
     name: string
     keywords: string[]
@@ -58,7 +58,7 @@ interface ItemDefinition {
  *
  * @extends GameEntity
  */
-class Item extends GameEntity {
+export class Item extends GameEntity {
     area: Area;
     metadata: Record<string, any> = Metadatable(EventEmitter);
     behaviors: Map<string, any>;

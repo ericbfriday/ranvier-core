@@ -1,6 +1,6 @@
 import { Attribute, AttributeFormula } from './Attribute.js';
 
-interface AttributeDefinition {
+export interface AttributeDefinition {
     name: string
     base: number
     formula: AttributeFormula | null
@@ -10,7 +10,7 @@ interface AttributeDefinition {
 /**
  * @property {Map} attributes
  */
-class AttributeFactory {
+export class AttributeFactory {
     attributes: Map<string, AttributeDefinition>;
 
     constructor() {

@@ -6,7 +6,7 @@ import Room from './Room.js';
  * Stores definitions of npcs to allow for easy creation/cloning
  * @extends EntityFactory
  */
-class RoomFactory extends EntityFactory {
+export class RoomFactory extends EntityFactory {
     /**
      * Create a new instance of a given room. Room will not be hydrated
      *

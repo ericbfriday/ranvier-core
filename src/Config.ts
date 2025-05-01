@@ -3,7 +3,7 @@ let __cache: Record<string, any> | null = null;
 /**
  * Access class for the `ranvier.json` config
  */
-class Config {
+export class Config {
     /**
      * @param {string} key
      * @param {any} fallback fallback value

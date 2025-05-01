@@ -1,12 +1,12 @@
 import type { Player } from './Player.js';
 import ChannelAudience from './ChannelAudience.js';
 
-interface RoleAudienceOptions {
+export interface RoleAudienceOptions {
     minRole: number
     [key: string]: any
 }
 
-class RoleAudience extends ChannelAudience {
+export class RoleAudience extends ChannelAudience {
     minRole: number;
 
     constructor(options: RoleAudienceOptions) {

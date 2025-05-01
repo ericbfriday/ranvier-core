@@ -9,7 +9,7 @@ import ChannelAudience from './ChannelAudience.js';
  * @memberof ChannelAudience
  * @extends ChannelAudience
  */
-class RoomAudience extends ChannelAudience {
+export class RoomAudience extends ChannelAudience {
     getBroadcastTargets(): GameEntity[] {
         return this.sender.room
             .getBroadcastTargets()

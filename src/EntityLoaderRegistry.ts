@@ -11,7 +11,7 @@ export interface EntityLoaderConfig {
 /**
  * Holds instances of configured EntityLoaders
  */
-export default class EntityLoaderRegistry extends Map<string, EntityLoader> {
+export class EntityLoaderRegistry extends Map<string, EntityLoader> {
     /**
      * Load entity loaders from configuration
      * @param sourceRegistry - Registry of data sources
@@ -47,3 +47,4 @@ export default class EntityLoaderRegistry extends Map<string, EntityLoader> {
         }
     }
 }
+export default EntityLoaderRegistry;

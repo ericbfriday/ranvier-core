@@ -3,7 +3,7 @@ import type Helpfile from './Helpfile.js';
 /**
  * Contain/look up helpfiles
  */
-export default class HelpManager {
+export class HelpManager {
     private helps: Map<string, Helpfile>;
 
     constructor() {
@@ -63,3 +63,4 @@ export default class HelpManager {
         return hfile;
     }
 }
+export default HelpManager; 

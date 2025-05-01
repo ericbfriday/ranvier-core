@@ -4,7 +4,7 @@ interface DataSource {
     [key: string]: any
 }
 
-interface DataSourceConfig {
+export interface DataSourceConfig {
     require: string
     config?: Record<string, any>
 }
@@ -13,7 +13,7 @@ interface DataSourceConfig {
  * Holds instances of configured DataSources
  * @type {Map<string, DataSource>}
  */
-class DataSourceRegistry extends Map<string, DataSource> {
+export class DataSourceRegistry extends Map<string, DataSource> {
     /**
      * @param {Function} requireFn used to require() the loader
      * @param {string} rootPath project root

@@ -32,7 +32,7 @@ export interface SkillConfig {
  * @property {GameState}        state
  * @property {SkillType}        type
  */
-export default class Skill {
+export class Skill {
     configureEffect: (effect: Effect) => Effect;
     cooldownGroup: string | null;
     cooldownLength: number | null;
@@ -289,3 +289,4 @@ export default class Skill {
         );
     }
 }
+export default Skill;

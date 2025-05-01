@@ -13,7 +13,7 @@ import { Player } from './Player.js';
  * @listens PlayerManager#save
  * @listens PlayerManager#updateTick
  */
-class PlayerManager extends EventEmitter {
+export class PlayerManager extends EventEmitter {
     players: Map<string, Player>;
     events: EventManager;
     loader: EntityLoader | null;

@@ -62,7 +62,7 @@ export interface CommandImport {
 /**
  * Handles loading/parsing/initializing all bundles. AKA where the magic happens
  */
-export default class BundleManager {
+export class BundleManager {
     state: GameState;
     bundlesPath: string;
     areas: string[];
@@ -805,3 +805,4 @@ export default class BundleManager {
         return `${this.bundlesPath}/${bundle}/areas/${areaName}/scripts`;
     }
 }
+export default BundleManager;

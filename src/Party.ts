@@ -3,7 +3,7 @@ import type { Player } from './Player.js';
 /**
  * Representation of an adventuring party
  */
-class Party extends Set<Player> {
+export class Party extends Set<Player> {
     invited: Set<Player>;
     leader: Player;
 

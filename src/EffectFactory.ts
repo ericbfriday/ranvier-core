@@ -3,7 +3,7 @@ import Effect from './Effect.js';
 import EventManager from './EventManager.js';
 
 /** @typedef {{config: Object<string,*>, listeners: Object<String,function (...*)>}} */
-interface EffectConfig {
+export interface EffectConfig {
     config?: Record<string, any>
     listeners?:
         | Record<string, Function>
@@ -12,7 +12,7 @@ interface EffectConfig {
     [key: string]: any
 }
 
-interface EffectEntry {
+export interface EffectEntry {
     definition: EffectConfig
     eventManager: EventManager
 }
@@ -20,7 +20,7 @@ interface EffectEntry {
 /**
  * @property {Map} effects
  */
-class EffectFactory {
+export class EffectFactory {
     effects: Map<string, EffectEntry>;
 
     constructor() {

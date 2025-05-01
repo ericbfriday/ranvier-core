@@ -8,7 +8,7 @@ import CommandQueue from './CommandQueue.js';
 import Logger from './Logger.js';
 import Scriptable from './Scriptable.js';
 
-interface NpcConfig {
+export interface NpcConfig {
     keywords: string[]
     name: string
     id: number
@@ -30,7 +30,7 @@ interface NpcConfig {
  * @extends Character
  * @mixes Scriptable
  */
-class Npc extends Scriptable(Character) {
+export class Npc extends Scriptable(Character) {
     area: Area;
     script?: string;
     behaviors: Map<string, any>;

@@ -48,7 +48,7 @@ export interface ChannelConfig {
  * @property {string} description
  * @property {{sender: Function, target: Function}} [formatter]
  */
-export default class Channel {
+export class Channel {
     name: string;
     minRequiredRole: PlayerRoles | null;
     description?: string;
@@ -251,3 +251,5 @@ export default class Channel {
 export class NoPartyError extends Error {}
 export class NoRecipientError extends Error {}
 export class NoMessageError extends Error {}
+
+export default Channel;

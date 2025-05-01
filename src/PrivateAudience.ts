@@ -7,7 +7,7 @@ import ChannelAudience from './ChannelAudience.js';
  * @memberof ChannelAudience
  * @extends ChannelAudience
  */
-class PrivateAudience extends ChannelAudience {
+export class PrivateAudience extends ChannelAudience {
     getBroadcastTargets(): Player[] {
         const targetPlayerName = this.message.split(' ')[0];
         const targetPlayer = this.state.PlayerManager.getPlayer(targetPlayerName);

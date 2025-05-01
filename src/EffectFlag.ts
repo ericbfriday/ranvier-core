@@ -2,7 +2,7 @@
  * @module EffectFlag
  * @enum {symbol}
  */
-const EffectFlag = {
+export const EffectFlag = {
     BUFF: Symbol('BUFF'),
     DEBUFF: Symbol('DEBUFF'),
 } as const;

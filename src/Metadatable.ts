@@ -1,6 +1,6 @@
 import type { EventEmitter } from 'node:events';
 
-interface MetadatableEntity extends EventEmitter {
+export interface MetadatableEntity extends EventEmitter {
     metadata: Record<string, any>
 }
 
