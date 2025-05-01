@@ -120,5 +120,3 @@ export class AttributeFormula {
         return this.formula.bind(attribute)(...args);
     }
 }
-
-export { Attribute, AttributeFormula };

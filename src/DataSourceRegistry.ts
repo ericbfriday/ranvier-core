@@ -1,4 +1,4 @@
-interface DataSource {
+export interface DataSource {
     name?: string
     hasData: (config: any) => boolean
     [key: string]: any

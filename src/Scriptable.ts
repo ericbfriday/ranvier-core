@@ -7,7 +7,7 @@ import Logger from './Logger.js';
  * @param {*} parentClass
  * @return {module:ScriptableFn~Scriptable}
  */
-function Scriptable<T extends new (...args: any[]) => any>(parentClass: T) {
+export function Scriptable<T extends new (...args: any[]) => any>(parentClass: T) {
     return class extends parentClass {
         behaviors: Map<string, any>;
         __pruned?: boolean;

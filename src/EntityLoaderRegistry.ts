@@ -1,4 +1,4 @@
-import type { DataSource } from './DataSource.js';
+import type { DataSource } from './DataSourceRegistry.ts';
 import { EntityLoader } from './EntityLoader.ts';
 
 export interface EntityLoaderConfig {

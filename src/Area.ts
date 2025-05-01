@@ -23,7 +23,7 @@ export interface Broadcastable {
 
 /**
  * Representation of an in game area
- * See the {@link http://ranviermud.com/extending/areas/|Area guide} for documentation on how to
+ * See the {@link http://ranviermud.com/extending/areas/}|Area guide for documentation on how to
  * actually build areas.
  *
  * @property {string} bundle Bundle this area comes from

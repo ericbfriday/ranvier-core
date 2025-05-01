@@ -11,6 +11,7 @@ import Config from './Config.js';
 import EffectList from './EffectList.js';
 import { EquipAlreadyEquippedError, EquipSlotTakenError } from './EquipErrors.js';
 import { Inventory, InventoryFullError } from './Inventory.js';
+import Logger from './Logger.js';
 import Metadatable from './Metadatable.js';
 
 export interface CharacterConfig {
@@ -158,8 +159,8 @@ export class Character extends Metadatable(EventEmitter) {
      * @param {string} attr Attribute name
      * @return {number}
      */
-    getBaseAttribute(attr: string): number {
-        var attr = this.attributes.get(attr);
+    getBaseAttribute(attributeName: string): number {
+        const attr = this.attributes.get(attributeName);
         return attr && attr.base;
     }
 

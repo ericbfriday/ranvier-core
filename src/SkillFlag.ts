@@ -1,4 +1,4 @@
-const SkillFlag = {
+export const SkillFlag = {
     PASSIVE: Symbol('PASSIVE'),
     ACTIVE: Symbol('ACTIVE'),
 } as const;
