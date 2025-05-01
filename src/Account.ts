@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import Data from './Data.ts';
+import Data from './Data.js';
 
 export interface AccountData {
     username: string

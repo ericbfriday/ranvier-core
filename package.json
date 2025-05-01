@@ -9,12 +9,13 @@
     "homepage": "https://ranviermud.com",
     "repository": "github:ranviermud/core",
     "bugs": "https://github.com/ranviermud/core/issues",
+    "main": "index.ts",
     "scripts": {
-        "build": "tsc",
-        "test": "nyc --reporter=html --reporter=text --include=src --all mocha --recursive",
-        "coverage": "nyc report --reporter=text-lcov | coveralls",
-        "lint": "eslint",
-        "lint:fix": "eslint --fix",
+        "build": "yarn exec tsc",
+        "test": "yarn exec nyc --reporter=html --reporter=text --include=src --all mocha --recursive",
+        "coverage": "yarn exec nyc report --reporter=text-lcov | coveralls",
+        "lint": "yarn exec eslint",
+        "lint:fix": "yarn exec eslint --fix",
         "lint:inspect": "yarn dlx @eslint/config-inspector"
     },
     "dependencies": {
@@ -30,6 +31,7 @@
     "devDependencies": {
         "@antfu/eslint-config": "^4.11.0",
         "@hypermod/cli": "^0.25.0",
+        "@total-typescript/ts-reset": "^0.6.1",
         "@types/bcryptjs": "2.4.6",
         "@types/js-yaml": "4.0.9",
         "@types/node": "^22.13.13",

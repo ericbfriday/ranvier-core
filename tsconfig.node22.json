@@ -10,6 +10,7 @@
         "moduleResolution": "nodenext",
         "strict": true,
         "esModuleInterop": true,
+        "skipDefaultLibCheck": true,
         "skipLibCheck": true
     }
 }

@@ -67,6 +67,8 @@ export default class Area extends GameEntity implements Broadcastable {
         });
     }
 
+    emit: (event: string, ...args: any[]) => void;
+
     /**
      * Get ranvier-root-relative path to this area
      * @return {string}

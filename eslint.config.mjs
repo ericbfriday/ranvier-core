@@ -12,7 +12,6 @@ export default antfu({
             'ts/consistent-type-definitions': ['error', 'interface'],
             'ts/no-unsafe-function-type': 'warn',
             'ts/no-require-imports': 'warn',
-            'ts/no-unsafe-function-type': 'warn',
             'ts/no-redeclare': 'warn',
         },
     },

@@ -1,5 +1,5 @@
-import type Player from './Player.ts';
-import ChannelAudience from './ChannelAudience.ts';
+import type Player from './Player.js';
+import ChannelAudience from './ChannelAudience.js';
 
 /**
  * Audience class representing characters in the same area as the sender

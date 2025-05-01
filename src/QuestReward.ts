@@ -1,6 +1,6 @@
-import type GameState from './GameState.ts';
-import type Player from './Player.ts';
-import type Quest from './Quest.ts';
+import type GameState from './GameState.js';
+import type Player from './Player.js';
+import type Quest from './Quest.js';
 
 /**
  * Representation of a quest reward
