@@ -51,7 +51,7 @@ export class EntityFactory {
     addScriptListener(
         entityRef: string,
         event: string,
-        listener: Function,
+        listener: (...arg0: unknown[]) => unknown,
     ): void {
         this.scripts.addListener(entityRef, event, listener);
     }

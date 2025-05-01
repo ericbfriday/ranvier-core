@@ -250,7 +250,7 @@ export class Effect extends EventEmitter {
 
         if (typeof this.modifiers.attributes === 'function') {
             modifier = (current: number) => {
-                return (this.modifiers.attributes as Function).bind(this)(
+                return (this.modifiers.attributes as ((attrName: string, currentValue: number) => number)).bind(this)(
                     attrName,
                     current,
                 );
@@ -317,6 +317,7 @@ export class Effect extends EventEmitter {
      */
     hydrate(state: GameState, data: SerializedEffect): void {
         data.config.duration
+        // @ts-expect-error this is weird but i assume necessary.
       = data.config.duration === 'inf' ? Infinity : data.config.duration;
         this.config = data.config;
 
